@@ -3,8 +3,8 @@
 <div class="top-bar" id="top-bar" #topBar>
   <div class="container top-bar-inner">
     <div class="utility-links">
-      <a routerLink="/contact">
-        <svg lucideMapPin [size]="14"></svg> Surkhet, Nepal
+      <a [href]="mapsUrl()" target="_blank" rel="noreferrer">
+        <svg lucideMapPin [size]="14"></svg> Birendranagar, Surkhet, Nepal
       </a>
       @if (school().phone; as phone) {
         <a [href]="'tel:' + phone">
@@ -21,10 +21,17 @@
         </a>
       }
     </div>
-    <a routerLink="/notices" class="utility-notice">
-      <span aria-hidden="true"></span> School notices
-      <svg lucideArrowUpRight [size]="13"></svg>
-    </a>
+    <div class="utility-actions">
+      <a routerLink="/notices" class="utility-notice">
+        <span aria-hidden="true"></span> School notices
+        <svg lucideArrowUpRight [size]="13"></svg>
+      </a>
+      @if (showAdminLogin()) {
+        <a routerLink="/admin" class="utility-admin">
+          <svg lucideLock [size]="12"></svg> Admin Login
+        </a>
+      }
+    </div>
   </div>
 </div>
 
@@ -34,7 +41,7 @@
   (keydown.escape)="onEscape()"
 >
   <div class="container nav-inner">
-    <app-brand />
+    <app-brand (click)="onLogoClick()" />
 
     <nav aria-label="Main navigation" class="desktop-nav">
       @for (item of navigation; track item.to) {

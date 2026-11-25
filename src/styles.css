@@ -184,8 +184,19 @@ app-root {
   align-items: center;
   gap: 20px;
 }
+.utility-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex: none;
+}
 .utility-notice {
   flex: none;
+}
+.utility-admin {
+  padding-left: 18px;
+  border-left: 1px solid #ffffff2b;
+  color: #dbeafe;
 }
 .utility-notice span {
   width: 6px;
