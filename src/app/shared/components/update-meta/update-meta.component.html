@@ -1,5 +1,9 @@
-<p class="news-meta">
-  <span>{{ item().category }}</span>
-  <small>{{ metaLabel() }}</small>
+<p
+  class="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[var(--muted-ink)] text-[11px] font-semibold"
+>
+  <span class="px-2 py-[3px] rounded-[5px] bg-[var(--blue-light)] text-[var(--blue-deep)]">
+    {{ item().category }}
+  </span>
+  <small class="text-[11px]">{{ metaLabel() }}</small>
 </p>
   

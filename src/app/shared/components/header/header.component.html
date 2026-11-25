@@ -1,34 +1,62 @@
-<a href="#main-content" class="skip-link">Skip to content</a>
+<a
+  href="#main-content"
+  class="fixed top-2.5 left-2.5 z-[100] px-4 py-2.5 rounded-lg text-white bg-[var(--blue-deep)] -translate-y-[150%] focus:translate-y-0"
+>
+  Skip to content
+</a>
 
-<div class="top-bar" id="top-bar" #topBar>
-  <div class="container top-bar-inner">
-    <div class="utility-links">
-      <a [href]="mapsUrl()" target="_blank" rel="noreferrer">
-        <svg lucideMapPin [size]="14"></svg> Birendranagar, Surkhet, Nepal
+<div class="text-[#eff7ff] bg-[var(--navy)]" id="top-bar" #topBar>
+  <div
+    class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] flex justify-between items-center min-h-[31px] min-[711px]:min-h-9 gap-3 text-[10px] min-[711px]:text-[11.5px] font-medium tracking-[0.015em]"
+  >
+    <div class="flex items-center gap-[7px] min-[711px]:gap-5">
+      <a
+        class="inline-flex items-center gap-2 hover:text-white hover:underline"
+        [href]="mapsUrl()"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <svg class="text-[var(--gold)]" lucideMapPin [size]="14"></svg> Birendranagar, Surkhet, Nepal
       </a>
       @if (school().phone; as phone) {
-        <a [href]="'tel:' + phone">
-          <svg lucidePhone [size]="14"></svg> {{ phone }}
+        <a
+          class="inline-flex items-center gap-2 hover:text-white hover:underline"
+          [href]="'tel:' + phone"
+        >
+          <svg class="text-[var(--gold)]" lucidePhone [size]="14"></svg> {{ phone }}
         </a>
       }
       @if (school().email; as email) {
-        <a [href]="'mailto:' + email">
-          <svg lucideMail [size]="14"></svg> {{ email }}
+        <a
+          class="inline-flex items-center gap-2 hover:text-white hover:underline"
+          [href]="'mailto:' + email"
+        >
+          <svg class="text-[var(--gold)]" lucideMail [size]="14"></svg> {{ email }}
         </a>
       } @else {
-        <a class="utility-contact" routerLink="/contact">
-          <svg lucideMail [size]="14"></svg> Contact the school
+        <a
+          class="hidden min-[621px]:inline-flex items-center gap-2 hover:text-white hover:underline"
+          routerLink="/contact"
+        >
+          <svg class="text-[var(--gold)]" lucideMail [size]="14"></svg> Contact the school
         </a>
       }
     </div>
-    <div class="utility-actions">
-      <a routerLink="/notices" class="utility-notice">
-        <span aria-hidden="true"></span> School notices
-        <svg lucideArrowUpRight [size]="13"></svg>
+    <div class="flex items-center gap-[18px] flex-none">
+      <a
+        routerLink="/notices"
+        class="inline-flex items-center gap-2 flex-none hover:text-white hover:underline"
+      >
+        <span class="w-1.5 h-1.5 rounded-full bg-[var(--gold)]" aria-hidden="true"></span>
+        School notices
+        <svg class="text-[var(--gold)] opacity-85" lucideArrowUpRight [size]="13"></svg>
       </a>
       @if (showAdminLogin()) {
-        <a routerLink="/admin" class="utility-admin">
-          <svg lucideLock [size]="12"></svg> Admin Login
+        <a
+          routerLink="/admin"
+          class="inline-flex items-center gap-2 pl-[18px] border-l border-white/15 text-[#dbeafe] hover:text-white hover:underline"
+        >
+          <svg class="text-[var(--gold)]" lucideLock [size]="12"></svg> Admin Login
         </a>
       }
     </div>
@@ -36,29 +64,46 @@
 </div>
 
 <header
-  class="site-header"
-  [class.is-scrolled]="isScrolled()"
+  [class]="
+    'sticky z-10 top-0 bg-white border-b border-[var(--line)] transition-shadow duration-220 ' +
+    (isScrolled() ? 'shadow-[0_6px_26px_#172d5411]' : '')
+  "
   (keydown.escape)="onEscape()"
 >
-  <div class="container nav-inner">
+  <div
+    class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] flex items-center justify-between min-h-[52px] gap-4 min-[1191px]:gap-[22px]"
+  >
     <app-brand (click)="onLogoClick()" />
 
-    <nav aria-label="Main navigation" class="desktop-nav">
+    <nav
+      aria-label="Main navigation"
+      class="hidden min-[711px]:flex items-stretch gap-[clamp(13px,1.5vw,22px)] self-stretch"
+    >
       @for (item of navigation; track item.to) {
         @if (item.children?.length) {
-          <div class="nav-dropdown">
+          <div class="group/dropdown relative flex items-stretch">
             <a
               [routerLink]="item.to"
               routerLinkActive="active"
               [class.active]="isChildActive(item.children)"
-              class="nav-dropdown-trigger"
+              class="relative flex items-center gap-[5px] whitespace-nowrap text-[#46536a] text-[13px] font-semibold transition-colors duration-180 hover:text-[var(--blue-deep)] [&.active]:text-[var(--blue-deep)] [&.active]:after:content-[''] [&.active]:after:absolute [&.active]:after:h-[3px] [&.active]:after:rounded-t-[5px] [&.active]:after:bg-[var(--gold)] [&.active]:after:-bottom-px [&.active]:after:inset-x-0"
             >
               {{ item.title }}
-              <svg lucideChevronDown [size]="14"></svg>
+              <svg
+                class="transition-transform duration-180 group-hover/dropdown:rotate-180 group-focus-within/dropdown:rotate-180"
+                lucideChevronDown
+                [size]="14"
+              ></svg>
             </a>
-            <div class="nav-dropdown-menu">
+            <div
+              class="absolute top-[calc(100%+1px)] -left-2.5 min-w-[190px] p-1.5 border border-[var(--line)] rounded-[10px] bg-white shadow-[var(--shadow)] opacity-0 invisible translate-y-1.5 transition-all duration-160 z-20 group-hover/dropdown:opacity-100 group-hover/dropdown:visible group-hover/dropdown:translate-y-0 group-focus-within/dropdown:opacity-100 group-focus-within/dropdown:visible group-focus-within/dropdown:translate-y-0"
+            >
               @for (child of item.children; track child.to) {
-                <a [routerLink]="child.to" routerLinkActive="active">
+                <a
+                  class="relative flex items-center px-3 py-[9px] rounded-[7px] text-[#46536a] text-[13px] font-semibold whitespace-nowrap transition-colors duration-180 hover:text-[var(--blue-deep)] hover:bg-[var(--blue-light)] [&.active]:text-[var(--blue-deep)] [&.active]:bg-[var(--blue-light)]"
+                  [routerLink]="child.to"
+                  routerLinkActive="active"
+                >
                   {{ child.title }}
                 </a>
               }
@@ -66,6 +111,7 @@
           </div>
         } @else {
           <a
+            class="relative flex items-center whitespace-nowrap text-[#46536a] text-[13px] font-semibold transition-colors duration-180 hover:text-[var(--blue-deep)] [&.active]:text-[var(--blue-deep)] [&.active]:after:content-[''] [&.active]:after:absolute [&.active]:after:h-[3px] [&.active]:after:rounded-t-[5px] [&.active]:after:bg-[var(--gold)] [&.active]:after:-bottom-px [&.active]:after:inset-x-0"
             [routerLink]="item.to"
             routerLinkActive="active"
             [routerLinkActiveOptions]="{ exact: item.to === '/' }"
@@ -77,14 +123,17 @@
       }
     </nav>
 
-    <a routerLink="/admissions" class="button button-primary nav-cta">
+    <a
+      routerLink="/admissions"
+      class="hidden min-[961px]:inline-flex w-fit justify-center items-center gap-[11px] px-[13px] min-h-9 border border-transparent rounded-[9px] font-bold text-[13px] leading-[1.2] whitespace-nowrap text-white bg-[var(--blue)] shadow-[0_5px_12px_#1c629e26] transition-all duration-180 hover:-translate-y-0.5 hover:bg-[var(--blue-deep)] hover:shadow-[0_7px_16px_#124c7b3b]"
+    >
       Admission Inquiry <svg lucideArrowUpRight [size]="16"></svg>
     </a>
 
     <button
       #toggleBtn
       type="button"
-      class="menu-toggle icon-button"
+      class="inline-grid min-[711px]:hidden place-items-center shrink-0 w-[42px] h-[42px] rounded-[9px] text-[var(--ink)] bg-[#f1f5fb] hover:bg-[var(--blue-light)] hover:text-[var(--blue-deep)]"
       [attr.aria-label]="menuOpen() ? 'Close menu' : 'Open menu'"
       [attr.aria-expanded]="menuOpen()"
       aria-controls="mobile-navigation"
@@ -101,12 +150,15 @@
   <nav
     id="mobile-navigation"
     aria-label="Mobile navigation"
-    class="mobile-nav"
+    class="min-[711px]:hidden border-t border-[var(--line)] bg-white py-3.5 pb-5"
     [hidden]="!menuOpen()"
   >
-    <div class="container">
+    <div
+      class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] flex flex-col gap-1"
+    >
       @for (item of navigation; track item.to) {
         <a
+          class="px-2.5 py-2.5 rounded-lg text-[#46536a] font-semibold text-sm hover:bg-[var(--blue-light)] hover:text-[var(--blue-deep)] [&.active]:bg-[var(--blue-light)] [&.active]:text-[var(--blue-deep)]"
           [routerLink]="item.to"
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: item.to === '/' }"
@@ -116,10 +168,11 @@
           {{ item.title }}
         </a>
         @if (item.children?.length) {
-          <div class="mobile-nav-sub">
+          <div class="pl-4 flex flex-col gap-1">
             @for (child of item.children; track child.to) {
               @if (child.to !== item.to) {
                 <a
+                  class="px-2.5 py-2 rounded-lg text-[var(--muted-ink)] font-semibold text-[13px] hover:bg-[var(--blue-light)] hover:text-[var(--blue-deep)] [&.active]:bg-[var(--blue-light)] [&.active]:text-[var(--blue-deep)]"
                   [routerLink]="child.to"
                   routerLinkActive="active"
                   (click)="menuOpen.set(false)"
@@ -131,9 +184,11 @@
           </div>
         }
       }
-      <app-action-link to="/admissions" icon="diagonal">
-        Admission Inquiry
-      </app-action-link>
+      <div class="mt-2">
+        <app-action-link to="/admissions" icon="diagonal">
+          Admission Inquiry
+        </app-action-link>
+      </div>
     </div>
   </nav>
 </header>

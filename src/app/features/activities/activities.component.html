@@ -5,30 +5,41 @@
   [image]="introImage()"
 />
 
-<section class="container section">
-  <div class="section-heading split-heading">
+<section
+  class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] py-[clamp(40px,4.5vw,68px)]"
+>
+  <div class="mb-[30px] flex flex-col min-[711px]:flex-row justify-between gap-[25px] min-[711px]:items-end">
     <div>
       <app-eyebrow>Explore categories</app-eyebrow>
-      <h2>Different ways to take part</h2>
+      <h2 class="mt-3">Different ways to take part</h2>
     </div>
-    <p>
+    <p class="w-[min(100%,375px)] text-[var(--muted-ink)]">
       These categories show the kinds of activities this site can feature. They do not confirm
       which activities the school currently offers.
     </p>
   </div>
 
-  <div class="activity-grid">
+  <div class="grid grid-cols-2 min-[1191px]:grid-cols-4 gap-2 min-[461px]:gap-[15px]">
     @for (item of activities(); track item.title) {
-      <article [class]="item.image ? 'activity-card activity-photo-card' : 'activity-card'">
+      <article class="overflow-hidden rounded-2xl border border-[var(--line)] bg-white">
         @if (item.image; as imageSrc) {
-          <app-photo [src]="imageSrc" [alt]="altFor(imageSrc)" />
+          <app-photo [src]="imageSrc" [alt]="altFor(imageSrc)" photoClass="aspect-[1.45]" />
         }
-        <div>
-          <span class="tile-icon">
+        <div class="p-3 min-[461px]:p-[17px]">
+          <span
+            [class]="
+              'grid place-items-center flex-none w-10 h-10 mb-3 rounded-[9px] ' +
+              (item.image
+                ? 'bg-[#e9f6e9] text-[#16763b]'
+                : 'bg-[var(--blue-light)] text-[var(--blue-deep)]')
+            "
+          >
             <ng-container *ngComponentOutlet="item.icon; inputs: { size: 21 }" />
           </span>
-          <h3>{{ item.title }}</h3>
-          <p>{{ item.description }}</p>
+          <h3 class="text-[0.99rem] min-[461px]:text-[1.22rem] [overflow-wrap:anywhere]">
+            {{ item.title }}
+          </h3>
+          <p class="mt-1.5 text-[var(--muted-ink)] text-sm">{{ item.description }}</p>
         </div>
       </article>
     }

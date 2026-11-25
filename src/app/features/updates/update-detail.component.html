@@ -6,21 +6,29 @@
     [image]="{ src: item.image, alt: '' }"
   />
 
-  <article class="container article-content section">
-    <a [routerLink]="'/' + item.kind" class="text-link">
-      <svg lucideArrowLeft [size]="17"></svg> Back to {{ sectionLabel() }}
+  <article
+    class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] py-[clamp(40px,4.5vw,68px)] max-w-[740px] grid gap-[15px] content-start"
+  >
+    <a
+      [routerLink]="'/' + item.kind"
+      class="group mb-[5px] inline-flex items-center w-fit gap-2 text-[var(--blue-deep)] text-[13px] font-bold hover:underline underline-offset-4"
+    >
+      <svg class="shrink-0 transition-transform duration-180 group-hover:-translate-x-[3px]" lucideArrowLeft [size]="17"></svg>
+      Back to {{ sectionLabel() }}
     </a>
 
     <app-update-meta [item]="item" />
 
     @if (item.sample) {
-      <div class="notice">
-        <svg lucideInfo [size]="19"></svg>
+      <div
+        class="flex items-start gap-2 px-[13px] py-[11px] rounded-lg text-[var(--blue-deep)] bg-[var(--blue-light)] text-[13px]"
+      >
+        <svg class="shrink-0 mt-px" lucideInfo [size]="19"></svg>
         <p>Editable sample content. This is not an official school announcement.</p>
       </div>
     }
 
-    <p>{{ item.body }}</p>
+    <p class="text-[#53627a]">{{ item.body }}</p>
   </article>
 } @else {
   <app-not-found />

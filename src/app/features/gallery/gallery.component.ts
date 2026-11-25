@@ -17,7 +17,6 @@ import {
 import { SchoolContentService } from '../../core/services/school-content.service';
 import { FiltersComponent } from '../../shared/components/filters/filters.component';
 import { PageIntroComponent } from '../../shared/components/page-intro/page-intro.component';
-import { PhotoComponent } from '../../shared/components/photo/photo.component';
 
 @Component({
   selector: 'app-gallery',
@@ -25,7 +24,6 @@ import { PhotoComponent } from '../../shared/components/photo/photo.component';
   imports: [
     PageIntroComponent,
     FiltersComponent,
-    PhotoComponent,
     LucideArrowUpRight,
     LucideX,
     LucideChevronLeft,

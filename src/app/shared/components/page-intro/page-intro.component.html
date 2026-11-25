@@ -1,18 +1,15 @@
-<section [class]="image() ? 'page-intro has-image' : 'page-intro'">
-  <div class="container page-intro-inner">
-    <div>
-      <div class="breadcrumbs">
-        <a routerLink="/">Home</a>
-        <svg lucideChevronRight [size]="14"></svg>
-        <span>{{ label() }}</span>
-      </div>
-      <app-eyebrow>{{ label() }}</app-eyebrow>
-      <h1>{{ title() }}</h1>
-      <p>{{ description() }}</p>
-    </div>
-    @if (image(); as img) {
-      <app-photo [src]="img.src" [alt]="img.alt" [priority]="true" />
-    }
+<section class="bg-transparent">
+  <div
+    class="mx-auto w-[min(100%-32px,1440px)] sm:w-[min(100%-64px,1440px)] flex items-center pt-[18px]"
+  >
+    <nav
+      class="flex items-center gap-1.5 mb-0 text-[var(--muted-ink)] text-[12.5px] font-medium"
+      aria-label="Breadcrumb"
+    >
+      <a class="hover:text-[var(--blue-deep)] hover:underline" routerLink="/">Home</a>
+      <svg class="opacity-60" lucideChevronRight [size]="14"></svg>
+      <span class="text-[var(--ink)] font-semibold">{{ label() }}</span>
+    </nav>
   </div>
 </section>
   

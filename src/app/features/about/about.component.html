@@ -5,21 +5,23 @@
   [image]="introImage()"
 />
 
-<section class="container section editorial">
+<section
+  class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] py-[clamp(40px,4.5vw,68px)] grid grid-cols-1 min-[711px]:grid-cols-[0.78fr_1.2fr] gap-[clamp(28px,6vw,88px)]"
+>
   <div>
     <app-eyebrow>Our story</app-eyebrow>
-    <h2>Rooted in Surkhet</h2>
-    <p class="editorial-aside">
+    <h2 class="mt-3">Rooted in Surkhet</h2>
+    <p class="mt-3.5 text-[var(--muted-ink)]">
       Established in {{ school().established }}
       <br />
       Nursery to Grade 8
     </p>
   </div>
-  <div class="prose">
+  <div class="grid content-start gap-2.5">
     <h3>School Introduction</h3>
-    <p>{{ school().welcome }}</p>
-    <h3>Our Background</h3>
-    <p>
+    <p class="text-[#53627a]">{{ school().welcome }}</p>
+    <h3 class="mt-[15px]">Our Background</h3>
+    <p class="text-[#53627a]">
       Established in {{ school().established }}, Pragyan Paathshala serves children from Nursery
       to Grade 8 in {{ school().address }}. We value practical learning, creativity and
       cooperation alongside discipline and self-reliance.
@@ -27,45 +29,57 @@
   </div>
 </section>
 
-<section class="vision-section section">
-  <div class="container vision-grid">
-    <article>
+<section class="bg-[#f4f8fe] py-[clamp(40px,4.5vw,68px)]">
+  <div
+    class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] grid grid-cols-1 min-[461px]:grid-cols-2 gap-5"
+  >
+    <article class="p-7 border border-[var(--line)] rounded-[17px] bg-white">
       <app-eyebrow>Where we’re going</app-eyebrow>
-      <h2>Our Vision</h2>
-      <p>{{ school().vision }}</p>
+      <h2 class="mt-3">Our Vision</h2>
+      <p class="mt-3 text-[var(--muted-ink)]">{{ school().vision }}</p>
     </article>
-    <article>
+    <article class="p-7 border border-[var(--line)] rounded-[17px] bg-white">
       <app-eyebrow>What we work toward</app-eyebrow>
-      <h2>Our Mission</h2>
-      <p>{{ school().mission }}</p>
+      <h2 class="mt-3">Our Mission</h2>
+      <p class="mt-3 text-[var(--muted-ink)]">{{ school().mission }}</p>
     </article>
   </div>
 </section>
 
-<section class="container section editorial">
+<section
+  class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] py-[clamp(40px,4.5vw,68px)] grid grid-cols-1 min-[711px]:grid-cols-[0.78fr_1.2fr] gap-[clamp(28px,6vw,88px)]"
+>
   <div>
     <app-eyebrow>How we teach</app-eyebrow>
-    <h2>Our Educational Philosophy</h2>
+    <h2 class="mt-3">Our Educational Philosophy</h2>
   </div>
-  <div class="prose">
-    <p>{{ school().philosophy }}</p>
-    <h3>Our Goals</h3>
-    <p>
+  <div class="grid content-start gap-2.5">
+    <p class="text-[#53627a]">{{ school().philosophy }}</p>
+    <h3 class="mt-[15px]">Our Goals</h3>
+    <p class="text-[#53627a]">
       Help children become confident, creative and responsible people who can make their own
       decisions and contribute to their community.
     </p>
-    <h3>Our Objectives</h3>
-    <ul>
+    <h3 class="mt-[15px]">Our Objectives</h3>
+    <ul class="pl-[1.3em] list-disc text-[#53627a]">
       <li>Recognize and nurture each child’s strengths.</li>
       <li>Support academic, creative, social and physical development.</li>
       <li>Develop curiosity, critical thinking, empathy and self-reliance.</li>
     </ul>
-    <div class="inline-links">
-      <a routerLink="/staff" class="text-link">
-        Teachers &amp; Staff <svg lucideArrowRight [size]="16"></svg>
+    <div class="flex flex-wrap gap-4 mt-3.5">
+      <a
+        routerLink="/staff"
+        class="group inline-flex items-center w-fit gap-2 text-[var(--blue-deep)] text-[13px] font-bold hover:underline underline-offset-4"
+      >
+        Teachers &amp; Staff
+        <svg class="shrink-0 transition-transform duration-180 group-hover:translate-x-[3px]" lucideArrowRight [size]="16"></svg>
       </a>
-      <a routerLink="/facilities" class="text-link">
-        Facilities <svg lucideArrowRight [size]="16"></svg>
+      <a
+        routerLink="/facilities"
+        class="group inline-flex items-center w-fit gap-2 text-[var(--blue-deep)] text-[13px] font-bold hover:underline underline-offset-4"
+      >
+        Facilities
+        <svg class="shrink-0 transition-transform duration-180 group-hover:translate-x-[3px]" lucideArrowRight [size]="16"></svg>
       </a>
     </div>
   </div>

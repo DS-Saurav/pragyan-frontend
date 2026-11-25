@@ -4,13 +4,19 @@
   description="Explore schooling from Nursery to Grade 8. Please confirm availability and all admission details with the school."
 />
 
-<section class="container section admissions-layout">
+<section
+  class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] py-[clamp(40px,4.5vw,68px)] grid grid-cols-1 min-[961px]:grid-cols-[0.72fr_1.2fr] gap-[clamp(24px,6vw,85px)] items-start"
+>
   <div>
     <app-eyebrow>Before you apply</app-eyebrow>
-    <h2>Start with a conversation</h2>
+    <h2 class="mt-3">Start with a conversation</h2>
     <app-admission-steps />
-    <a routerLink="/contact" class="text-link">
-      Find the school <svg lucideArrowRight [size]="17"></svg>
+    <a
+      routerLink="/contact"
+      class="group mt-3.5 inline-flex items-center w-fit gap-2 text-[var(--blue-deep)] text-[13px] font-bold hover:underline underline-offset-4"
+    >
+      Find the school
+      <svg class="shrink-0 transition-transform duration-180 group-hover:translate-x-[3px]" lucideArrowRight [size]="17"></svg>
     </a>
   </div>
 

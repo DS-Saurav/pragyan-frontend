@@ -1,22 +1,28 @@
 <form
-  class="inquiry-form"
+  class="grid justify-items-start gap-4 p-[clamp(17px,3vw,29px)] border border-[var(--line)] rounded-[17px] bg-white shadow-[var(--shadow)]"
   [formGroup]="form"
   (ngSubmit)="previewInquiry()"
   [attr.aria-describedby]="noteId"
   autocomplete="off"
 >
-  <h2>{{ isAdmissions() ? 'Admission Inquiry' : 'Contact form' }}</h2>
-  <div class="notice" [id]="noteId">
-    <svg lucideInfo [size]="19"></svg>
+  <h2 class="text-[clamp(1.38rem,2.35vw,1.9rem)]">
+    {{ isAdmissions() ? 'Admission Inquiry' : 'Contact form' }}
+  </h2>
+  <div
+    class="flex items-start gap-2 w-full px-[13px] py-[11px] rounded-lg text-[var(--blue-deep)] bg-[var(--blue-light)] text-[13px]"
+    [id]="noteId"
+  >
+    <svg class="shrink-0 mt-px" lucideInfo [size]="19"></svg>
     <p>Preview only. Use sample details; no messages are sent or saved.</p>
   </div>
 
-  <div class="fields">
+  <div class="grid grid-cols-1 min-[461px]:grid-cols-2 w-full gap-[13px]">
     @if (isAdmissions()) {
-      <label hlmLabel>
+      <label hlmLabel class="text-[var(--ink)] font-bold text-[13px]">
         Student name
         <input
           hlmInput
+          class="block w-full min-h-[43px] mt-[5px] px-2.5 py-2 text-[var(--ink)] border border-[#cdd8e7] rounded-[7px] bg-white font-normal placeholder:text-[var(--muted-ink)] placeholder:font-normal"
           formControlName="student"
           required
           placeholder="Sample student name"
@@ -24,20 +30,22 @@
       </label>
     }
 
-    <label hlmLabel>
+    <label hlmLabel class="text-[var(--ink)] font-bold text-[13px]">
       Parent / guardian name
       <input
         hlmInput
+        class="block w-full min-h-[43px] mt-[5px] px-2.5 py-2 text-[var(--ink)] border border-[#cdd8e7] rounded-[7px] bg-white font-normal placeholder:text-[var(--muted-ink)] placeholder:font-normal"
         formControlName="guardian"
         required
         placeholder="Sample guardian name"
       />
     </label>
 
-    <label hlmLabel>
+    <label hlmLabel class="text-[var(--ink)] font-bold text-[13px]">
       Contact number
       <input
         hlmInput
+        class="block w-full min-h-[43px] mt-[5px] px-2.5 py-2 text-[var(--ink)] border border-[#cdd8e7] rounded-[7px] bg-white font-normal placeholder:text-[var(--muted-ink)] placeholder:font-normal"
         formControlName="phone"
         type="tel"
         required
@@ -45,10 +53,11 @@
       />
     </label>
 
-    <label hlmLabel>
+    <label hlmLabel class="text-[var(--ink)] font-bold text-[13px]">
       Email
       <input
         hlmInput
+        class="block w-full min-h-[43px] mt-[5px] px-2.5 py-2 text-[var(--ink)] border border-[#cdd8e7] rounded-[7px] bg-white font-normal placeholder:text-[var(--muted-ink)] placeholder:font-normal"
         formControlName="email"
         type="email"
         required
@@ -56,9 +65,13 @@
       />
     </label>
 
-    <label hlmLabel class="full-field">
+    <label hlmLabel class="col-span-full text-[var(--ink)] font-bold text-[13px]">
       {{ isAdmissions() ? 'Preferred grade' : 'Student grade or level' }}
-      <select formControlName="grade" required>
+      <select
+        class="block w-full min-h-[43px] mt-[5px] px-2.5 py-2 text-[var(--ink)] border border-[#cdd8e7] rounded-[7px] bg-white font-normal"
+        formControlName="grade"
+        required
+      >
         <option value="" disabled>Select a grade</option>
         @for (grade of gradeOptions(); track grade) {
           <option [value]="grade">{{ grade }}</option>
@@ -69,13 +82,14 @@
       </select>
     </label>
 
-    <label hlmLabel class="full-field">
+    <label hlmLabel class="col-span-full text-[var(--ink)] font-bold text-[13px]">
       Message
       @if (isAdmissions()) {
-        <span class="optional">(optional)</span>
+        <span class="text-[var(--muted-ink)] font-normal">(optional)</span>
       }
       <textarea
         hlmTextarea
+        class="block w-full min-h-[43px] mt-[5px] px-2.5 py-2 text-[var(--ink)] border border-[#cdd8e7] rounded-[7px] bg-white font-normal resize-y placeholder:text-[var(--muted-ink)] placeholder:font-normal"
         formControlName="message"
         rows="4"
         [required]="!isAdmissions()"
@@ -84,14 +98,18 @@
     </label>
   </div>
 
-  <button hlmBtn type="submit" class="button button-primary h-auto">
+  <button
+    hlmBtn
+    type="submit"
+    class="inline-flex items-center justify-center gap-2 min-h-[45px] px-[18px] border border-transparent rounded-[9px] font-bold text-[13px] leading-[1.2] whitespace-nowrap text-white bg-[var(--blue)] shadow-[0_5px_12px_#1c629e26] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[var(--blue-deep)] hover:shadow-[0_7px_16px_#124c7b3b] h-auto"
+  >
     {{ isAdmissions() ? 'Preview inquiry' : 'Preview message' }}
     <svg lucideArrowRight [size]="17"></svg>
   </button>
 
   @if (checked()) {
     <div role="status">
-      <p class="form-success">
+      <p class="flex items-center gap-[7px] text-[#16763b] font-semibold text-[13px]">
         <svg lucideCheck [size]="18"></svg>
         All required fields are complete. Nothing was sent or saved.
       </p>

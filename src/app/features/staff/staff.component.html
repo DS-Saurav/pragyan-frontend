@@ -4,15 +4,27 @@
   description="Meet the people who support children’s learning and wellbeing. Staff profiles will appear here once the school provides verified information."
 />
 
-<section class="container section">
-  <div class="empty-state">
-    <span class="tile-icon">
+<section
+  class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] py-[clamp(40px,4.5vw,68px)]"
+>
+  <div
+    class="grid justify-items-start content-start gap-[13px] p-6 border border-[var(--line)] rounded-2xl bg-[var(--bg)]"
+  >
+    <span
+      class="grid place-items-center flex-none w-10 h-10 rounded-[9px] bg-[var(--blue-light)] text-[var(--blue-deep)]"
+    >
       <svg lucideUsersRound [size]="26"></svg>
     </span>
-    <h2>Staff profiles are not yet available</h2>
-    <p>No individual names, roles or photographs have been published.</p>
-    <a class="text-link" routerLink="/about">
-      Read about our approach <svg lucideArrowRight [size]="17"></svg>
+    <h2 class="text-[clamp(1.38rem,2.35vw,1.9rem)]">Staff profiles are not yet available</h2>
+    <p class="text-[var(--muted-ink)]">
+      No individual names, roles or photographs have been published.
+    </p>
+    <a
+      class="group inline-flex items-center w-fit gap-2 text-[var(--blue-deep)] text-[13px] font-bold hover:underline underline-offset-4"
+      routerLink="/about"
+    >
+      Read about our approach
+      <svg class="shrink-0 transition-transform duration-180 group-hover:translate-x-[3px]" lucideArrowRight [size]="17"></svg>
     </a>
   </div>
 </section>

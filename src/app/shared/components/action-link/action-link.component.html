@@ -1,7 +1,16 @@
 <a
   hlmBtn
   [routerLink]="to()"
-  [class]="'button button-' + variant() + ' h-auto'"
+  [class]="
+    'inline-flex items-center justify-center gap-2 min-h-[45px] px-[18px] border rounded-[9px] font-bold text-[13px] leading-[1.2] whitespace-nowrap transition-all duration-200 hover:-translate-y-0.5 h-auto ' +
+    (variant() === 'primary'
+      ? 'border-transparent text-white bg-[var(--blue)] shadow-[0_5px_12px_#1c629e26] hover:bg-[var(--blue-deep)] hover:shadow-[0_7px_16px_#124c7b3b]'
+      : variant() === 'outline'
+        ? 'bg-white text-[var(--blue-deep)] border-[#c8dce9] hover:bg-[var(--blue-light)] hover:border-[#9abbcf]'
+        : variant() === 'gold'
+          ? 'border-transparent text-[var(--navy)] bg-[var(--gold)] hover:bg-[#ffe46b]'
+          : 'text-white border-white/60 bg-[color-mix(in_srgb,var(--navy)_38%,transparent)] hover:text-[var(--navy)] hover:bg-white hover:border-white')
+  "
 >
   <ng-content />
   @if (icon() === 'right') {

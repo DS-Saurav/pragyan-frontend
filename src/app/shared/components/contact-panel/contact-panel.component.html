@@ -1,23 +1,30 @@
-<section class="container section family-contact" aria-label="Contact and directions">
-  <div class="family-contact-details">
+<section
+  class="mx-auto w-[min(100%-32px,1440px)] sm:w-[min(100%-64px,1440px)] py-[clamp(40px,4.5vw,68px)] grid grid-cols-1 min-[961px]:grid-cols-[0.82fr_1.18fr] items-start gap-[clamp(25px,6vw,83px)]"
+  aria-label="Contact and directions"
+>
+  <div>
     <app-eyebrow>Visit or get in touch</app-eyebrow>
-    <h2>Find us in Surkhet</h2>
-    <dl>
+    <h2 class="mt-3">Find us in Surkhet</h2>
+    <dl class="grid gap-[11px] my-[17px]">
       <div>
-        <dt>Phone</dt>
-        <dd>
+        <dt class="text-[13px] font-bold">Phone</dt>
+        <dd class="text-sm text-[var(--muted-ink)]">
           @if (school().phone; as phone) {
-            <a [href]="'tel:' + phone">{{ phone }}</a>
+            <a class="hover:text-[var(--blue-deep)] hover:underline" [href]="'tel:' + phone">
+              {{ phone }}
+            </a>
           } @else {
             Not yet published
           }
         </dd>
       </div>
       <div>
-        <dt>Email</dt>
-        <dd>
+        <dt class="text-[13px] font-bold">Email</dt>
+        <dd class="text-sm text-[var(--muted-ink)]">
           @if (school().email; as email) {
-            <a [href]="'mailto:' + email">{{ email }}</a>
+            <a class="hover:text-[var(--blue-deep)] hover:underline" [href]="'mailto:' + email">
+              {{ email }}
+            </a>
           } @else {
             Not yet published
           }
@@ -25,9 +32,10 @@
       </div>
       @if (school().whatsapp; as whatsapp) {
         <div>
-          <dt>WhatsApp</dt>
-          <dd>
+          <dt class="text-[13px] font-bold">WhatsApp</dt>
+          <dd class="text-sm text-[var(--muted-ink)]">
             <a
+              class="hover:text-[var(--blue-deep)] hover:underline"
               [href]="'https://wa.me/' + whatsapp.replace(/[^0-9]/g, '')"
               target="_blank"
               rel="noreferrer"
@@ -38,23 +46,32 @@
         </div>
       }
       <div>
-        <dt>Office hours</dt>
-        <dd>{{ school().officeHours ?? 'Please confirm with the school' }}</dd>
+        <dt class="text-[13px] font-bold">Office hours</dt>
+        <dd class="text-sm text-[var(--muted-ink)]">
+          {{ school().officeHours ?? 'Please confirm with the school' }}
+        </dd>
       </div>
       <div>
-        <dt>School address</dt>
-        <dd>{{ school().address }}</dd>
+        <dt class="text-[13px] font-bold">School address</dt>
+        <dd class="text-sm text-[var(--muted-ink)]">{{ school().address }}</dd>
       </div>
     </dl>
-    <a class="map-card" [href]="mapsUrl()" target="_blank" rel="noreferrer">
-      <span class="tile-icon">
+    <a
+      class="flex items-center gap-[9px] p-[11px] border border-[var(--line)] rounded-xl bg-[var(--bg)] text-[var(--blue-deep)] transition-colors duration-180 hover:bg-[var(--blue-light)]"
+      [href]="mapsUrl()"
+      target="_blank"
+      rel="noreferrer"
+    >
+      <span
+        class="grid place-items-center flex-none w-10 h-10 rounded-[9px] bg-[var(--blue-light)] text-[var(--blue-deep)]"
+      >
         <svg lucideMapPin [size]="22"></svg>
       </span>
       <span>
-        <strong>Latikoili, Surkhet</strong>
-        <small>Search this address in Google Maps</small>
+        <strong class="block">Latikoili, Surkhet</strong>
+        <small class="block text-[var(--muted-ink)]">Search this address in Google Maps</small>
       </span>
-      <svg lucideArrowUpRight [size]="19"></svg>
+      <svg class="ml-auto flex-none" lucideArrowUpRight [size]="19"></svg>
     </a>
   </div>
   <app-inquiry-form mode="contact" />

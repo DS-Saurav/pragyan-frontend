@@ -1,12 +1,15 @@
-<ul class="notice-list">
+<ul class="overflow-hidden border border-[var(--line)] rounded-[13px] bg-white divide-y divide-[var(--line)]">
   @for (item of items(); track item.slug) {
     <li>
-      <a [routerLink]="content.updatePath(item)">
+      <a
+        class="flex items-center justify-between gap-3 px-4 py-[13px] transition-colors duration-180 hover:bg-[var(--blue-light)] focus-visible:outline-offset-[-4px]"
+        [routerLink]="content.updatePath(item)"
+      >
         <div>
           <app-update-meta [item]="item" />
-          <strong>{{ item.title }}</strong>
+          <strong class="block mt-1 text-sm leading-[1.4]">{{ item.title }}</strong>
         </div>
-        <svg lucideArrowUpRight [size]="19"></svg>
+        <svg class="text-[var(--blue-deep)] flex-none" lucideArrowUpRight [size]="19"></svg>
       </a>
     </li>
   }

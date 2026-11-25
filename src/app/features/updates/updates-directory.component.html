@@ -4,17 +4,24 @@
   [description]="sectionMeta().description"
 />
 
-<section class="container section gallery-section" [attr.aria-label]="sectionMeta().label">
-  <nav class="update-tabs" aria-label="School updates">
+<section
+  class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] pt-[39px] pb-[clamp(40px,4.5vw,68px)]"
+  [attr.aria-label]="sectionMeta().label"
+>
+  <nav class="flex flex-wrap gap-2 mb-4" aria-label="School updates">
     @for (tab of tabs; track tab.key) {
-      <a [routerLink]="'/' + tab.key" routerLinkActive="active">
+      <a
+        class="px-4 py-2 border border-[var(--line)] rounded-full text-[13px] font-semibold text-[#485770] bg-white transition-colors duration-150 hover:text-[var(--blue-deep)] hover:border-[#9eb8f1] [&.active]:text-white [&.active]:border-[var(--blue)] [&.active]:bg-[var(--blue)]"
+        [routerLink]="'/' + tab.key"
+        routerLinkActive="active"
+      >
         {{ tab.label }}
       </a>
     }
   </nav>
 
   @if (!hasOfficialItems()) {
-    <p class="directory-note">
+    <p class="mb-4 text-[13px] text-[var(--muted-ink)]">
       No official {{ kind() }} have been published here. The entries below are sample content.
     </p>
   }
@@ -31,20 +38,23 @@
   @if (kind() === 'notices') {
     <app-notice-list [items]="visibleItems()" />
   } @else {
-    <div class="news-grid">
+    <div class="grid grid-cols-1 min-[461px]:grid-cols-2 min-[961px]:grid-cols-3 gap-4">
       @for (item of visibleItems(); track item.slug) {
-        <article class="news-card">
-          <app-photo [src]="item.image" alt="" />
-          <div class="news-copy">
+        <article
+          class="flex flex-col overflow-hidden border border-[var(--line)] rounded-2xl bg-white"
+        >
+          <app-photo [src]="item.image" alt="" photoClass="aspect-[1.9]" />
+          <div class="flex flex-1 flex-col items-start gap-[9px] p-[18px]">
             <app-update-meta [item]="item" />
-            <h3>{{ item.title }}</h3>
-            <p>{{ item.summary }}</p>
+            <h3 class="[text-wrap:initial]">{{ item.title }}</h3>
+            <p class="mb-2 text-[var(--muted-ink)] text-[13px]">{{ item.summary }}</p>
             <a
-              class="text-link"
+              class="group mt-auto inline-flex items-center w-fit gap-2 text-[var(--blue-deep)] text-[13px] font-bold hover:underline underline-offset-4"
               [routerLink]="content.updatePath(item)"
               [attr.aria-label]="'View details: ' + item.title"
             >
-              View details <svg lucideArrowRight [size]="16"></svg>
+              View details
+              <svg class="shrink-0 transition-transform duration-180 group-hover:translate-x-[3px]" lucideArrowRight [size]="16"></svg>
             </a>
           </div>
         </article>

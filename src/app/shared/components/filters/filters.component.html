@@ -1,9 +1,15 @@
-<div class="filters" role="group" [attr.aria-label]="label()">
+<div class="flex flex-wrap gap-2 mb-[25px]" role="group" [attr.aria-label]="label()">
   @for (category of allCategories(); track category) {
     <button
       type="button"
       [attr.aria-pressed]="active() === category"
       (click)="categoryChange.emit(category)"
+      [class]="
+        'px-[15px] py-2 border rounded-full text-[13px] font-semibold transition-colors duration-150 ' +
+        (active() === category
+          ? 'text-white border-[var(--blue)] bg-[var(--blue)]'
+          : 'text-[#485770] border-[var(--line)] bg-white hover:text-[var(--blue-deep)] hover:border-[#9eb8f1]')
+      "
     >
       {{ category }}
     </button>

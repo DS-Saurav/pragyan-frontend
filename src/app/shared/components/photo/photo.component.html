@@ -1,10 +1,15 @@
-<figure [class]="'photo ' + photoClass()">
+<figure [class]="'relative overflow-hidden isolate bg-[#e3eaf4] ' + photoClass()">
   <img
+    class="block w-full h-full object-cover"
     [src]="src()"
     [alt]="alt()"
     [attr.loading]="priority() ? 'eager' : 'lazy'"
     [attr.fetchpriority]="priority() ? 'high' : 'auto'"
   />
-  <figcaption>Illustrative image</figcaption>
+  <figcaption
+    class="absolute right-3 bottom-3 px-2 py-0.5 rounded-[5px] text-white bg-[#111c2acc] text-[9px] leading-[1.55] tracking-[0.01em]"
+  >
+    Illustrative image
+  </figcaption>
 </figure>
   

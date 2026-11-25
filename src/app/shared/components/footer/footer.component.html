@@ -1,52 +1,92 @@
-<footer class="footer">
-  <div class="container footer-main">
-    <div class="footer-brand">
+<footer class="site-footer text-[#c3cfe6] bg-[var(--navy)] [&_:focus-visible]:outline-[var(--gold)]">
+  <div
+    class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] grid grid-cols-2 min-[961px]:grid-cols-[1.45fr_1fr_1fr_1.05fr] gap-x-[13px] gap-y-5 min-[461px]:gap-[26px] min-[961px]:gap-6 py-9 pb-6 min-[961px]:py-[53px] min-[961px]:pb-[38px] text-[13px]"
+  >
+    <div class="max-[960px]:col-span-full">
       <app-brand />
-      <p>
+      <p class="max-w-[240px] mt-[15px]">
         A child-centered school in Surkhet, Nepal, where curiosity and confidence grow together.
       </p>
     </div>
 
     <div>
-      <h2>Explore</h2>
-      <a routerLink="/about">About Us</a>
-      <a routerLink="/academics">Academics</a>
-      <a routerLink="/activities">Student Life</a>
-      <a routerLink="/gallery">Gallery</a>
+      <h2 class="text-white text-sm tracking-[-0.015em] mb-3.5">Explore</h2>
+      <a class="flex w-fit items-center gap-1.5 mt-2 hover:text-white hover:underline" routerLink="/about">
+        About Us
+      </a>
+      <a class="flex w-fit items-center gap-1.5 mt-2 hover:text-white hover:underline" routerLink="/academics">
+        Academics
+      </a>
+      <a class="flex w-fit items-center gap-1.5 mt-2 hover:text-white hover:underline" routerLink="/activities">
+        Student Life
+      </a>
+      <a class="flex w-fit items-center gap-1.5 mt-2 hover:text-white hover:underline" routerLink="/gallery">
+        Gallery
+      </a>
     </div>
 
     <div>
-      <h2>School information</h2>
-      <a routerLink="/admissions">Admissions</a>
-      <a routerLink="/facilities">Facilities</a>
-      <a routerLink="/staff">Teachers &amp; Staff</a>
-      <a routerLink="/news">News</a>
-      <a routerLink="/events">Events</a>
-      <a routerLink="/notices">Notices</a>
+      <h2 class="text-white text-sm tracking-[-0.015em] mb-3.5">School information</h2>
+      <a class="flex w-fit items-center gap-1.5 mt-2 hover:text-white hover:underline" routerLink="/admissions">
+        Admissions
+      </a>
+      <a class="flex w-fit items-center gap-1.5 mt-2 hover:text-white hover:underline" routerLink="/facilities">
+        Facilities
+      </a>
+      <a class="flex w-fit items-center gap-1.5 mt-2 hover:text-white hover:underline" routerLink="/staff">
+        Teachers &amp; Staff
+      </a>
+      <a class="flex w-fit items-center gap-1.5 mt-2 hover:text-white hover:underline" routerLink="/news">
+        News
+      </a>
+      <a class="flex w-fit items-center gap-1.5 mt-2 hover:text-white hover:underline" routerLink="/events">
+        Events
+      </a>
+      <a class="flex w-fit items-center gap-1.5 mt-2 hover:text-white hover:underline" routerLink="/notices">
+        Notices
+      </a>
     </div>
 
     <div>
-      <h2>Find us</h2>
+      <h2 class="text-white text-sm tracking-[-0.015em] mb-3.5">Find us</h2>
       <p>{{ school().address }}</p>
       @if (school().phone; as phone) {
-        <a [href]="'tel:' + phone">{{ phone }}</a>
+        <a class="flex w-fit items-center gap-1.5 mt-2 hover:text-white hover:underline" [href]="'tel:' + phone">
+          {{ phone }}
+        </a>
       }
       @if (school().email; as email) {
-        <a [href]="'mailto:' + email">{{ email }}</a>
+        <a class="flex w-fit items-center gap-1.5 mt-2 hover:text-white hover:underline" [href]="'mailto:' + email">
+          {{ email }}
+        </a>
       }
       @for (social of school().social; track social.url) {
-        <a [href]="social.url" target="_blank" rel="noreferrer">
+        <a
+          class="flex w-fit items-center gap-1.5 mt-2 hover:text-white hover:underline"
+          [href]="social.url"
+          target="_blank"
+          rel="noreferrer"
+        >
           {{ social.name }} <svg lucideArrowUpRight [size]="14"></svg>
         </a>
       }
-      <a [href]="mapsUrl()" target="_blank" rel="noreferrer">
+      <a
+        class="flex w-fit items-center gap-1.5 mt-2 hover:text-white hover:underline"
+        [href]="mapsUrl()"
+        target="_blank"
+        rel="noreferrer"
+      >
         Get directions <svg lucideArrowUpRight [size]="14"></svg>
       </a>
-      <a routerLink="/contact">Contact</a>
+      <a class="flex w-fit items-center gap-1.5 mt-2 hover:text-white hover:underline" routerLink="/contact">
+        Contact
+      </a>
     </div>
   </div>
 
-  <div class="container footer-bottom">
+  <div
+    class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] flex flex-col min-[461px]:flex-row justify-between gap-0.5 min-[461px]:gap-3 py-[17px] border-t border-white/15 text-[13px]"
+  >
     <span>© {{ year }} {{ school().name }}.</span>
     <span>Surkhet, Karnali Province, Nepal</span>
   </div>

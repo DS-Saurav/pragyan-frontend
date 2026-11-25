@@ -1,13 +1,11 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { LucideChevronRight } from '@lucide/angular';
-import { EyebrowComponent } from '../eyebrow/eyebrow.component';
-import { PhotoComponent } from '../photo/photo.component';
 
 @Component({
   selector: 'app-page-intro',
   standalone: true,
-  imports: [RouterLink, LucideChevronRight, EyebrowComponent, PhotoComponent],
+  imports: [RouterLink, LucideChevronRight],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './page-intro.component.html',
 })
