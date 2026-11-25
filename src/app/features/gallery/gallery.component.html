@@ -1,0 +1,87 @@
+<app-page-intro
+  label="Gallery"
+  title="Learning in pictures"
+  description="These illustrative images show what learning through play, creativity and collaboration can look like. They do not depict Pragyan Paathshala or its students."
+/>
+
+<section class="container section gallery-section" aria-label="Browse photo gallery">
+  <app-filters
+    [categories]="categories()"
+    label="Filter photos by category"
+    [active]="category()"
+    (categoryChange)="onCategoryChange($event)"
+  />
+
+  <div class="gallery-grid">
+    @for (item of items(); track item.src; let idx = $index) {
+      <article class="gallery-item">
+        <app-photo [src]="item.src" [alt]="item.alt" />
+        <span class="gallery-item-caption">
+          <span>
+            <small>{{ item.category }}</small>
+            <strong>{{ item.title }}</strong>
+          </span>
+          <svg lucideArrowUpRight [size]="20"></svg>
+        </span>
+        <button
+          class="gallery-open"
+          type="button"
+          (click)="openLightbox(idx, $event)"
+          [attr.aria-label]="'View image: ' + item.title"
+        ></button>
+      </article>
+    }
+  </div>
+</section>
+
+<dialog
+  #lightboxDialog
+  class="lightbox"
+  aria-label="Photo viewer"
+  (close)="onDialogClose()"
+  (click)="onDialogBackdropClick($event)"
+  (keydown)="onDialogKeydown($event)"
+>
+  @if (activePhoto(); as photo) {
+    <div class="lightbox-panel">
+      <div class="lightbox-top">
+        <span>
+          Illustrative image · {{ (selectedIndex() ?? 0) + 1 }} / {{ items().length }}
+        </span>
+        <button
+          type="button"
+          class="icon-button"
+          aria-label="Close image viewer"
+          (click)="closeLightbox()"
+        >
+          <svg lucideX [size]="23"></svg>
+        </button>
+      </div>
+      <img [src]="photo.src" [alt]="photo.alt" />
+      <div class="lightbox-bottom">
+        <strong aria-live="polite">{{ photo.title }}</strong>
+        <div>
+          <button
+            type="button"
+            class="icon-button"
+            [disabled]="items().length < 2"
+            (click)="step(-1)"
+            aria-label="Previous image"
+          >
+            <svg lucideChevronLeft [size]="22"></svg>
+          </button>
+          <button
+            type="button"
+            class="icon-button"
+            [disabled]="items().length < 2"
+            (click)="step(1)"
+            aria-label="Next image"
+          >
+            <svg lucideChevronRight [size]="22"></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</dialog>
+  

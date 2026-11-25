@@ -1,0 +1,55 @@
+<app-page-intro
+  label="Events & News"
+  [title]="sectionMeta().label"
+  [description]="sectionMeta().description"
+/>
+
+<section class="container section gallery-section" [attr.aria-label]="sectionMeta().label">
+  <nav class="update-tabs" aria-label="School updates">
+    @for (tab of tabs; track tab.key) {
+      <a [routerLink]="'/' + tab.key" routerLinkActive="active">
+        {{ tab.label }}
+      </a>
+    }
+  </nav>
+
+  @if (!hasOfficialItems()) {
+    <p class="directory-note">
+      No official {{ kind() }} have been published here. The entries below are sample content.
+    </p>
+  }
+
+  @if (items().length > 1) {
+    <app-filters
+      [categories]="categories()"
+      [label]="'Filter ' + kind() + ' by category'"
+      [active]="category()"
+      (categoryChange)="category.set($event)"
+    />
+  }
+
+  @if (kind() === 'notices') {
+    <app-notice-list [items]="visibleItems()" />
+  } @else {
+    <div class="news-grid">
+      @for (item of visibleItems(); track item.slug) {
+        <article class="news-card">
+          <app-photo [src]="item.image" alt="" />
+          <div class="news-copy">
+            <app-update-meta [item]="item" />
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.summary }}</p>
+            <a
+              class="text-link"
+              [routerLink]="content.updatePath(item)"
+              [attr.aria-label]="'View details: ' + item.title"
+            >
+              View details <svg lucideArrowRight [size]="16"></svg>
+            </a>
+          </div>
+        </article>
+      }
+    </div>
+  }
+</section>
+  

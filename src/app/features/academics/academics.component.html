@@ -1,0 +1,61 @@
+<app-page-intro
+  label="Academics"
+  title="A learning journey from Nursery to Grade 8"
+  description="From hands-on discovery in the early years to more independent work, children learn at a pace that suits them."
+  [image]="introImage()"
+/>
+
+<section class="container section">
+  <div class="section-heading">
+    <app-eyebrow>The learning journey</app-eyebrow>
+    <h2>From Nursery to Grade 8</h2>
+  </div>
+  <div class="journey-grid">
+    @for (level of levels(); track level.id; let idx = $index) {
+      <article class="journey-card" [id]="level.id">
+        <app-photo [src]="level.image" [alt]="level.alt" />
+        <div class="journey-copy">
+          <p class="step-label">
+            <span>0{{ idx + 1 }}</span>
+            {{ level.grades }}
+          </p>
+          <h3>{{ level.title }}</h3>
+          <p>{{ level.description }}</p>
+        </div>
+      </article>
+    }
+  </div>
+</section>
+
+<section class="values-section section">
+  <div class="container">
+    <div class="section-heading split-heading">
+      <div>
+        <app-eyebrow>Why Pragyan?</app-eyebrow>
+        <h2>
+          Learning for the
+          <br class="desktop-break" />
+          whole child
+        </h2>
+      </div>
+      <p>
+        Learning goes beyond the classroom. We want children to get to know their strengths,
+        work well with others and grow more independent.
+      </p>
+    </div>
+    <div class="values-grid">
+      @for (pillar of pillars(); track pillar.title; let idx = $index) {
+        <article [class]="'value-card tone-' + (idx % 3)">
+          <span class="tile-icon">
+            <ng-container *ngComponentOutlet="pillar.icon; inputs: { size: 22 }" />
+          </span>
+          <h3>{{ pillar.title }}</h3>
+          <p>{{ pillar.description }}</p>
+        </article>
+      }
+    </div>
+  </div>
+</section>
+
+<app-admission-band />
+  

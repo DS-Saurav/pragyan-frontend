@@ -1,0 +1,18 @@
+<section [class]="image() ? 'page-intro has-image' : 'page-intro'">
+  <div class="container page-intro-inner">
+    <div>
+      <div class="breadcrumbs">
+        <a routerLink="/">Home</a>
+        <svg lucideChevronRight [size]="14"></svg>
+        <span>{{ label() }}</span>
+      </div>
+      <app-eyebrow>{{ label() }}</app-eyebrow>
+      <h1>{{ title() }}</h1>
+      <p>{{ description() }}</p>
+    </div>
+    @if (image(); as img) {
+      <app-photo [src]="img.src" [alt]="img.alt" [priority]="true" />
+    }
+  </div>
+</section>
+  

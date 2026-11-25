@@ -1,0 +1,133 @@
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<div class="top-bar" id="top-bar" #topBar>
+  <div class="container top-bar-inner">
+    <div class="utility-links">
+      <a routerLink="/contact">
+        <svg lucideMapPin [size]="14"></svg> Surkhet, Nepal
+      </a>
+      @if (school().phone; as phone) {
+        <a [href]="'tel:' + phone">
+          <svg lucidePhone [size]="14"></svg> {{ phone }}
+        </a>
+      }
+      @if (school().email; as email) {
+        <a [href]="'mailto:' + email">
+          <svg lucideMail [size]="14"></svg> {{ email }}
+        </a>
+      } @else {
+        <a class="utility-contact" routerLink="/contact">
+          <svg lucideMail [size]="14"></svg> Contact the school
+        </a>
+      }
+    </div>
+    <a routerLink="/notices" class="utility-notice">
+      <span aria-hidden="true"></span> School notices
+      <svg lucideArrowUpRight [size]="13"></svg>
+    </a>
+  </div>
+</div>
+
+<header
+  class="site-header"
+  [class.is-scrolled]="isScrolled()"
+  (keydown.escape)="onEscape()"
+>
+  <div class="container nav-inner">
+    <app-brand />
+
+    <nav aria-label="Main navigation" class="desktop-nav">
+      @for (item of navigation; track item.to) {
+        @if (item.children?.length) {
+          <div class="nav-dropdown">
+            <a
+              [routerLink]="item.to"
+              routerLinkActive="active"
+              [class.active]="isChildActive(item.children)"
+              class="nav-dropdown-trigger"
+            >
+              {{ item.title }}
+              <svg lucideChevronDown [size]="14"></svg>
+            </a>
+            <div class="nav-dropdown-menu">
+              @for (child of item.children; track child.to) {
+                <a [routerLink]="child.to" routerLinkActive="active">
+                  {{ child.title }}
+                </a>
+              }
+            </div>
+          </div>
+        } @else {
+          <a
+            [routerLink]="item.to"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: item.to === '/' }"
+            [class.active]="item.to === '/news' && isUpdatesPage()"
+          >
+            {{ item.title }}
+          </a>
+        }
+      }
+    </nav>
+
+    <a routerLink="/admissions" class="button button-primary nav-cta">
+      Admission Inquiry <svg lucideArrowUpRight [size]="16"></svg>
+    </a>
+
+    <button
+      #toggleBtn
+      type="button"
+      class="menu-toggle icon-button"
+      [attr.aria-label]="menuOpen() ? 'Close menu' : 'Open menu'"
+      [attr.aria-expanded]="menuOpen()"
+      aria-controls="mobile-navigation"
+      (click)="toggleMenu()"
+    >
+      @if (menuOpen()) {
+        <svg lucideX [size]="23"></svg>
+      } @else {
+        <svg lucideMenu [size]="23"></svg>
+      }
+    </button>
+  </div>
+
+  <nav
+    id="mobile-navigation"
+    aria-label="Mobile navigation"
+    class="mobile-nav"
+    [hidden]="!menuOpen()"
+  >
+    <div class="container">
+      @for (item of navigation; track item.to) {
+        <a
+          [routerLink]="item.to"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: item.to === '/' }"
+          [class.active]="item.to === '/news' && isUpdatesPage()"
+          (click)="menuOpen.set(false)"
+        >
+          {{ item.title }}
+        </a>
+        @if (item.children?.length) {
+          <div class="mobile-nav-sub">
+            @for (child of item.children; track child.to) {
+              @if (child.to !== item.to) {
+                <a
+                  [routerLink]="child.to"
+                  routerLinkActive="active"
+                  (click)="menuOpen.set(false)"
+                >
+                  {{ child.title }}
+                </a>
+              }
+            }
+          </div>
+        }
+      }
+      <app-action-link to="/admissions" icon="diagonal">
+        Admission Inquiry
+      </app-action-link>
+    </div>
+  </nav>
+</header>
+  

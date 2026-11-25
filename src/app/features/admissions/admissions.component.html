@@ -1,0 +1,19 @@
+<app-page-intro
+  label="Admissions"
+  [title]="introTitle()"
+  description="Explore schooling from Nursery to Grade 8. Please confirm availability and all admission details with the school."
+/>
+
+<section class="container section admissions-layout">
+  <div>
+    <app-eyebrow>Before you apply</app-eyebrow>
+    <h2>Start with a conversation</h2>
+    <app-admission-steps />
+    <a routerLink="/contact" class="text-link">
+      Find the school <svg lucideArrowRight [size]="17"></svg>
+    </a>
+  </div>
+
+  <app-inquiry-form mode="admissions" />
+</section>
+  

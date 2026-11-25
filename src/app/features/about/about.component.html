@@ -1,0 +1,75 @@
+<app-page-intro
+  label="About Us"
+  title="Every child learns differently"
+  description="Meet Pragyan Paathshala, a private, co-educational day school in the heart of Surkhet."
+  [image]="introImage()"
+/>
+
+<section class="container section editorial">
+  <div>
+    <app-eyebrow>Our story</app-eyebrow>
+    <h2>Rooted in Surkhet</h2>
+    <p class="editorial-aside">
+      Established in {{ school().established }}
+      <br />
+      Nursery to Grade 8
+    </p>
+  </div>
+  <div class="prose">
+    <h3>School Introduction</h3>
+    <p>{{ school().welcome }}</p>
+    <h3>Our Background</h3>
+    <p>
+      Established in {{ school().established }}, Pragyan Paathshala serves children from Nursery
+      to Grade 8 in {{ school().address }}. We value practical learning, creativity and
+      cooperation alongside discipline and self-reliance.
+    </p>
+  </div>
+</section>
+
+<section class="vision-section section">
+  <div class="container vision-grid">
+    <article>
+      <app-eyebrow>Where we’re going</app-eyebrow>
+      <h2>Our Vision</h2>
+      <p>{{ school().vision }}</p>
+    </article>
+    <article>
+      <app-eyebrow>What we work toward</app-eyebrow>
+      <h2>Our Mission</h2>
+      <p>{{ school().mission }}</p>
+    </article>
+  </div>
+</section>
+
+<section class="container section editorial">
+  <div>
+    <app-eyebrow>How we teach</app-eyebrow>
+    <h2>Our Educational Philosophy</h2>
+  </div>
+  <div class="prose">
+    <p>{{ school().philosophy }}</p>
+    <h3>Our Goals</h3>
+    <p>
+      Help children become confident, creative and responsible people who can make their own
+      decisions and contribute to their community.
+    </p>
+    <h3>Our Objectives</h3>
+    <ul>
+      <li>Recognize and nurture each child’s strengths.</li>
+      <li>Support academic, creative, social and physical development.</li>
+      <li>Develop curiosity, critical thinking, empathy and self-reliance.</li>
+    </ul>
+    <div class="inline-links">
+      <a routerLink="/staff" class="text-link">
+        Teachers &amp; Staff <svg lucideArrowRight [size]="16"></svg>
+      </a>
+      <a routerLink="/facilities" class="text-link">
+        Facilities <svg lucideArrowRight [size]="16"></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<app-admission-band />
+  

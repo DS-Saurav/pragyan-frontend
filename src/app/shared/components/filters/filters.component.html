@@ -1,0 +1,12 @@
+<div class="filters" role="group" [attr.aria-label]="label()">
+  @for (category of allCategories(); track category) {
+    <button
+      type="button"
+      [attr.aria-pressed]="active() === category"
+      (click)="categoryChange.emit(category)"
+    >
+      {{ category }}
+    </button>
+  }
+</div>
+  

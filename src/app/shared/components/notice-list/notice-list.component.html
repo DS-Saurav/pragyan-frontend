@@ -1,0 +1,14 @@
+<ul class="notice-list">
+  @for (item of items(); track item.slug) {
+    <li>
+      <a [routerLink]="content.updatePath(item)">
+        <div>
+          <app-update-meta [item]="item" />
+          <strong>{{ item.title }}</strong>
+        </div>
+        <svg lucideArrowUpRight [size]="19"></svg>
+      </a>
+    </li>
+  }
+</ul>
+  

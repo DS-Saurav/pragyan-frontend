@@ -1,0 +1,28 @@
+@if (article(); as item) {
+  <app-page-intro
+    [label]="sectionLabel()"
+    [title]="item.title"
+    [description]="item.summary"
+    [image]="{ src: item.image, alt: '' }"
+  />
+
+  <article class="container article-content section">
+    <a [routerLink]="'/' + item.kind" class="text-link">
+      <svg lucideArrowLeft [size]="17"></svg> Back to {{ sectionLabel() }}
+    </a>
+
+    <app-update-meta [item]="item" />
+
+    @if (item.sample) {
+      <div class="notice">
+        <svg lucideInfo [size]="19"></svg>
+        <p>Editable sample content. This is not an official school announcement.</p>
+      </div>
+    }
+
+    <p>{{ item.body }}</p>
+  </article>
+} @else {
+  <app-not-found />
+}
+  

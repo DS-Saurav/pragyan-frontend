@@ -1,0 +1,29 @@
+<app-page-intro
+  label="Facilities"
+  title="A child-friendly learning environment"
+  description="The school’s educational approach emphasizes spaces and materials that help children take part comfortably and learn independently."
+/>
+
+<section class="container section editorial">
+  <div>
+    <app-eyebrow>Learning environment</app-eyebrow>
+    <h2>Features to confirm</h2>
+    <p class="editorial-aside">
+      This list is not a confirmed inventory. Please ask the school about current facilities and
+      arrangements.
+    </p>
+  </div>
+  <ul class="facility-list">
+    @for (item of facilities(); track item.title) {
+      <li>
+        <span class="tile-icon">
+          <ng-container *ngComponentOutlet="item.icon; inputs: { size: 21 }" />
+        </span>
+        {{ item.title }}
+      </li>
+    }
+  </ul>
+</section>
+
+<app-admission-band />
+  

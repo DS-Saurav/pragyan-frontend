@@ -1,0 +1,13 @@
+<a
+  hlmBtn
+  [routerLink]="to()"
+  [class]="'button button-' + variant() + ' h-auto'"
+>
+  <ng-content />
+  @if (icon() === 'right') {
+    <svg lucideArrowRight [size]="17"></svg>
+  } @else if (icon() === 'diagonal') {
+    <svg lucideArrowUpRight [size]="17"></svg>
+  }
+</a>
+  

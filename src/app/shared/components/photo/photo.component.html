@@ -1,0 +1,10 @@
+<figure [class]="'photo ' + photoClass()">
+  <img
+    [src]="src()"
+    [alt]="alt()"
+    [attr.loading]="priority() ? 'eager' : 'lazy'"
+    [attr.fetchpriority]="priority() ? 'high' : 'auto'"
+  />
+  <figcaption>Illustrative image</figcaption>
+</figure>
+  

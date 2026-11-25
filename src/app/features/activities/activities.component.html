@@ -1,0 +1,39 @@
+<app-page-intro
+  label="Student Life"
+  title="Learning beyond the classroom"
+  description="Activities give children different ways to express themselves, develop physically and learn to work with others."
+  [image]="introImage()"
+/>
+
+<section class="container section">
+  <div class="section-heading split-heading">
+    <div>
+      <app-eyebrow>Explore categories</app-eyebrow>
+      <h2>Different ways to take part</h2>
+    </div>
+    <p>
+      These categories show the kinds of activities this site can feature. They do not confirm
+      which activities the school currently offers.
+    </p>
+  </div>
+
+  <div class="activity-grid">
+    @for (item of activities(); track item.title) {
+      <article [class]="item.image ? 'activity-card activity-photo-card' : 'activity-card'">
+        @if (item.image; as imageSrc) {
+          <app-photo [src]="imageSrc" [alt]="altFor(imageSrc)" />
+        }
+        <div>
+          <span class="tile-icon">
+            <ng-container *ngComponentOutlet="item.icon; inputs: { size: 21 }" />
+          </span>
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.description }}</p>
+        </div>
+      </article>
+    }
+  </div>
+</section>
+
+<app-admission-band />
+  

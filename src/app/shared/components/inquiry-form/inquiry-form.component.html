@@ -1,0 +1,101 @@
+<form
+  class="inquiry-form"
+  [formGroup]="form"
+  (ngSubmit)="previewInquiry()"
+  [attr.aria-describedby]="noteId"
+  autocomplete="off"
+>
+  <h2>{{ isAdmissions() ? 'Admission Inquiry' : 'Contact form' }}</h2>
+  <div class="notice" [id]="noteId">
+    <svg lucideInfo [size]="19"></svg>
+    <p>Preview only. Use sample details; no messages are sent or saved.</p>
+  </div>
+
+  <div class="fields">
+    @if (isAdmissions()) {
+      <label hlmLabel>
+        Student name
+        <input
+          hlmInput
+          formControlName="student"
+          required
+          placeholder="Sample student name"
+        />
+      </label>
+    }
+
+    <label hlmLabel>
+      Parent / guardian name
+      <input
+        hlmInput
+        formControlName="guardian"
+        required
+        placeholder="Sample guardian name"
+      />
+    </label>
+
+    <label hlmLabel>
+      Contact number
+      <input
+        hlmInput
+        formControlName="phone"
+        type="tel"
+        required
+        placeholder="Sample phone number"
+      />
+    </label>
+
+    <label hlmLabel>
+      Email
+      <input
+        hlmInput
+        formControlName="email"
+        type="email"
+        required
+        placeholder="name@example.com"
+      />
+    </label>
+
+    <label hlmLabel class="full-field">
+      {{ isAdmissions() ? 'Preferred grade' : 'Student grade or level' }}
+      <select formControlName="grade" required>
+        <option value="" disabled>Select a grade</option>
+        @for (grade of gradeOptions(); track grade) {
+          <option [value]="grade">{{ grade }}</option>
+        }
+        @if (!isAdmissions()) {
+          <option value="Not applicable">Not applicable</option>
+        }
+      </select>
+    </label>
+
+    <label hlmLabel class="full-field">
+      Message
+      @if (isAdmissions()) {
+        <span class="optional">(optional)</span>
+      }
+      <textarea
+        hlmTextarea
+        formControlName="message"
+        rows="4"
+        [required]="!isAdmissions()"
+        placeholder="What would you like to ask the school?"
+      ></textarea>
+    </label>
+  </div>
+
+  <button hlmBtn type="submit" class="button button-primary h-auto">
+    {{ isAdmissions() ? 'Preview inquiry' : 'Preview message' }}
+    <svg lucideArrowRight [size]="17"></svg>
+  </button>
+
+  @if (checked()) {
+    <div role="status">
+      <p class="form-success">
+        <svg lucideCheck [size]="18"></svg>
+        All required fields are complete. Nothing was sent or saved.
+      </p>
+    </div>
+  }
+</form>
+  

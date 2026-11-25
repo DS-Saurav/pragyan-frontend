@@ -1,0 +1,54 @@
+<footer class="footer">
+  <div class="container footer-main">
+    <div class="footer-brand">
+      <app-brand />
+      <p>
+        A child-centered school in Surkhet, Nepal, where curiosity and confidence grow together.
+      </p>
+    </div>
+
+    <div>
+      <h2>Explore</h2>
+      <a routerLink="/about">About Us</a>
+      <a routerLink="/academics">Academics</a>
+      <a routerLink="/activities">Student Life</a>
+      <a routerLink="/gallery">Gallery</a>
+    </div>
+
+    <div>
+      <h2>School information</h2>
+      <a routerLink="/admissions">Admissions</a>
+      <a routerLink="/facilities">Facilities</a>
+      <a routerLink="/staff">Teachers &amp; Staff</a>
+      <a routerLink="/news">News</a>
+      <a routerLink="/events">Events</a>
+      <a routerLink="/notices">Notices</a>
+    </div>
+
+    <div>
+      <h2>Find us</h2>
+      <p>{{ school().address }}</p>
+      @if (school().phone; as phone) {
+        <a [href]="'tel:' + phone">{{ phone }}</a>
+      }
+      @if (school().email; as email) {
+        <a [href]="'mailto:' + email">{{ email }}</a>
+      }
+      @for (social of school().social; track social.url) {
+        <a [href]="social.url" target="_blank" rel="noreferrer">
+          {{ social.name }} <svg lucideArrowUpRight [size]="14"></svg>
+        </a>
+      }
+      <a [href]="mapsUrl()" target="_blank" rel="noreferrer">
+        Get directions <svg lucideArrowUpRight [size]="14"></svg>
+      </a>
+      <a routerLink="/contact">Contact</a>
+    </div>
+  </div>
+
+  <div class="container footer-bottom">
+    <span>© {{ year }} {{ school().name }}.</span>
+    <span>Surkhet, Karnali Province, Nepal</span>
+  </div>
+</footer>
+  

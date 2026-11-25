@@ -1,0 +1,62 @@
+<section class="container section family-contact" aria-label="Contact and directions">
+  <div class="family-contact-details">
+    <app-eyebrow>Visit or get in touch</app-eyebrow>
+    <h2>Find us in Surkhet</h2>
+    <dl>
+      <div>
+        <dt>Phone</dt>
+        <dd>
+          @if (school().phone; as phone) {
+            <a [href]="'tel:' + phone">{{ phone }}</a>
+          } @else {
+            Not yet published
+          }
+        </dd>
+      </div>
+      <div>
+        <dt>Email</dt>
+        <dd>
+          @if (school().email; as email) {
+            <a [href]="'mailto:' + email">{{ email }}</a>
+          } @else {
+            Not yet published
+          }
+        </dd>
+      </div>
+      @if (school().whatsapp; as whatsapp) {
+        <div>
+          <dt>WhatsApp</dt>
+          <dd>
+            <a
+              [href]="'https://wa.me/' + whatsapp.replace(/[^0-9]/g, '')"
+              target="_blank"
+              rel="noreferrer"
+            >
+              {{ whatsapp }}
+            </a>
+          </dd>
+        </div>
+      }
+      <div>
+        <dt>Office hours</dt>
+        <dd>{{ school().officeHours ?? 'Please confirm with the school' }}</dd>
+      </div>
+      <div>
+        <dt>School address</dt>
+        <dd>{{ school().address }}</dd>
+      </div>
+    </dl>
+    <a class="map-card" [href]="mapsUrl()" target="_blank" rel="noreferrer">
+      <span class="tile-icon">
+        <svg lucideMapPin [size]="22"></svg>
+      </span>
+      <span>
+        <strong>Latikoili, Surkhet</strong>
+        <small>Search this address in Google Maps</small>
+      </span>
+      <svg lucideArrowUpRight [size]="19"></svg>
+    </a>
+  </div>
+  <app-inquiry-form mode="contact" />
+</section>
+  
