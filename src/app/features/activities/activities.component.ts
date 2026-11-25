@@ -23,7 +23,7 @@ export class ActivitiesComponent {
   private readonly content = inject(SchoolContentService);
   protected readonly activities = this.content.activities;
   protected readonly introImage = computed(() => ({
-    src: '/images/sports.webp',
+    src: '/assets/images/sports.webp',
     alt: this.content.photos()[2].alt,
   }));
 

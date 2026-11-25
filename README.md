@@ -1,59 +1,169 @@
-# PragyanFrontend
+# Pragyan Paathshala Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.3.0.
+A responsive, content-rich school website for **Pragyan Paathshala**, a school in Latikoili, Birendranagar-9, Surkhet, Nepal.
 
-## Development server
+This frontend presents the school's mission, academics, student activities, facilities, staff, admissions, updates, and contact information through a modern Angular single-page application.
 
-To start a local development server, run:
+## Features
+
+- Child-friendly, responsive school website
+- Lazy-loaded pages for faster navigation
+- School information and navigation managed from a central content service
+- Dedicated sections for academics, activities, facilities, staff, and admissions
+- News, event, and notice directories with detail pages
+- Admission inquiry form and school contact information
+- Reusable layout and UI components
+- Lucide icons and Tailwind CSS styling
+- 404 page for unknown routes
+
+## Tech Stack
+
+| Category | Technology |
+| --- | --- |
+| Framework | Angular 22 |
+| Language | TypeScript 6 |
+| Styling | Tailwind CSS 4, custom CSS |
+| UI | Spartan UI primitives, Angular CDK, Lucide Angular |
+| Routing | Angular Router with standalone components |
+| State and content | Angular signals, RxJS |
+| Testing | Angular unit test builder with Vitest |
+| Package manager | npm |
+
+## Pages
+
+| Route | Page |
+| --- | --- |
+| `/` | Home |
+| `/about` | About the school |
+| `/academics` | Academic levels and programs |
+| `/activities` | Student activities and student life |
+| `/facilities` | School facilities |
+| `/gallery` | Photo gallery |
+| `/news` | School news |
+| `/news/:slug` | News detail |
+| `/events` | Upcoming events |
+| `/events/:slug` | Event detail |
+| `/notices` | Notice board |
+| `/notices/:slug` | Notice detail |
+| `/admissions` | Admission information and inquiry form |
+| `/staff` | Teachers and staff |
+| `/contact` | Contact and location |
+| `*` | 404 not found page |
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js
+- npm
+- Angular CLI 22 or a compatible global `ng` command
+
+Using the npm scripts is recommended because they do not require a global Angular CLI installation.
+
+### Installation
 
 ```bash
-ng serve
+npm install
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Start the development server
 
 ```bash
-ng generate component component-name
+npm start
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Open `http://localhost:4200/`. The application reloads automatically when source files change.
+
+## Available Scripts
+
+| Command | Description |
+| --- | --- |
+| `npm start` | Start the Angular development server |
+| `npm run build` | Create a production build |
+| `npm run watch` | Build continuously in development mode |
+| `npm test` | Run unit tests |
+| `npm run ng -- <command>` | Run an Angular CLI command |
+
+For example, to generate a new component:
 
 ```bash
-ng generate --help
+npm run ng -- generate component component-name
 ```
 
 ## Building
 
-To build the project run:
+Create an optimized production build:
 
 ```bash
-ng build
+npm run build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+The generated output is written to `dist/pragyan-frontend/browser/`.
 
-## Running unit tests
+## Testing
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Run the unit test suite with:
 
 ```bash
-ng test
+npm test
 ```
 
-## Running end-to-end tests
+The test configuration uses Angular's unit test builder and Vitest.
 
-For end-to-end (e2e) testing, run:
+## Project Structure
+
+```text
+src/
+  app/
+    core/
+      models/       # Shared application and content interfaces
+      services/     # School content and shared data services
+    features/       # Route-level pages and feature components
+    layout/         # Main school page layout
+    shared/
+      components/   # Reusable school website components
+      ui/           # Reusable UI primitives
+  assets/
+    images/         # School and website images
+  public/           # Public favicon and browser assets
+  index.html
+  main.ts
+  styles.css
+```
+
+## Managing School Content
+
+Most website content is centralized in:
+
+```text
+src/app/core/services/school-content.service.ts
+```
+
+This service contains the school profile, navigation, academic levels, facilities, activities, gallery photos, update sections, and sample news, event, and notice entries.
+
+When updating route-level copy or layouts, edit the corresponding component under:
+
+```text
+src/app/features/
+```
+
+Static images used by the site are stored in `src/assets/images/`.
+
+## Deployment
+
+Build the project before deploying:
 
 ```bash
-ng e2e
+npm run build
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Deploy the contents of `dist/pragyan-frontend/browser/` to a static web host.
 
-## Additional Resources
+If the host does not support Angular SPA routing automatically, configure a fallback rule that rewrites non-static routes to `index.html`.
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Contributing
+
+1. Create a branch for your change.
+2. Keep components focused and reusable.
+3. Preserve the existing Angular standalone component structure.
+4. Run `npm test` and `npm run build` before opening a pull request.

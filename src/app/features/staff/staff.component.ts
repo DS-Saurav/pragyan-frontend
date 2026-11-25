@@ -30,7 +30,7 @@ export class StaffComponent {
       department: 'Leadership',
       grades: 'Nursery – Grade 8',
       bio: 'Guides curriculum planning, teacher mentoring, and a supportive, child-friendly school culture.',
-      image: '/images/teacher-1.jpg',
+      image: '/assets/images/teacher-1.jpg',
       alt: 'Portrait of a Nepali female school principal smiling in a sunlit classroom',
     },
     {
@@ -39,7 +39,7 @@ export class StaffComponent {
       department: 'Primary & Middle',
       grades: 'Grades 4 – 8',
       bio: 'Encourages practical inquiry, problem-solving, and hands-on experiments in everyday learning.',
-      image: '/images/teacher-2.jpg',
+      image: '/assets/images/teacher-2.jpg',
       alt: 'Portrait of a Nepali male teacher smiling in a bright classroom with bookshelves',
     },
     {
@@ -48,7 +48,7 @@ export class StaffComponent {
       department: 'Early Childhood',
       grades: 'Nursery – UKG',
       bio: 'Creates warm, play-based routines where young learners explore, ask questions, and build confidence.',
-      image: '/images/teacher-3.jpg',
+      image: '/assets/images/teacher-3.jpg',
       alt: 'Portrait of a Nepali female early childhood teacher in a bright Montessori classroom',
     },
     {
@@ -57,7 +57,7 @@ export class StaffComponent {
       department: 'Arts & Sports',
       grades: 'Grades 1 – 8',
       bio: 'Leads creative arts, teamwork, and outdoor games that help children stay active and expressive.',
-      image: '/images/teacher-4.jpg',
+      image: '/assets/images/teacher-4.jpg',
       alt: 'Portrait of a Nepali male arts and sports teacher standing in a sunny school courtyard',
     },
   ];

@@ -75,7 +75,7 @@ export class HomeComponent {
 
   protected readonly heroSlides = computed(() => [
     {
-      src: '/images/learning-together.webp',
+      src: '/assets/images/learning-together.webp',
       alt: 'Illustration of children working together on a handmade model in a Nepalese classroom',
     },
     ...this.photos().map((photo) => ({
