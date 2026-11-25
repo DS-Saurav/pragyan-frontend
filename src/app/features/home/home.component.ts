@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  DestroyRef,
   ElementRef,
   inject,
   signal,
@@ -65,14 +66,75 @@ import { UpdateMetaComponent } from '../../shared/components/update-meta/update-
 })
 export class HomeComponent {
   protected readonly content = inject(SchoolContentService);
+  private readonly destroyRef = inject(DestroyRef);
 
   protected readonly school = this.content.school;
   protected readonly levels = this.content.levels;
   protected readonly quickLinks = this.content.quickLinks;
   protected readonly photos = this.content.photos;
 
+  protected readonly heroSlides = computed(() => [
+    {
+      src: '/images/learning-together.webp',
+      alt: 'Illustration of children working together on a handmade model in a Nepalese classroom',
+    },
+    ...this.photos().map((photo) => ({
+      src: photo.src,
+      alt: photo.alt,
+    })),
+  ]);
+  protected readonly activeHero = signal(0);
+  private heroPointerStartX: number | null = null;
+  private heroPaused = false;
+
   protected readonly activeMoment = signal(0);
   private readonly momentsTrackRef = viewChild<ElementRef<HTMLDivElement>>('momentsTrack');
+
+  constructor() {
+    if (
+      typeof window !== 'undefined' &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      const timer = window.setInterval(() => {
+        if (!this.heroPaused) {
+          this.setHeroSlide(this.activeHero() + 1);
+        }
+      }, 5500);
+      this.destroyRef.onDestroy(() => window.clearInterval(timer));
+    }
+  }
+
+  protected setHeroSlide(index: number): void {
+    const total = this.heroSlides().length;
+    if (total === 0) return;
+    this.activeHero.set((index + total) % total);
+  }
+
+  protected onHeroPointerDown(event: PointerEvent): void {
+    const target = event.target as HTMLElement | null;
+    if (target?.closest('a, button')) return;
+    this.heroPointerStartX = event.clientX;
+    this.heroPaused = true;
+  }
+
+  protected onHeroPointerUp(event: PointerEvent): void {
+    this.heroPaused = false;
+    if (this.heroPointerStartX === null) return;
+    const dx = event.clientX - this.heroPointerStartX;
+    this.heroPointerStartX = null;
+    if (Math.abs(dx) > 40) {
+      this.setHeroSlide(this.activeHero() + (dx < 0 ? 1 : -1));
+    }
+  }
+
+  protected onHeroPointerCancel(): void {
+    this.heroPointerStartX = null;
+    this.heroPaused = false;
+  }
+
+  protected setHeroPaused(paused: boolean): void {
+    this.heroPaused = paused;
+  }
 
   protected readonly activePhoto = computed(() => this.photos()[this.activeMoment()]);
 

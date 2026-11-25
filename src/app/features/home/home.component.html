@@ -1,18 +1,43 @@
 <!-- Hero -->
 <section
-  class="flex flex-col min-[621px]:block relative isolate bg-[var(--navy)] text-white [&_:focus-visible]:outline-[var(--gold)]"
+  class="flex flex-col min-[621px]:block relative isolate overflow-hidden bg-[var(--navy)] text-white select-none touch-pan-y cursor-grab active:cursor-grabbing [&_:focus-visible]:outline-[var(--gold)]"
   aria-label="Welcome to Pragyan Paathshala"
+  aria-roledescription="carousel"
+  (pointerdown)="onHeroPointerDown($event)"
+  (pointerup)="onHeroPointerUp($event)"
+  (pointercancel)="onHeroPointerCancel()"
+  (mouseenter)="setHeroPaused(true)"
+  (mouseleave)="setHeroPaused(false)"
 >
-  <app-photo
-    src="/images/learning-together.webp"
-    alt="Illustration of children working together on a handmade model in a Nepalese classroom"
-    photoClass="relative order-1 z-0 aspect-[1.66] min-[621px]:aspect-auto min-[621px]:absolute min-[621px]:inset-0 min-[621px]:-z-10 [&_img]:object-[76%_59%] min-[621px]:[&_img]:object-[center_57%] after:content-[''] after:absolute after:inset-0 after:bg-gradient-to-b after:from-[var(--navy)] after:to-transparent after:to-30% min-[621px]:after:bg-[linear-gradient(90deg,var(--navy)_0%,color-mix(in_srgb,var(--navy)_90%,transparent)_27%,color-mix(in_srgb,var(--navy)_53%,transparent)_49%,transparent_77%)] [&_figcaption]:z-[1] [&_figcaption]:right-[9px] [&_figcaption]:bottom-[9px] min-[621px]:[&_figcaption]:right-[max(20px,calc((100%-1440px)/2))] min-[621px]:[&_figcaption]:bottom-5"
-    [priority]="true"
-  />
+  <div
+    class="relative order-1 z-0 aspect-[1.66] min-[621px]:aspect-auto min-[621px]:absolute min-[621px]:inset-0 min-[621px]:-z-10 overflow-hidden"
+  >
+    <div
+      class="flex h-full w-full transition-transform duration-500 ease-out"
+      [style.transform]="'translateX(-' + activeHero() * 100 + '%)'"
+    >
+      @for (slide of heroSlides(); track slide.src; let first = $first) {
+        <img
+          [src]="slide.src"
+          [alt]="slide.alt"
+          [attr.loading]="first ? 'eager' : 'lazy'"
+          [attr.fetchpriority]="first ? 'high' : 'auto'"
+          draggable="false"
+          class="h-full w-full shrink-0 object-cover object-[76%_59%] min-[621px]:object-[center_57%]"
+        />
+      }
+    </div>
+    <span
+      class="pointer-events-none absolute right-[9px] bottom-[9px] min-[621px]:right-[max(20px,calc((100%-1440px)/2))] min-[621px]:bottom-5 z-[1] px-2 py-0.5 rounded-[5px] text-white bg-[#111c2acc] text-[9px] leading-[1.55] tracking-[0.01em]"
+    >
+      Illustrative image
+    </span>
+  </div>
+
   <div
     class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] min-h-0 min-[621px]:min-h-[clamp(500px,41vw,655px)] flex items-center py-8 pb-[15px] min-[621px]:py-[clamp(45px,5vw,86px)]"
   >
-    <div class="max-w-[650px]">
+    <div class="max-w-[650px] min-[621px]:drop-shadow-[0_2px_14px_rgba(0,0,0,0.6)]">
       <p
         class="inline-flex items-center gap-2 border border-[color-mix(in_srgb,var(--gold)_53%,transparent)] rounded-full bg-[color-mix(in_srgb,var(--navy)_76%,transparent)] px-[11px] py-[5px] text-[var(--gold-light)] text-[9px] min-[621px]:text-[11px] font-bold tracking-[0.075em] min-[621px]:tracking-[0.11em] uppercase"
       >
@@ -44,6 +69,43 @@
         {{ school().established }}
       </p>
     </div>
+  </div>
+
+  <!-- Hero swipe controls -->
+  <button
+    type="button"
+    class="hidden min-[621px]:inline-grid place-items-center absolute top-1/2 left-4 -translate-y-1/2 z-10 w-10 h-10 rounded-full border border-white/25 bg-[color-mix(in_srgb,var(--navy)_65%,transparent)] text-white backdrop-blur-md transition hover:bg-[var(--gold)] hover:text-[var(--navy)] hover:border-[var(--gold)]"
+    aria-label="Previous hero image"
+    (click)="setHeroSlide(activeHero() - 1)"
+  >
+    <svg lucideChevronLeft [size]="20"></svg>
+  </button>
+  <button
+    type="button"
+    class="hidden min-[621px]:inline-grid place-items-center absolute top-1/2 right-4 -translate-y-1/2 z-10 w-10 h-10 rounded-full border border-white/25 bg-[color-mix(in_srgb,var(--navy)_65%,transparent)] text-white backdrop-blur-md transition hover:bg-[var(--gold)] hover:text-[var(--navy)] hover:border-[var(--gold)]"
+    aria-label="Next hero image"
+    (click)="setHeroSlide(activeHero() + 1)"
+  >
+    <svg lucideChevronRight [size]="20"></svg>
+  </button>
+
+  <div
+    class="order-2 flex items-center justify-center gap-1.5 py-2.5 min-[621px]:py-0 min-[621px]:absolute min-[621px]:bottom-5 min-[621px]:left-1/2 min-[621px]:-translate-x-1/2 z-10"
+    role="group"
+    aria-label="Choose hero image"
+  >
+    @for (slide of heroSlides(); track slide.src; let idx = $index) {
+      <button
+        type="button"
+        [attr.aria-label]="'Show hero image ' + (idx + 1)"
+        [attr.aria-current]="activeHero() === idx ? 'true' : null"
+        (click)="setHeroSlide(idx)"
+        [class]="
+          'h-2 rounded-full transition-all duration-200 ' +
+          (activeHero() === idx ? 'w-6 bg-[var(--gold)]' : 'w-2 bg-white/50 hover:bg-white/80')
+        "
+      ></button>
+    }
   </div>
 </section>
 

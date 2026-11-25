@@ -4,7 +4,10 @@
   description="These illustrative images show what learning through play, creativity and collaboration can look like. They do not depict Pragyan Paathshala or its students."
 />
 
-<section class="container section pt-10" aria-label="Browse photo gallery">
+<section
+  class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] pt-10 pb-16"
+  aria-label="Browse photo gallery"
+>
   <app-filters
     [categories]="categories()"
     label="Filter photos by category"
@@ -12,7 +15,7 @@
     (categoryChange)="onCategoryChange($event)"
   />
 
-  <div class="grid grid-cols-2 gap-2 sm:gap-4 lg:grid-cols-3">
+  <div class="grid grid-cols-2 gap-2 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
     @for (item of items(); track item.src; let idx = $index) {
       <article
         class="group relative overflow-hidden rounded-2xl bg-slate-200 text-left transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl focus-within:-translate-y-0.5 focus-within:shadow-xl"
@@ -61,7 +64,7 @@
         <img
           [src]="photo.src"
           [alt]="photo.alt"
-          class="block h-auto w-auto max-h-[80dvh] max-w-[80vw] object-contain"
+          class="block h-auto w-[80vw] max-h-[80dvh] max-w-[80vw] object-contain sm:h-[80dvh] sm:w-auto"
         />
         <button
           type="button"

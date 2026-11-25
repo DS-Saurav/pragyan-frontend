@@ -7,7 +7,7 @@
 
 <div class="text-[#eff7ff] bg-[var(--navy)]" id="top-bar" #topBar>
   <div
-    class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] flex justify-between items-center min-h-[31px] min-[711px]:min-h-9 gap-3 text-[10px] min-[711px]:text-[11.5px] font-medium tracking-[0.015em]"
+    class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] flex justify-between items-center min-h-7 gap-3 text-[10px] min-[711px]:text-[11.5px] font-medium tracking-[0.015em]"
   >
     <div class="flex items-center gap-[7px] min-[711px]:gap-5">
       <a
@@ -71,7 +71,7 @@
   (keydown.escape)="onEscape()"
 >
   <div
-    class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] flex items-center justify-between min-h-[52px] gap-4 min-[1191px]:gap-[22px]"
+    class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] flex items-center justify-between min-h-[70px] gap-4 min-[1191px]:gap-[22px]"
   >
     <app-brand (click)="onLogoClick()" />
 
@@ -125,9 +125,14 @@
 
     <a
       routerLink="/admissions"
-      class="hidden min-[961px]:inline-flex w-fit justify-center items-center gap-[11px] px-[13px] min-h-9 border border-transparent rounded-[9px] font-bold text-[13px] leading-[1.2] whitespace-nowrap text-white bg-[var(--blue)] shadow-[0_5px_12px_#1c629e26] transition-all duration-180 hover:-translate-y-0.5 hover:bg-[var(--blue-deep)] hover:shadow-[0_7px_16px_#124c7b3b]"
+      class="group hidden min-[961px]:inline-flex w-fit justify-center items-center gap-1.5 px-4 py-2 rounded-full font-semibold text-xs leading-none whitespace-nowrap text-white bg-gradient-to-r from-[var(--blue)] to-[var(--blue-deep)] shadow-[0_4px_14px_rgba(28,98,158,0.28)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_6px_18px_rgba(18,76,123,0.38)] active:scale-[0.98]"
     >
-      Admission Inquiry <svg lucideArrowUpRight [size]="16"></svg>
+      Admission Inquiry
+      <svg
+        class="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+        lucideArrowUpRight
+        [size]="15"
+      ></svg>
     </a>
 
     <button

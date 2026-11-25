@@ -52,7 +52,6 @@ export class SchoolContentService {
     { to: '/activities', title: 'Student Life' },
     { to: '/gallery', title: 'Gallery' },
     { to: '/news', title: 'Events & News' },
-    { to: '/admissions', title: 'Admissions' },
     { to: '/contact', title: 'Contact' },
   ];
 

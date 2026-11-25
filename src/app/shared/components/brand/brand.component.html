@@ -4,18 +4,18 @@
   [attr.aria-label]="school().name + ' home'"
 >
   <img
-    class="block shrink-0 w-[78px] sm:w-[82px] h-auto in-[.site-footer]:w-[94px] in-[.site-footer]:p-[7px] in-[.site-footer]:rounded-[7px] in-[.site-footer]:bg-white"
+    class="block shrink-0 w-[104px] h-[50px] object-cover object-center in-[.site-footer]:w-[94px] in-[.site-footer]:h-auto in-[.site-footer]:object-contain in-[.site-footer]:p-[7px] in-[.site-footer]:rounded-[7px] in-[.site-footer]:bg-white"
     src="/images/logo-pragaya.png"
     width="384"
     height="166"
     alt=""
   />
-  <span>
-    <strong class="block font-[var(--heading)] font-bold text-base tracking-[-0.04em]">
+  <span class="flex flex-col justify-center gap-1">
+    <strong class="block font-[var(--heading)] font-bold text-base leading-none tracking-[-0.04em]">
       {{ school().name }}
     </strong>
     <small
-      class="block text-[var(--muted-ink)] in-[.site-footer]:text-[#ccd9ef] text-[8px] font-bold tracking-[0.06em] uppercase mt-0.5"
+      class="block text-[var(--blue-deep)] in-[.site-footer]:text-[#ccd9ef] text-[8.5px] leading-none font-bold tracking-[0.045em] uppercase"
     >
       International School Award 2020-23
     </small>

@@ -1,31 +1,60 @@
 <app-page-intro
   label="Teachers & Staff"
   title="Teachers & Staff"
-  description="Meet the people who support children’s learning and wellbeing. Staff profiles will appear here once the school provides verified information."
+  description="Meet the people who support children’s learning, creativity, and wellbeing."
 />
 
 <section
-  class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] py-[clamp(40px,4.5vw,68px)]"
+  class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] pt-10 pb-16"
 >
-  <div
-    class="grid justify-items-start content-start gap-[13px] p-6 border border-[var(--line)] rounded-2xl bg-[var(--bg)]"
-  >
-    <span
-      class="grid place-items-center flex-none w-10 h-10 rounded-[9px] bg-[var(--blue-light)] text-[var(--blue-deep)]"
-    >
-      <svg lucideUsersRound [size]="26"></svg>
-    </span>
-    <h2 class="text-[clamp(1.38rem,2.35vw,1.9rem)]">Staff profiles are not yet available</h2>
-    <p class="text-[var(--muted-ink)]">
-      No individual names, roles or photographs have been published.
+  <div class="mb-7 flex flex-col min-[711px]:flex-row justify-between gap-4 min-[711px]:items-end">
+    <div>
+      <app-eyebrow>Our educators</app-eyebrow>
+      <h2 class="mt-3">Meet the team</h2>
+    </div>
+    <p class="w-[min(100%,420px)] text-[13px] text-[var(--muted-ink)]">
+      Illustrative placeholder profiles showing how teachers and staff can be presented once
+      verified details are provided by the school.
     </p>
-    <a
-      class="group inline-flex items-center w-fit gap-2 text-[var(--blue-deep)] text-[13px] font-bold hover:underline underline-offset-4"
-      routerLink="/about"
-    >
-      Read about our approach
-      <svg class="shrink-0 transition-transform duration-180 group-hover:translate-x-[3px]" lucideArrowRight [size]="17"></svg>
-    </a>
+  </div>
+
+  <app-filters
+    [categories]="departments()"
+    label="Filter teachers and staff by department"
+    [active]="department()"
+    (categoryChange)="department.set($event)"
+  />
+
+  <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    @for (member of visibleStaff(); track member.name) {
+      <article
+        class="group overflow-hidden rounded-2xl border border-[var(--line)] bg-white transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow)]"
+      >
+        <div class="relative overflow-hidden bg-[#e3eaf4]">
+          <img
+            [src]="member.image"
+            [alt]="member.alt"
+            loading="lazy"
+            class="aspect-[4/3] w-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
+          />
+          <span
+            class="absolute right-3 bottom-3 rounded-[5px] bg-[#111c2acc] px-2 py-0.5 text-[9px] leading-[1.55] tracking-[0.01em] text-white"
+          >
+            Illustrative image
+          </span>
+        </div>
+        <div class="p-5">
+          <span
+            class="inline-block rounded-full bg-[var(--blue-light)] px-2.5 py-0.5 text-[11px] font-semibold text-[var(--blue-deep)]"
+          >
+            {{ member.department }}
+          </span>
+          <h3 class="mt-2.5 text-lg font-bold text-[var(--ink)]">{{ member.name }}</h3>
+          <p class="text-[13px] font-semibold text-[var(--blue-deep)]">{{ member.role }}</p>
+          <p class="mt-0.5 text-xs font-medium text-[var(--muted-ink)]">{{ member.grades }}</p>
+          <p class="mt-2.5 text-[13px] leading-relaxed text-[#53627a]">{{ member.bio }}</p>
+        </div>
+      </article>
+    }
   </div>
 </section>
-  
