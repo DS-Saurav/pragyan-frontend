@@ -1,74 +1,118 @@
 <form
-  class="grid justify-items-start gap-4 p-[clamp(17px,3vw,29px)] border border-[var(--line)] rounded-[17px] bg-white shadow-[var(--shadow)]"
+  class="grid gap-5 p-[clamp(20px,3vw,32px)] border border-[var(--line)] rounded-2xl bg-white shadow-[var(--shadow)]"
   [formGroup]="form"
   (ngSubmit)="previewInquiry()"
   [attr.aria-describedby]="noteId"
   autocomplete="off"
+  novalidate
 >
-  <h2 class="text-[clamp(1.38rem,2.35vw,1.9rem)]">
-    {{ isAdmissions() ? 'Admission Inquiry' : 'Contact form' }}
-  </h2>
+  <div>
+    <h2 class="text-[clamp(1.35rem,2.2vw,1.8rem)] font-bold text-[var(--navy)]">
+      {{ isAdmissions() ? 'Admission Inquiry' : 'Send Us a Message' }}
+    </h2>
+    <p class="mt-1 text-sm text-[var(--muted-ink)]">
+      {{
+        isAdmissions()
+          ? 'Share basic details about your child to preview an admission inquiry.'
+          : 'Have a question about classes, admissions or school life? Write to our office.'
+      }}
+    </p>
+  </div>
+
   <div
-    class="flex items-start gap-2 w-full px-[13px] py-[11px] rounded-lg text-[var(--blue-deep)] bg-[var(--blue-light)] text-[13px]"
+    class="flex items-start gap-2.5 w-full px-3.5 py-2.5 rounded-xl border border-[var(--blue)]/15 text-[var(--blue-deep)] bg-[var(--blue-light)] text-[13px] leading-snug"
     [id]="noteId"
   >
-    <svg class="shrink-0 mt-px" lucideInfo [size]="19"></svg>
+    <svg class="shrink-0 mt-0.5 text-[var(--blue)]" lucideInfo [size]="17"></svg>
     <p>Preview only. Use sample details; no messages are sent or saved.</p>
   </div>
 
-  <div class="grid grid-cols-1 min-[461px]:grid-cols-2 w-full gap-[13px]">
+  <div class="grid grid-cols-1 min-[520px]:grid-cols-2 w-full gap-4">
     @if (isAdmissions()) {
-      <label hlmLabel class="text-[var(--ink)] font-bold text-[13px]">
-        Student name
+      <div class="flex flex-col gap-1.5">
+        <label hlmLabel [for]="noteId + '-student'" class="text-[var(--ink)] font-semibold text-[13px]">
+          Student name <span class="text-red-600">*</span>
+        </label>
         <input
           hlmInput
-          class="block w-full min-h-[43px] mt-[5px] px-2.5 py-2 text-[var(--ink)] border border-[#cdd8e7] rounded-[7px] bg-white font-normal placeholder:text-[var(--muted-ink)] placeholder:font-normal"
+          [id]="noteId + '-student'"
+          class="w-full min-h-[44px] px-3 py-2 text-sm text-[var(--ink)] border border-[#cdd8e7] rounded-lg bg-white transition placeholder:text-[var(--muted-ink)]/80 focus:outline-none focus:border-[var(--blue)] focus:ring-2 focus:ring-[var(--blue)]/15"
+          [class.border-red-500]="isInvalid('student')"
           formControlName="student"
           required
           placeholder="Sample student name"
         />
-      </label>
+        @if (isInvalid('student')) {
+          <p class="text-xs text-red-600">Please enter the student name.</p>
+        }
+      </div>
     }
 
-    <label hlmLabel class="text-[var(--ink)] font-bold text-[13px]">
-      Parent / guardian name
+    <div class="flex flex-col gap-1.5">
+      <label hlmLabel [for]="noteId + '-guardian'" class="text-[var(--ink)] font-semibold text-[13px]">
+        Parent / guardian name <span class="text-red-600">*</span>
+      </label>
       <input
         hlmInput
-        class="block w-full min-h-[43px] mt-[5px] px-2.5 py-2 text-[var(--ink)] border border-[#cdd8e7] rounded-[7px] bg-white font-normal placeholder:text-[var(--muted-ink)] placeholder:font-normal"
+        [id]="noteId + '-guardian'"
+        class="w-full min-h-[44px] px-3 py-2 text-sm text-[var(--ink)] border border-[#cdd8e7] rounded-lg bg-white transition placeholder:text-[var(--muted-ink)]/80 focus:outline-none focus:border-[var(--blue)] focus:ring-2 focus:ring-[var(--blue)]/15"
+        [class.border-red-500]="isInvalid('guardian')"
         formControlName="guardian"
         required
         placeholder="Sample guardian name"
       />
-    </label>
+      @if (isInvalid('guardian')) {
+        <p class="text-xs text-red-600">Please enter a parent or guardian name.</p>
+      }
+    </div>
 
-    <label hlmLabel class="text-[var(--ink)] font-bold text-[13px]">
-      Contact number
+    <div class="flex flex-col gap-1.5">
+      <label hlmLabel [for]="noteId + '-phone'" class="text-[var(--ink)] font-semibold text-[13px]">
+        Contact number <span class="text-red-600">*</span>
+      </label>
       <input
         hlmInput
-        class="block w-full min-h-[43px] mt-[5px] px-2.5 py-2 text-[var(--ink)] border border-[#cdd8e7] rounded-[7px] bg-white font-normal placeholder:text-[var(--muted-ink)] placeholder:font-normal"
+        [id]="noteId + '-phone'"
+        class="w-full min-h-[44px] px-3 py-2 text-sm text-[var(--ink)] border border-[#cdd8e7] rounded-lg bg-white transition placeholder:text-[var(--muted-ink)]/80 focus:outline-none focus:border-[var(--blue)] focus:ring-2 focus:ring-[var(--blue)]/15"
+        [class.border-red-500]="isInvalid('phone')"
         formControlName="phone"
         type="tel"
         required
-        placeholder="Sample phone number"
+        placeholder="e.g. 9800000000"
       />
-    </label>
+      @if (isInvalid('phone')) {
+        <p class="text-xs text-red-600">Please enter a contact number.</p>
+      }
+    </div>
 
-    <label hlmLabel class="text-[var(--ink)] font-bold text-[13px]">
-      Email
+    <div class="flex flex-col gap-1.5">
+      <label hlmLabel [for]="noteId + '-email'" class="text-[var(--ink)] font-semibold text-[13px]">
+        Email address <span class="text-red-600">*</span>
+      </label>
       <input
         hlmInput
-        class="block w-full min-h-[43px] mt-[5px] px-2.5 py-2 text-[var(--ink)] border border-[#cdd8e7] rounded-[7px] bg-white font-normal placeholder:text-[var(--muted-ink)] placeholder:font-normal"
+        [id]="noteId + '-email'"
+        class="w-full min-h-[44px] px-3 py-2 text-sm text-[var(--ink)] border border-[#cdd8e7] rounded-lg bg-white transition placeholder:text-[var(--muted-ink)]/80 focus:outline-none focus:border-[var(--blue)] focus:ring-2 focus:ring-[var(--blue)]/15"
+        [class.border-red-500]="isInvalid('email')"
         formControlName="email"
         type="email"
         required
         placeholder="name@example.com"
       />
-    </label>
+      @if (isInvalid('email')) {
+        <p class="text-xs text-red-600">Please enter a valid email address.</p>
+      }
+    </div>
 
-    <label hlmLabel class="col-span-full text-[var(--ink)] font-bold text-[13px]">
-      {{ isAdmissions() ? 'Preferred grade' : 'Student grade or level' }}
+    <div class="flex flex-col gap-1.5" [class.min-[520px]:col-span-2]="isAdmissions()">
+      <label hlmLabel [for]="noteId + '-grade'" class="text-[var(--ink)] font-semibold text-[13px]">
+        {{ isAdmissions() ? 'Preferred grade' : 'Student grade or level' }}
+        <span class="text-red-600">*</span>
+      </label>
       <select
-        class="block w-full min-h-[43px] mt-[5px] px-2.5 py-2 text-[var(--ink)] border border-[#cdd8e7] rounded-[7px] bg-white font-normal"
+        [id]="noteId + '-grade'"
+        class="w-full min-h-[44px] px-3 py-2 text-sm text-[var(--ink)] border border-[#cdd8e7] rounded-lg bg-white transition focus:outline-none focus:border-[var(--blue)] focus:ring-2 focus:ring-[var(--blue)]/15"
+        [class.border-red-500]="isInvalid('grade')"
         formControlName="grade"
         required
       >
@@ -80,40 +124,54 @@
           <option value="Not applicable">Not applicable</option>
         }
       </select>
-    </label>
-
-    <label hlmLabel class="col-span-full text-[var(--ink)] font-bold text-[13px]">
-      Message
-      @if (isAdmissions()) {
-        <span class="text-[var(--muted-ink)] font-normal">(optional)</span>
+      @if (isInvalid('grade')) {
+        <p class="text-xs text-red-600">Please select a grade or level.</p>
       }
+    </div>
+
+    <div class="flex flex-col gap-1.5 col-span-full">
+      <label hlmLabel [for]="noteId + '-message'" class="text-[var(--ink)] font-semibold text-[13px]">
+        Message
+        @if (isAdmissions()) {
+          <span class="text-[var(--muted-ink)] font-normal">(optional)</span>
+        } @else {
+          <span class="text-red-600">*</span>
+        }
+      </label>
       <textarea
         hlmTextarea
-        class="block w-full min-h-[43px] mt-[5px] px-2.5 py-2 text-[var(--ink)] border border-[#cdd8e7] rounded-[7px] bg-white font-normal resize-y placeholder:text-[var(--muted-ink)] placeholder:font-normal"
+        [id]="noteId + '-message'"
+        class="w-full min-h-[112px] px-3 py-2.5 text-sm text-[var(--ink)] border border-[#cdd8e7] rounded-lg bg-white resize-y transition placeholder:text-[var(--muted-ink)]/80 focus:outline-none focus:border-[var(--blue)] focus:ring-2 focus:ring-[var(--blue)]/15"
+        [class.border-red-500]="isInvalid('message')"
         formControlName="message"
         rows="4"
         [required]="!isAdmissions()"
         placeholder="What would you like to ask the school?"
       ></textarea>
-    </label>
+      @if (isInvalid('message')) {
+        <p class="text-xs text-red-600">Please write your message.</p>
+      }
+    </div>
   </div>
 
-  <button
-    hlmBtn
-    type="submit"
-    class="inline-flex items-center justify-center gap-2 min-h-[45px] px-[18px] border border-transparent rounded-[9px] font-bold text-[13px] leading-[1.2] whitespace-nowrap text-white bg-[var(--blue)] shadow-[0_5px_12px_#1c629e26] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[var(--blue-deep)] hover:shadow-[0_7px_16px_#124c7b3b] h-auto"
-  >
-    {{ isAdmissions() ? 'Preview inquiry' : 'Preview message' }}
-    <svg lucideArrowRight [size]="17"></svg>
-  </button>
+  <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+    <button
+      hlmBtn
+      type="submit"
+      class="inline-flex items-center justify-center gap-2 min-h-[45px] px-5 border border-transparent rounded-lg font-bold text-[13px] leading-[1.2] whitespace-nowrap text-white bg-[var(--blue)] shadow-[0_5px_12px_#1c629e26] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[var(--blue-deep)] hover:shadow-[0_7px_16px_#124c7b3b] h-auto"
+    >
+      {{ isAdmissions() ? 'Preview inquiry' : 'Preview message' }}
+      <svg lucideArrowRight [size]="17"></svg>
+    </button>
 
-  @if (checked()) {
-    <div role="status">
-      <p class="flex items-center gap-[7px] text-[#16763b] font-semibold text-[13px]">
-        <svg lucideCheck [size]="18"></svg>
-        All required fields are complete. Nothing was sent or saved.
-      </p>
-    </div>
-  }
+    @if (checked()) {
+      <div
+        role="status"
+        class="flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 px-3.5 py-2 text-[#16763b] font-semibold text-[13px]"
+      >
+        <svg lucideCheck [size]="17" class="shrink-0"></svg>
+        <span>All required fields are complete. Nothing was sent or saved.</span>
+      </div>
+    }
+  </div>
 </form>
-  

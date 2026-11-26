@@ -5,88 +5,47 @@
   Skip to content
 </a>
 
-<div class="text-[#eff7ff] bg-[var(--navy)]" id="top-bar" #topBar>
-  <div
-    class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] flex justify-between items-center min-h-7 gap-3 text-[10px] min-[711px]:text-[11.5px] font-medium tracking-[0.015em]"
-  >
-    <div class="flex items-center gap-[7px] min-[711px]:gap-5">
-      <a
-        class="inline-flex items-center gap-2 hover:text-white hover:underline"
-        [href]="mapsUrl()"
-        target="_blank"
-        rel="noreferrer"
-      >
-        <svg class="text-[var(--gold)]" lucideMapPin [size]="14"></svg> Birendranagar, Surkhet, Nepal
-      </a>
-      @if (school().phone; as phone) {
-        <a
-          class="inline-flex items-center gap-2 hover:text-white hover:underline"
-          [href]="'tel:' + phone"
-        >
-          <svg class="text-[var(--gold)]" lucidePhone [size]="14"></svg> {{ phone }}
-        </a>
-      }
-      @if (school().email; as email) {
-        <a
-          class="inline-flex items-center gap-2 hover:text-white hover:underline"
-          [href]="'mailto:' + email"
-        >
-          <svg class="text-[var(--gold)]" lucideMail [size]="14"></svg> {{ email }}
-        </a>
-      } @else {
-        <a
-          class="hidden min-[621px]:inline-flex items-center gap-2 hover:text-white hover:underline"
-          routerLink="/contact"
-        >
-          <svg class="text-[var(--gold)]" lucideMail [size]="14"></svg> Contact the school
-        </a>
-      }
-    </div>
-    <div class="flex items-center gap-[18px] flex-none">
-      <a
-        routerLink="/notices"
-        class="inline-flex items-center gap-2 flex-none hover:text-white hover:underline"
-      >
-        <span class="w-1.5 h-1.5 rounded-full bg-[var(--gold)]" aria-hidden="true"></span>
-        School notices
-        <svg class="text-[var(--gold)] opacity-85" lucideArrowUpRight [size]="13"></svg>
-      </a>
-      @if (showAdminLogin()) {
-        <a
-          routerLink="/admin"
-          class="inline-flex items-center gap-2 pl-[18px] border-l border-white/15 text-[#dbeafe] hover:text-white hover:underline"
-        >
-          <svg class="text-[var(--gold)]" lucideLock [size]="12"></svg> Admin Login
-        </a>
-      }
-    </div>
-  </div>
-</div>
+<div #topBar class="h-0 w-full" aria-hidden="true"></div>
 
 <header
+  #siteHeader
   [class]="
-    'sticky z-10 top-0 bg-white border-b border-[var(--line)] transition-shadow duration-220 ' +
-    (isScrolled() ? 'shadow-[0_6px_26px_#172d5411]' : '')
+    'sticky z-40 top-0 bg-white/90 backdrop-blur-md border-b border-[var(--line)] transition-[box-shadow,background-color] duration-200 ' +
+    (isScrolled() ? 'shadow-[0_10px_30px_-10px_rgba(13,27,42,0.12)]' : '')
   "
   (keydown.escape)="onEscape()"
 >
   <div
-    class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] flex items-center justify-between min-h-[70px] gap-4 min-[1191px]:gap-[22px]"
+    [class]="
+      'mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] flex items-center justify-between gap-4 min-[1191px]:gap-6 transition-[min-height] duration-200 ' +
+      (isScrolled() ? 'min-h-[62px]' : 'min-h-[72px]')
+    "
   >
-    <app-brand (click)="onLogoClick()" />
+    <app-brand data-header-brand (click)="onLogoClick()" />
 
     <nav
+      #desktopNav
       aria-label="Main navigation"
-      class="hidden min-[711px]:flex items-stretch gap-[clamp(13px,1.5vw,22px)] self-stretch"
+      class="relative hidden min-[711px]:flex items-stretch gap-[clamp(4px,0.7vw,10px)] self-stretch"
+      (mouseleave)="onNavLeave()"
     >
+      <span
+        #navPill
+        class="pointer-events-none absolute top-1/2 -translate-y-1/2 left-0 h-9 rounded-full bg-[var(--blue-light)]/75 opacity-0 -z-10"
+        aria-hidden="true"
+      ></span>
       @for (item of navigation; track item.to) {
         @if (item.children?.length) {
-          <div class="group/dropdown relative flex items-stretch">
+          <div
+            data-header-nav
+            class="group/dropdown relative flex items-stretch"
+            (mouseenter)="onNavHover($event)"
+          >
             <a
               [routerLink]="item.to"
               routerLinkActive="active"
               [class.active]="isChildActive(item.children)"
-              class="relative flex items-center gap-[5px] whitespace-nowrap text-[#46536a] text-[13px] font-semibold transition-colors duration-180 hover:text-[var(--blue-deep)] [&.active]:text-[var(--blue-deep)] [&.active]:after:content-[''] [&.active]:after:absolute [&.active]:after:h-[3px] [&.active]:after:rounded-t-[5px] [&.active]:after:bg-[var(--gold)] [&.active]:after:-bottom-px [&.active]:after:inset-x-0"
+              class="relative flex items-center gap-1 px-2.5 whitespace-nowrap text-[#3b4860] text-[13.5px] font-semibold transition-colors duration-180 hover:text-[var(--blue-deep)] [&.active]:text-[var(--blue-deep)] [&.active]:after:content-[''] [&.active]:after:absolute [&.active]:after:h-[2.5px] [&.active]:after:rounded-full [&.active]:after:bg-[var(--gold)] [&.active]:after:-bottom-px [&.active]:after:inset-x-2"
             >
               {{ item.title }}
               <svg
@@ -97,15 +56,16 @@
             </a>
             <div
               [class]="
-                'absolute top-[calc(100%+1px)] -left-2.5 border border-[var(--line)] bg-white shadow-[var(--shadow)] opacity-0 invisible translate-y-1.5 transition-all duration-160 z-20 group-hover/dropdown:opacity-100 group-hover/dropdown:visible group-hover/dropdown:translate-y-0 group-focus-within/dropdown:opacity-100 group-focus-within/dropdown:visible group-focus-within/dropdown:translate-y-0 ' +
+                'absolute top-[calc(100%+1px)] -left-2.5 origin-top-left border border-[var(--line)] bg-white shadow-[0_20px_44px_-12px_rgba(13,27,42,0.18)] opacity-0 invisible scale-95 translate-y-2 transition-all duration-200 ease-out z-30 group-hover/dropdown:opacity-100 group-hover/dropdown:visible group-hover/dropdown:scale-100 group-hover/dropdown:translate-y-0 group-focus-within/dropdown:opacity-100 group-focus-within/dropdown:visible group-focus-within/dropdown:scale-100 group-focus-within/dropdown:translate-y-0 ' +
                 (hasRichChildren(item.children)
                   ? 'w-[420px] rounded-2xl p-2.5'
-                  : 'min-w-[190px] rounded-[10px] p-1.5')
+                  : 'min-w-[190px] rounded-xl p-1.5')
               "
             >
               @for (child of item.children; track child.to) {
                 @if (hasRichChildren(item.children)) {
                   <a
+                    data-dropdown-item
                     class="group/sub flex items-start gap-3 rounded-xl px-3 py-2.5 text-[#46536a] transition-colors duration-180 hover:bg-[var(--blue-light)]/75 hover:text-[var(--blue-deep)] [&.active]:bg-[var(--blue-light)] [&.active]:text-[var(--blue-deep)]"
                     [routerLink]="child.to"
                     routerLinkActive="active"
@@ -113,12 +73,12 @@
                   >
                     @if (child.icon) {
                       <span
-                        class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[var(--blue-light)] text-[var(--blue)] transition-colors group-hover/sub:bg-[var(--blue)] group-hover/sub:text-white"
+                        class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[var(--blue-light)] text-[var(--blue)] transition-all duration-200 group-hover/sub:scale-105 group-hover/sub:bg-[var(--blue)] group-hover/sub:text-white"
                       >
                         <ng-container *ngComponentOutlet="child.icon; inputs: { size: 16 }" />
                       </span>
                     }
-                    <span class="min-w-0">
+                    <span class="min-w-0 transition-transform duration-150 group-hover/sub:translate-x-0.5">
                       <span class="block text-[13px] font-bold text-[var(--navy)]">
                         {{ child.title }}
                       </span>
@@ -131,7 +91,8 @@
                   </a>
                 } @else {
                   <a
-                    class="relative flex items-center px-3 py-[9px] rounded-[7px] text-[#46536a] text-[13px] font-semibold whitespace-nowrap transition-colors duration-180 hover:text-[var(--blue-deep)] hover:bg-[var(--blue-light)] [&.active]:text-[var(--blue-deep)] [&.active]:bg-[var(--blue-light)]"
+                    data-dropdown-item
+                    class="relative flex items-center px-3 py-2 rounded-lg text-[#46536a] text-[13px] font-semibold whitespace-nowrap transition-all duration-180 hover:translate-x-0.5 hover:text-[var(--blue-deep)] hover:bg-[var(--blue-light)] [&.active]:text-[var(--blue-deep)] [&.active]:bg-[var(--blue-light)]"
                     [routerLink]="child.to"
                     routerLinkActive="active"
                   >
@@ -143,11 +104,13 @@
           </div>
         } @else {
           <a
-            class="relative flex items-center whitespace-nowrap text-[#46536a] text-[13px] font-semibold transition-colors duration-180 hover:text-[var(--blue-deep)] [&.active]:text-[var(--blue-deep)] [&.active]:after:content-[''] [&.active]:after:absolute [&.active]:after:h-[3px] [&.active]:after:rounded-t-[5px] [&.active]:after:bg-[var(--gold)] [&.active]:after:-bottom-px [&.active]:after:inset-x-0"
+            data-header-nav
+            class="relative flex items-center px-2.5 whitespace-nowrap text-[#3b4860] text-[13.5px] font-semibold transition-colors duration-180 hover:text-[var(--blue-deep)] [&.active]:text-[var(--blue-deep)] [&.active]:after:content-[''] [&.active]:after:absolute [&.active]:after:h-[2.5px] [&.active]:after:rounded-full [&.active]:after:bg-[var(--gold)] [&.active]:after:-bottom-px [&.active]:after:inset-x-2"
             [routerLink]="item.to"
             routerLinkActive="active"
             [routerLinkActiveOptions]="{ exact: item.to === '/' }"
-            [class.active]="item.to === '/news' && isUpdatesPage()"
+            [class.active]="item.to === '/events' && isUpdatesPage()"
+            (mouseenter)="onNavHover($event)"
           >
             {{ item.title }}
           </a>
@@ -155,17 +118,23 @@
       }
     </nav>
 
-    <a
-      routerLink="/admissions"
-      class="group hidden min-[961px]:inline-flex w-fit justify-center items-center gap-1.5 px-4 py-2 rounded-full font-semibold text-xs leading-none whitespace-nowrap text-white bg-gradient-to-r from-[var(--blue)] to-[var(--blue-deep)] shadow-[0_4px_14px_rgba(28,98,158,0.28)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_6px_18px_rgba(18,76,123,0.38)] active:scale-[0.98]"
-    >
-      Admission Inquiry
-      <svg
-        class="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-        lucideArrowUpRight
-        [size]="15"
-      ></svg>
-    </a>
+    <div data-header-cta class="hidden min-[961px]:flex items-center gap-2.5 shrink-0">
+      @if (showAdminLogin()) {
+        <a
+          routerLink="/admin"
+          class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full border-[1.5px] border-[var(--blue)]/45 bg-[var(--blue-light)]/35 text-xs font-semibold text-[var(--blue-deep)] hover:border-[var(--blue)] hover:bg-[var(--blue-light)] transition-colors"
+        >
+          <svg class="text-[var(--blue)]" lucideLogIn [size]="14"></svg> Login
+        </a>
+      }
+      <a
+        routerLink="/admissions"
+        class="group inline-flex w-fit justify-center items-center gap-2 px-4 py-2.5 rounded-full font-semibold text-[13px] leading-none whitespace-nowrap text-white bg-gradient-to-r from-[var(--blue)] to-[var(--blue-deep)] shadow-[0_4px_14px_rgba(28,98,158,0.25)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_6px_18px_rgba(18,76,123,0.35)] active:scale-[0.98]"
+      >
+        <svg class="shrink-0" lucideGraduationCap [size]="16"></svg>
+        Admission Inquiry
+      </a>
+    </div>
 
     <button
       #toggleBtn
@@ -234,7 +203,7 @@
             [routerLink]="item.to"
             routerLinkActive="active"
             [routerLinkActiveOptions]="{ exact: item.to === '/' }"
-            [class.active]="item.to === '/news' && isUpdatesPage()"
+            [class.active]="item.to === '/events' && isUpdatesPage()"
             (click)="menuOpen.set(false)"
           >
             {{ item.title }}
@@ -248,5 +217,13 @@
       </div>
     </div>
   </nav>
+
+  <!-- Reading progress bar -->
+  <div class="pointer-events-none absolute inset-x-0 bottom-0 h-[2px] overflow-hidden" aria-hidden="true">
+    <div
+      class="h-full bg-gradient-to-r from-[var(--blue)] via-[var(--gold)] to-[var(--blue-deep)] transition-[width] duration-75"
+      [style.width.%]="scrollProgress()"
+    ></div>
+  </div>
 </header>
   

@@ -1,0 +1,355 @@
+<section
+  class="bg-white py-14 sm:py-20 border-b border-[var(--line)]"
+  aria-labelledby="achievement-showcase-heading"
+>
+  <div
+    class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)]"
+  >
+    <!-- Header -->
+    <div data-ach-header class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+      <div class="max-w-3xl">
+        <app-eyebrow>Student Achievement Showcase</app-eyebrow>
+        <h2
+          id="achievement-showcase-heading"
+          class="mt-3 text-[clamp(1.75rem,3vw,2.6rem)] font-bold leading-[1.15] tracking-[-0.03em] text-[var(--navy)]"
+        >
+          Celebrating Excellence, Inspiring Tomorrow
+        </h2>
+        <p class="mt-2.5 text-base sm:text-lg font-medium text-[var(--blue-deep)]">
+          Every achievement tells a story of dedication, curiosity and determination.
+        </p>
+
+        @if (!compactIntro()) {
+          <div class="mt-3.5 space-y-2.5 text-[15px] leading-[1.7] text-[var(--muted-ink)]">
+            <p>
+              At Pragyan Paathshala, we believe every student has the potential to achieve something
+              extraordinary. We celebrate achievements in academics, sports, creativity and beyond,
+              recognizing the effort, discipline and passion that help our students grow into
+              confident individuals.
+            </p>
+            <p>
+              From classroom accomplishments to extracurricular milestones, every success reflects
+              the spirit of learning, perseverance and excellence that we nurture at our school.
+            </p>
+          </div>
+        }
+      </div>
+
+      @if (showViewAll()) {
+        <div class="shrink-0">
+          <app-action-link to="/achievements" variant="primary">
+            View All Achievements
+          </app-action-link>
+        </div>
+      }
+    </div>
+
+    <!-- Category Filters -->
+    <div
+      class="mt-8 flex flex-wrap items-center gap-2"
+      role="group"
+      aria-label="Filter student achievements by category"
+    >
+      @for (cat of categories; track cat) {
+        <button
+          type="button"
+          (click)="selectCategory(cat)"
+          [attr.aria-pressed]="activeCategory() === cat"
+          [class]="
+            'px-4 py-2 rounded-full text-[13px] font-semibold border transition-all duration-200 ' +
+            (activeCategory() === cat
+              ? 'bg-[var(--blue)] text-white border-[var(--blue)] shadow-sm'
+              : 'bg-[var(--bg)] text-[#46536a] border-[var(--line)] hover:border-[var(--blue)]/50 hover:text-[var(--blue-deep)]')
+          "
+        >
+          {{ cat }}
+        </button>
+      }
+    </div>
+
+    <!-- Featured Achievement -->
+    @if (featuredAchievement(); as featured) {
+      <article
+        data-ach-featured
+        class="mt-7 overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--bg)] grid grid-cols-1 lg:grid-cols-12 items-stretch"
+      >
+        <div class="lg:col-span-5 relative overflow-hidden bg-[var(--navy)] h-[210px] sm:h-[240px] lg:h-[270px]">
+          <img
+            [src]="featured.image"
+            [alt]="featured.alt"
+            loading="lazy"
+            class="h-full w-full object-cover transition-transform duration-700 hover:scale-[1.03]"
+          />
+          @if (featured.isDemo) {
+            <span
+              class="absolute top-3 left-3 rounded-full bg-[#0d1b2a]/80 backdrop-blur-sm px-2.5 py-0.5 text-[10px] font-semibold text-white"
+            >
+              Sample Showcase
+            </span>
+          }
+          <button
+            type="button"
+            (click)="openModal(featured)"
+            aria-label="Enlarge featured achievement photograph"
+            class="absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1.5 text-[11px] font-semibold text-[var(--navy)] shadow-sm transition hover:bg-[var(--gold)]"
+          >
+            <svg lucideExpand [size]="13"></svg>
+            View Photo
+          </button>
+        </div>
+
+        <div class="lg:col-span-7 flex flex-col justify-center p-5 sm:p-6 lg:p-7">
+          <div class="flex flex-wrap items-center gap-2">
+            <span
+              class="inline-flex items-center gap-1.5 rounded-full bg-[var(--blue-light)] px-3 py-1 text-xs font-bold text-[var(--blue-deep)]"
+            >
+              <svg lucideAward [size]="13"></svg>
+              {{ featured.category }}
+            </span>
+            @if (featured.featured) {
+              <span
+                class="rounded-full bg-[color-mix(in_srgb,var(--gold)_24%,white)] px-2.5 py-1 text-[11px] font-bold text-[var(--navy)]"
+              >
+                Featured
+              </span>
+            }
+          </div>
+
+          <h3 class="mt-4 text-xl sm:text-2xl font-bold leading-snug text-[var(--navy)]">
+            {{ featured.title }}
+          </h3>
+          <p class="mt-3 text-sm sm:text-[15px] leading-[1.7] text-[var(--muted-ink)]">
+            {{ featured.description }}
+          </p>
+
+          @if (featured.date || featured.studentName || featured.grade) {
+            <div
+              class="mt-5 pt-4 border-t border-[var(--line)] flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold text-[#46536a]"
+            >
+              @if (featured.date) {
+                <span class="inline-flex items-center gap-1.5">
+                  <svg class="text-[var(--blue)]" lucideCalendar [size]="14"></svg>
+                  {{ featured.date }}
+                </span>
+              }
+              @if (featured.studentName) {
+                <span class="inline-flex items-center gap-1.5">
+                  <svg class="text-[var(--blue)]" lucideUser [size]="14"></svg>
+                  {{ featured.studentName }}
+                </span>
+              }
+              @if (featured.grade) {
+                <span class="inline-flex items-center gap-1.5">
+                  <svg class="text-[var(--blue)]" lucideGraduationCap [size]="14"></svg>
+                  {{ featured.grade }}
+                </span>
+              }
+            </div>
+          }
+
+          <div class="mt-6">
+            <button
+              type="button"
+              (click)="openModal(featured)"
+              class="inline-flex items-center gap-2 rounded-lg border border-[var(--blue)]/30 bg-white px-4 py-2.5 text-xs font-bold text-[var(--blue-deep)] transition hover:border-[var(--blue)] hover:bg-[var(--blue-light)]"
+            >
+              View Achievement Details
+            </button>
+          </div>
+        </div>
+      </article>
+    }
+
+    <!-- Achievement Gallery Grid -->
+    @if (galleryAchievements().length > 0) {
+      <div
+        [class]="
+          'mt-6 grid grid-cols-1 md:grid-cols-2 gap-5 ' +
+          (galleryAchievements().length >= 3 ? 'lg:grid-cols-3' : '')
+        "
+      >
+        @for (item of galleryAchievements(); track item.id) {
+          <article
+            data-ach-card
+            class="group flex flex-col overflow-hidden rounded-2xl border border-[var(--line)] bg-white transition-all duration-300 hover:-translate-y-1 hover:border-[var(--blue)]/40 hover:shadow-md"
+          >
+            <button
+              type="button"
+              (click)="openModal(item)"
+              class="relative h-[180px] sm:h-[200px] w-full overflow-hidden bg-[var(--bg)] text-left focus-visible:outline-[var(--blue)]"
+              [attr.aria-label]="'View achievement: ' + item.title"
+            >
+              <img
+                [src]="item.image"
+                [alt]="item.alt"
+                loading="lazy"
+                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              @if (item.isDemo) {
+                <span
+                  class="absolute top-3 left-3 rounded-full bg-[#0d1b2a]/75 backdrop-blur-sm px-2.5 py-0.5 text-[10px] font-semibold text-white"
+                >
+                  Sample Showcase
+                </span>
+              }
+              <span
+                class="absolute bottom-3 right-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-[var(--navy)] opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+              >
+                <svg lucideExpand [size]="14"></svg>
+              </span>
+            </button>
+
+            <div class="flex flex-1 flex-col p-4 sm:p-5">
+              <div class="flex items-center justify-between gap-2">
+                <span
+                  class="inline-flex items-center gap-1 rounded-full bg-[var(--blue-light)] px-2.5 py-0.5 text-[11px] font-bold text-[var(--blue-deep)]"
+                >
+                  {{ item.category }}
+                </span>
+                @if (item.date) {
+                  <span class="text-[11px] font-medium text-[var(--muted-ink)]">
+                    {{ item.date }}
+                  </span>
+                }
+              </div>
+
+              <h3 class="mt-3 text-base font-bold leading-snug text-[var(--navy)] group-hover:text-[var(--blue)] transition-colors">
+                {{ item.title }}
+              </h3>
+              <p class="mt-2 text-sm leading-[1.6] text-[var(--muted-ink)] line-clamp-3">
+                {{ item.description }}
+              </p>
+
+              @if (item.studentName || item.grade) {
+                <div class="mt-3 flex flex-wrap items-center gap-3 text-xs font-semibold text-[#46536a]">
+                  @if (item.studentName) {
+                    <span>{{ item.studentName }}</span>
+                  }
+                  @if (item.grade) {
+                    <span>• {{ item.grade }}</span>
+                  }
+                </div>
+              }
+
+              <div class="mt-auto pt-4">
+                <button
+                  type="button"
+                  (click)="openModal(item)"
+                  class="inline-flex items-center gap-1.5 text-xs font-bold text-[var(--blue)] hover:text-[var(--navy)] transition-colors"
+                >
+                  Read more
+                </button>
+              </div>
+            </div>
+          </article>
+        }
+      </div>
+    }
+  </div>
+</section>
+
+<!-- Accessible Lightbox / Detail Modal -->
+@if (selectedAchievement(); as active) {
+  <div
+    class="fixed inset-0 z-50 flex items-center justify-center bg-[#0d1b2a]/75 backdrop-blur-sm p-4"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-label]="active.title"
+    (click)="closeModal()"
+  >
+    <div
+      class="relative w-full max-w-3xl overflow-hidden rounded-2xl bg-white shadow-2xl"
+      (click)="$event.stopPropagation()"
+    >
+      <button
+        type="button"
+        (click)="closeModal()"
+        aria-label="Close achievement details"
+        class="absolute top-3.5 right-3.5 z-10 inline-grid h-9 w-9 place-items-center rounded-full bg-white/90 text-[var(--navy)] shadow transition hover:bg-[var(--gold)]"
+      >
+        <svg lucideX [size]="18"></svg>
+      </button>
+
+      <div class="relative aspect-[16/9] w-full bg-[var(--navy)]">
+        <img [src]="active.image" [alt]="active.alt" class="h-full w-full object-cover" />
+        @if (active.isDemo) {
+          <span
+            class="absolute top-3.5 left-3.5 rounded-full bg-[#0d1b2a]/80 backdrop-blur-sm px-3 py-1 text-[11px] font-semibold text-white"
+          >
+            Sample Showcase
+          </span>
+        }
+      </div>
+
+      <div class="p-6 sm:p-8">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <span
+            class="inline-flex items-center gap-1.5 rounded-full bg-[var(--blue-light)] px-3 py-1 text-xs font-bold text-[var(--blue-deep)]"
+          >
+            <svg lucideAward [size]="13"></svg>
+            {{ active.category }}
+          </span>
+          @if (active.date) {
+            <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--muted-ink)]">
+              <svg lucideCalendar [size]="13"></svg>
+              {{ active.date }}
+            </span>
+          }
+        </div>
+
+        <h3 class="mt-3 text-xl sm:text-2xl font-bold text-[var(--navy)]">
+          {{ active.title }}
+        </h3>
+        <p class="mt-2.5 text-sm sm:text-[15px] leading-[1.7] text-[var(--muted-ink)]">
+          {{ active.description }}
+        </p>
+        @if (active.details) {
+          <p class="mt-2.5 text-sm leading-[1.7] text-[#46536a]">
+            {{ active.details }}
+          </p>
+        }
+
+        @if (active.studentName || active.grade) {
+          <div class="mt-4 flex flex-wrap items-center gap-4 text-xs font-semibold text-[#46536a]">
+            @if (active.studentName) {
+              <span class="inline-flex items-center gap-1.5">
+                <svg lucideUser [size]="14"></svg>
+                {{ active.studentName }}
+              </span>
+            }
+            @if (active.grade) {
+              <span class="inline-flex items-center gap-1.5">
+                <svg lucideGraduationCap [size]="14"></svg>
+                {{ active.grade }}
+              </span>
+            }
+          </div>
+        }
+
+        @if (filteredAchievements().length > 1) {
+          <div class="mt-6 pt-4 border-t border-[var(--line)] flex items-center justify-between">
+            <button
+              type="button"
+              (click)="stepModal(-1)"
+              class="inline-flex items-center gap-1.5 rounded-lg border border-[var(--line)] px-3 py-2 text-xs font-semibold text-[var(--navy)] hover:bg-[var(--bg)]"
+            >
+              <svg lucideChevronLeft [size]="15"></svg>
+              Previous
+            </button>
+            <span class="text-xs font-medium text-[var(--muted-ink)]">
+              {{ selectedIndex() + 1 }} of {{ filteredAchievements().length }}
+            </span>
+            <button
+              type="button"
+              (click)="stepModal(1)"
+              class="inline-flex items-center gap-1.5 rounded-lg border border-[var(--line)] px-3 py-2 text-xs font-semibold text-[var(--navy)] hover:bg-[var(--bg)]"
+            >
+              Next
+              <svg lucideChevronRight [size]="15"></svg>
+            </button>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+}

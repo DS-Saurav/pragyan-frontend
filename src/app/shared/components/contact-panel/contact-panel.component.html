@@ -1,79 +1,148 @@
 <section
-  class="mx-auto w-[min(100%-32px,1440px)] sm:w-[min(100%-64px,1440px)] py-[clamp(40px,4.5vw,68px)] grid grid-cols-1 min-[961px]:grid-cols-[0.82fr_1.18fr] items-start gap-[clamp(25px,6vw,83px)]"
+  class="mx-auto w-[min(100%-32px,1440px)] sm:w-[min(100%-64px,1440px)] py-[clamp(44px,5vw,76px)] grid grid-cols-1 min-[961px]:grid-cols-[0.88fr_1.12fr] items-start gap-[clamp(28px,5vw,72px)]"
   aria-label="Contact and directions"
 >
   <div>
     <app-eyebrow>Visit or get in touch</app-eyebrow>
-    <h2 class="mt-3">Find us in Surkhet</h2>
-    <dl class="grid gap-[11px] my-[17px]">
-      <div>
-        <dt class="text-[13px] font-bold">Phone</dt>
-        <dd class="text-sm text-[var(--muted-ink)]">
-          @if (school().phone; as phone) {
-            <a class="hover:text-[var(--blue-deep)] hover:underline" [href]="'tel:' + phone">
-              {{ phone }}
-            </a>
-          } @else {
-            Not yet published
-          }
-        </dd>
-      </div>
-      <div>
-        <dt class="text-[13px] font-bold">Email</dt>
-        <dd class="text-sm text-[var(--muted-ink)]">
-          @if (school().email; as email) {
-            <a class="hover:text-[var(--blue-deep)] hover:underline" [href]="'mailto:' + email">
-              {{ email }}
-            </a>
-          } @else {
-            Not yet published
-          }
-        </dd>
-      </div>
-      @if (school().whatsapp; as whatsapp) {
-        <div>
-          <dt class="text-[13px] font-bold">WhatsApp</dt>
-          <dd class="text-sm text-[var(--muted-ink)]">
-            <a
-              class="hover:text-[var(--blue-deep)] hover:underline"
-              [href]="'https://wa.me/' + whatsapp.replace(/[^0-9]/g, '')"
-              target="_blank"
-              rel="noreferrer"
-            >
-              {{ whatsapp }}
-            </a>
+    <h2 class="mt-3 text-[clamp(1.75rem,3vw,2.45rem)] font-bold leading-[1.15] tracking-[-0.03em] text-[var(--navy)]">
+      Find us in Surkhet
+    </h2>
+    <p class="mt-2.5 text-sm sm:text-[15px] leading-[1.65] text-[var(--muted-ink)] max-w-lg">
+      Reach our school office by phone, email, or WhatsApp, or visit our campus in Latikoili,
+      Birendranagar-9.
+    </p>
+
+    <dl class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <div class="flex items-start gap-3 rounded-xl border border-[var(--line)] bg-white p-4">
+        <span
+          class="grid place-items-center shrink-0 w-9 h-9 rounded-lg bg-[var(--blue-light)] text-[var(--blue)]"
+        >
+          <svg lucidePhone [size]="17"></svg>
+        </span>
+        <div class="min-w-0">
+          <dt class="text-xs font-bold uppercase tracking-[0.06em] text-[var(--muted-ink)]">
+            Phone
+          </dt>
+          <dd class="mt-0.5 text-sm font-semibold text-[var(--navy)]">
+            @if (school().phone; as phone) {
+              <a class="hover:text-[var(--blue)] transition-colors" [href]="'tel:' + phone">
+                {{ phone }}
+              </a>
+            } @else {
+              <span class="text-[var(--muted-ink)] font-normal">Not yet published</span>
+            }
           </dd>
         </div>
-      }
-      <div>
-        <dt class="text-[13px] font-bold">Office hours</dt>
-        <dd class="text-sm text-[var(--muted-ink)]">
-          {{ school().officeHours ?? 'Please confirm with the school' }}
-        </dd>
       </div>
-      <div>
-        <dt class="text-[13px] font-bold">School address</dt>
-        <dd class="text-sm text-[var(--muted-ink)]">{{ school().address }}</dd>
+
+      <div class="flex items-start gap-3 rounded-xl border border-[var(--line)] bg-white p-4">
+        <span
+          class="grid place-items-center shrink-0 w-9 h-9 rounded-lg bg-[var(--blue-light)] text-[var(--blue)]"
+        >
+          <svg lucideMail [size]="17"></svg>
+        </span>
+        <div class="min-w-0">
+          <dt class="text-xs font-bold uppercase tracking-[0.06em] text-[var(--muted-ink)]">
+            Email
+          </dt>
+          <dd class="mt-0.5 text-sm font-semibold text-[var(--navy)] break-all">
+            @if (school().email; as email) {
+              <a class="hover:text-[var(--blue)] transition-colors" [href]="'mailto:' + email">
+                {{ email }}
+              </a>
+            } @else {
+              <span class="text-[var(--muted-ink)] font-normal">Not yet published</span>
+            }
+          </dd>
+        </div>
+      </div>
+
+      @if (school().whatsapp; as whatsapp) {
+        <div class="flex items-start gap-3 rounded-xl border border-[var(--line)] bg-white p-4">
+          <span
+            class="grid place-items-center shrink-0 w-9 h-9 rounded-lg bg-emerald-50 text-emerald-700"
+          >
+            <svg lucideMessageCircle [size]="17"></svg>
+          </span>
+          <div class="min-w-0">
+            <dt class="text-xs font-bold uppercase tracking-[0.06em] text-[var(--muted-ink)]">
+              WhatsApp
+            </dt>
+            <dd class="mt-0.5 text-sm font-semibold text-[var(--navy)]">
+              <a
+                class="hover:text-[var(--blue)] transition-colors"
+                [href]="'https://wa.me/' + whatsapp.replace(/[^0-9]/g, '')"
+                target="_blank"
+                rel="noreferrer"
+              >
+                {{ whatsapp }}
+              </a>
+            </dd>
+          </div>
+        </div>
+      }
+
+      <div class="flex items-start gap-3 rounded-xl border border-[var(--line)] bg-white p-4">
+        <span
+          class="grid place-items-center shrink-0 w-9 h-9 rounded-lg bg-[var(--blue-light)] text-[var(--blue)]"
+        >
+          <svg lucideClock [size]="17"></svg>
+        </span>
+        <div class="min-w-0">
+          <dt class="text-xs font-bold uppercase tracking-[0.06em] text-[var(--muted-ink)]">
+            Office hours
+          </dt>
+          <dd class="mt-0.5 text-sm font-semibold text-[var(--navy)]">
+            {{ school().officeHours ?? 'Please confirm with the school' }}
+          </dd>
+        </div>
+      </div>
+
+      <div
+        class="sm:col-span-2 flex items-start gap-3 rounded-xl border border-[var(--line)] bg-white p-4"
+      >
+        <span
+          class="grid place-items-center shrink-0 w-9 h-9 rounded-lg bg-[var(--blue-light)] text-[var(--blue)]"
+        >
+          <svg lucideBuilding2 [size]="17"></svg>
+        </span>
+        <div class="min-w-0">
+          <dt class="text-xs font-bold uppercase tracking-[0.06em] text-[var(--muted-ink)]">
+            School address
+          </dt>
+          <dd class="mt-0.5 text-sm font-semibold text-[var(--navy)]">
+            {{ school().address }}
+          </dd>
+        </div>
       </div>
     </dl>
+
     <a
-      class="flex items-center gap-[9px] p-[11px] border border-[var(--line)] rounded-xl bg-[var(--bg)] text-[var(--blue-deep)] transition-colors duration-180 hover:bg-[var(--blue-light)]"
+      class="group mt-4 flex items-center gap-3.5 p-4 border border-[var(--line)] rounded-xl bg-[var(--bg)] text-[var(--navy)] transition-all duration-180 hover:border-[var(--blue)] hover:bg-[var(--blue-light)]/50 hover:shadow-sm"
       [href]="mapsUrl()"
       target="_blank"
       rel="noreferrer"
     >
       <span
-        class="grid place-items-center flex-none w-10 h-10 rounded-[9px] bg-[var(--blue-light)] text-[var(--blue-deep)]"
+        class="grid place-items-center flex-none w-10 h-10 rounded-lg bg-[var(--blue-light)] text-[var(--blue)] transition-colors group-hover:bg-[var(--blue)] group-hover:text-white"
       >
-        <svg lucideMapPin [size]="22"></svg>
+        <svg lucideMapPin [size]="20"></svg>
       </span>
-      <span>
-        <strong class="block">Latikoili, Surkhet</strong>
-        <small class="block text-[var(--muted-ink)]">Search this address in Google Maps</small>
+      <span class="min-w-0">
+        <strong class="block text-sm font-bold text-[var(--navy)]">
+          Open in Google Maps
+        </strong>
+        <small class="block text-xs text-[var(--muted-ink)]">
+          Latikoili, Birendranagar-9, Surkhet
+        </small>
       </span>
-      <svg class="ml-auto flex-none" lucideArrowUpRight [size]="19"></svg>
+      <svg
+        class="ml-auto flex-none text-[var(--blue)] transition-transform duration-180 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+        lucideArrowUpRight
+        [size]="18"
+      ></svg>
     </a>
   </div>
+
   <app-inquiry-form mode="contact" />
 </section>
-  

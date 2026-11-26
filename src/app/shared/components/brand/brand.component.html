@@ -1,21 +1,23 @@
 <a
   routerLink="/"
-  class="inline-flex shrink-0 items-center gap-[11px] leading-[1.25] in-[.site-footer]:text-white"
+  class="inline-flex min-w-0 shrink items-center gap-2 min-[461px]:gap-[11px] leading-[1.25] in-[.site-footer]:text-white"
   [attr.aria-label]="school().name + ' home'"
 >
   <img
-    class="block shrink-0 w-[104px] h-[50px] object-cover object-center in-[.site-footer]:w-[94px] in-[.site-footer]:h-auto in-[.site-footer]:object-contain in-[.site-footer]:p-[7px] in-[.site-footer]:rounded-[7px] in-[.site-footer]:bg-white"
+    class="block shrink-0 w-[72px] h-[36px] min-[380px]:w-[82px] min-[380px]:h-[40px] sm:w-[96px] sm:h-[46px] md:w-[104px] md:h-[50px] object-cover object-center in-[.site-footer]:w-[94px] in-[.site-footer]:h-auto in-[.site-footer]:object-contain in-[.site-footer]:p-[7px] in-[.site-footer]:rounded-[7px] in-[.site-footer]:bg-white"
     src="/assets/images/logo-pragaya.png"
     width="384"
     height="166"
     alt=""
   />
-  <span class="flex flex-col justify-center gap-1">
-    <strong class="block font-[var(--heading)] font-bold text-base leading-none tracking-[-0.04em]">
+  <span class="flex min-w-0 flex-col justify-center gap-0.5 sm:gap-1">
+    <strong
+      class="block truncate font-[var(--heading)] font-bold text-[13.5px] min-[380px]:text-[14.5px] sm:text-base leading-none tracking-[-0.03em]"
+    >
       {{ school().name }}
     </strong>
     <small
-      class="block text-[var(--blue-deep)] in-[.site-footer]:text-[#ccd9ef] text-[8.5px] leading-none font-bold tracking-[0.045em] uppercase"
+      class="block truncate text-[var(--blue-deep)] in-[.site-footer]:text-[#ccd9ef] text-[7px] min-[380px]:text-[7.5px] sm:text-[8.5px] leading-none font-bold tracking-[0.03em] sm:tracking-[0.045em] uppercase"
     >
       International School Award 2020-23
     </small>

@@ -32,8 +32,8 @@ export class UpdatesDirectoryComponent {
   protected readonly content = inject(SchoolContentService);
 
   protected readonly kind = toSignal(
-    this.route.data.pipe(map((data) => (data['kind'] as UpdateKind) ?? 'news')),
-    { initialValue: 'news' as UpdateKind },
+    this.route.data.pipe(map((data) => (data['kind'] as UpdateKind) ?? 'events')),
+    { initialValue: 'events' as UpdateKind },
   );
 
   protected readonly category = signal('All');
@@ -41,7 +41,9 @@ export class UpdatesDirectoryComponent {
   protected readonly tabs = (Object.entries(this.content.updateSections) as [
     UpdateKind,
     { label: string; description: string },
-  ][]).map(([key, meta]) => ({ key, label: meta.label }));
+  ][])
+    .filter(([key]) => key !== 'news')
+    .map(([key, meta]) => ({ key, label: meta.label }));
 
   protected readonly sectionMeta = computed(() => this.content.updateSections[this.kind()]);
 

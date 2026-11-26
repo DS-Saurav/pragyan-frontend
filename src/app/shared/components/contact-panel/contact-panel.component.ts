@@ -1,5 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { LucideArrowUpRight, LucideMapPin } from '@lucide/angular';
+import {
+  LucideArrowUpRight,
+  LucideBuilding2,
+  LucideClock,
+  LucideMail,
+  LucideMapPin,
+  LucideMessageCircle,
+  LucidePhone,
+} from '@lucide/angular';
 import { SchoolContentService } from '../../../core/services/school-content.service';
 import { EyebrowComponent } from '../eyebrow/eyebrow.component';
 import { InquiryFormComponent } from '../inquiry-form/inquiry-form.component';
@@ -7,7 +15,17 @@ import { InquiryFormComponent } from '../inquiry-form/inquiry-form.component';
 @Component({
   selector: 'app-contact-panel',
   standalone: true,
-  imports: [EyebrowComponent, InquiryFormComponent, LucideMapPin, LucideArrowUpRight],
+  imports: [
+    EyebrowComponent,
+    InquiryFormComponent,
+    LucideMapPin,
+    LucideArrowUpRight,
+    LucidePhone,
+    LucideMail,
+    LucideMessageCircle,
+    LucideClock,
+    LucideBuilding2,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './contact-panel.component.html',
 })

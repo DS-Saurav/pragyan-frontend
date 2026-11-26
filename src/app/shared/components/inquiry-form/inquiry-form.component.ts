@@ -84,4 +84,9 @@ export class InquiryFormComponent {
     }
     this.checked.set(true);
   }
+
+  protected isInvalid(name: 'student' | 'guardian' | 'phone' | 'email' | 'grade' | 'message'): boolean {
+    const ctrl = this.form.controls[name];
+    return ctrl.invalid && (ctrl.touched || ctrl.dirty);
+  }
 }

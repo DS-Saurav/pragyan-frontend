@@ -1,6 +1,6 @@
 <!-- Hero -->
 <section
-  class="flex flex-col min-[621px]:block relative isolate overflow-hidden bg-[var(--navy)] text-white select-none touch-pan-y cursor-grab active:cursor-grabbing [&_:focus-visible]:outline-[var(--gold)]"
+  class="relative isolate overflow-hidden bg-[var(--navy)] text-white select-none touch-pan-y cursor-grab active:cursor-grabbing [&_:focus-visible]:outline-[var(--gold)]"
   aria-label="Welcome to Pragyan Paathshala"
   aria-roledescription="carousel"
   (pointerdown)="onHeroPointerDown($event)"
@@ -9,9 +9,7 @@
   (mouseenter)="setHeroPaused(true)"
   (mouseleave)="setHeroPaused(false)"
 >
-  <div
-    class="relative order-1 z-0 aspect-[1.66] min-[621px]:aspect-auto min-[621px]:absolute min-[621px]:inset-0 min-[621px]:-z-10 overflow-hidden"
-  >
+  <div class="absolute inset-0 -z-10 overflow-hidden">
     <div
       class="flex h-full w-full transition-transform duration-500 ease-out"
       [style.transform]="'translateX(-' + activeHero() * 100 + '%)'"
@@ -23,39 +21,44 @@
           [attr.loading]="first ? 'eager' : 'lazy'"
           [attr.fetchpriority]="first ? 'high' : 'auto'"
           draggable="false"
-          class="h-full w-full shrink-0 object-cover object-[76%_59%] min-[621px]:object-[center_57%]"
+          class="h-full w-full shrink-0 object-cover object-center"
         />
       }
     </div>
-    <span
-      class="pointer-events-none absolute right-[9px] bottom-[9px] min-[621px]:right-[max(20px,calc((100%-1440px)/2))] min-[621px]:bottom-5 z-[1] px-2 py-0.5 rounded-[5px] text-white bg-[#111c2acc] text-[9px] leading-[1.55] tracking-[0.01em]"
-    >
-      Illustrative image
-    </span>
+    <!-- Subtle gradient overlay for text contrast while keeping the photo natural and prominent -->
+    <div
+      class="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#0d1b2a]/72 via-[#0d1b2a]/58 to-[#0d1b2a]/72 min-[621px]:bg-gradient-to-r min-[621px]:from-[#0d1b2a]/80 min-[621px]:via-[#0d1b2a]/45 min-[621px]:to-transparent"
+      aria-hidden="true"
+    ></div>
   </div>
 
   <div
-    class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] min-h-0 min-[621px]:min-h-[clamp(500px,41vw,655px)] flex items-center py-8 pb-[15px] min-[621px]:py-[clamp(45px,5vw,86px)]"
+    class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] min-h-[calc(100dvh-73px)] flex items-center pt-10 pb-14 min-[621px]:py-[clamp(52px,5.5vw,92px)]"
   >
-    <div class="max-w-[650px] min-[621px]:drop-shadow-[0_2px_14px_rgba(0,0,0,0.6)]">
+    <div class="max-w-[620px]">
       <p
-        class="inline-flex items-center gap-2 border border-[color-mix(in_srgb,var(--gold)_53%,transparent)] rounded-full bg-[color-mix(in_srgb,var(--navy)_76%,transparent)] px-[11px] py-[5px] text-[var(--gold-light)] text-[9px] min-[621px]:text-[11px] font-bold tracking-[0.075em] min-[621px]:tracking-[0.11em] uppercase"
+        data-hero-stagger
+        class="inline-flex items-center gap-2 border border-white/20 rounded-full bg-[#0d1b2a]/60 px-3 py-1.5 text-[var(--gold-light)] text-[10px] min-[621px]:text-[11px] font-semibold tracking-[0.08em] uppercase"
       >
         <svg class="text-[var(--gold)] flex-none" lucideSparkles [size]="14"></svg>
-        A child-centered school in Surkhet
+        Child-Centered School in Surkhet
       </p>
       <h1
-        class="mt-[13px] min-[621px]:mt-[19px] text-[clamp(2.6rem,10vw,3.7rem)] min-[621px]:text-[clamp(3.4rem,5.5vw,5.5rem)] font-bold leading-[1.05] tracking-[-0.058em] [text-wrap:initial]"
+        data-hero-stagger
+        class="mt-4 min-[621px]:mt-5 text-[clamp(2rem,8.5vw,2.85rem)] min-[621px]:text-[clamp(2.75rem,4.5vw,4.2rem)] font-bold leading-[1.08] tracking-[-0.025em] [text-wrap:balance]"
+        style="font-family: var(--heading)"
       >
-        Where curiosity grows and <em class="block text-[var(--gold)] not-italic">futures begin.</em>
+        Where curiosity grows and
+        <span class="block text-[var(--gold)]">futures begin.</span>
       </h1>
       <p
-        class="max-w-[435px] mt-[11px] min-[621px]:mt-[19px] text-[var(--blue-light)] text-[clamp(0.95rem,1.2vw,1.06rem)]"
+        data-hero-stagger
+        class="max-w-[520px] mt-4 min-[621px]:mt-5 text-white/90 text-sm sm:text-[15px] min-[621px]:text-[17px] leading-[1.65]"
       >
-        At Pragyan Paathshala, children from Nursery to Grade 8 learn by exploring, making and
-        working together.
+        At Pragyan Paathshala, students from Early Childhood through Grade 10 learn by exploring,
+        creating and growing together in a caring school community.
       </p>
-      <div class="flex flex-wrap items-center gap-[7px] min-[621px]:gap-[11px] mt-4 min-[621px]:mt-[23px]">
+      <div data-hero-stagger class="flex flex-wrap items-center gap-3 mt-6 min-[621px]:mt-7">
         <app-action-link to="/about" variant="gold">
           Explore Our School
         </app-action-link>
@@ -63,609 +66,515 @@
           Admission Inquiry
         </app-action-link>
       </div>
-      <p class="flex items-center gap-2 mt-4 min-[621px]:mt-[23px] text-[var(--blue-light)] text-xs">
-        <svg class="text-[var(--gold)]" lucideMapPin [size]="15"></svg> Latikoili, Surkhet
-        <span class="w-1 h-1 rounded-full bg-[var(--gold)] mx-[3px]"></span> Est.
-        {{ school().established }}
-      </p>
+      <div
+        data-hero-stagger
+        class="flex flex-wrap items-center gap-x-4 gap-y-2 mt-6 min-[621px]:mt-8 pt-4 min-[621px]:pt-5 border-t border-white/15 text-white/80 text-xs sm:text-[13px]"
+      >
+        <span class="inline-flex items-center gap-1.5">
+          <svg class="text-[var(--gold)] shrink-0" lucideMapPin [size]="14"></svg>
+          Latikoili, Birendranagar-9, Surkhet
+        </span>
+        <span class="hidden sm:inline w-1 h-1 rounded-full bg-[var(--gold)]" aria-hidden="true"></span>
+        <span>Est. {{ school().established }}</span>
+        <span class="hidden sm:inline w-1 h-1 rounded-full bg-[var(--gold)]" aria-hidden="true"></span>
+        <span>Early Childhood – Grade 10</span>
+      </div>
     </div>
   </div>
 
   <!-- Hero swipe controls -->
-  <button
-    type="button"
-    class="hidden min-[621px]:inline-grid place-items-center absolute top-1/2 left-4 -translate-y-1/2 z-10 w-10 h-10 rounded-full border border-white/25 bg-[color-mix(in_srgb,var(--navy)_65%,transparent)] text-white backdrop-blur-md transition hover:bg-[var(--gold)] hover:text-[var(--navy)] hover:border-[var(--gold)]"
-    aria-label="Previous hero image"
-    (click)="setHeroSlide(activeHero() - 1)"
-  >
-    <svg lucideChevronLeft [size]="20"></svg>
-  </button>
-  <button
-    type="button"
-    class="hidden min-[621px]:inline-grid place-items-center absolute top-1/2 right-4 -translate-y-1/2 z-10 w-10 h-10 rounded-full border border-white/25 bg-[color-mix(in_srgb,var(--navy)_65%,transparent)] text-white backdrop-blur-md transition hover:bg-[var(--gold)] hover:text-[var(--navy)] hover:border-[var(--gold)]"
-    aria-label="Next hero image"
-    (click)="setHeroSlide(activeHero() + 1)"
-  >
-    <svg lucideChevronRight [size]="20"></svg>
-  </button>
-
-  <div
-    class="order-2 flex items-center justify-center gap-1.5 py-2.5 min-[621px]:py-0 min-[621px]:absolute min-[621px]:bottom-5 min-[621px]:left-1/2 min-[621px]:-translate-x-1/2 z-10"
-    role="group"
-    aria-label="Choose hero image"
-  >
-    @for (slide of heroSlides(); track slide.src; let idx = $index) {
-      <button
-        type="button"
-        [attr.aria-label]="'Show hero image ' + (idx + 1)"
-        [attr.aria-current]="activeHero() === idx ? 'true' : null"
-        (click)="setHeroSlide(idx)"
-        [class]="
-          'h-2 rounded-full transition-all duration-200 ' +
-          (activeHero() === idx ? 'w-6 bg-[var(--gold)]' : 'w-2 bg-white/50 hover:bg-white/80')
-        "
-      ></button>
-    }
-  </div>
-</section>
-
-<!-- Parent Quick Links -->
-<nav class="border-b border-[var(--line)] bg-white" aria-label="Quick links for families">
-  <div
-    class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] grid grid-cols-2 min-[961px]:grid-cols-4"
-  >
-    @for (item of quickLinks(); track item.to; let idx = $index) {
-      <a
-        [routerLink]="item.to"
-        [class]="
-          'flex items-center gap-[7px] min-[621px]:gap-[11px] min-w-0 min-h-[70px] min-[621px]:min-h-0 py-2.5 pr-[5px] min-[621px]:py-[19px] min-[621px]:px-4 transition-colors duration-180 hover:bg-[var(--sunlight)] focus-visible:outline-offset-[-4px] ' +
-          (idx === 0 ? 'min-[961px]:pl-0 ' : 'min-[961px]:border-l min-[961px]:border-[var(--line)] ') +
-          (idx % 2 === 1 ? 'max-[960px]:border-l max-[960px]:border-[var(--line)] ' : '') +
-          (idx >= 2 ? 'max-[960px]:border-t max-[960px]:border-[var(--line)] ' : '')
-        "
-      >
-        <span
-          [class]="
-            'grid place-items-center flex-none w-[31px] h-[31px] min-[621px]:w-10 min-[621px]:h-10 rounded-[7px] min-[621px]:rounded-[9px] ' +
-            (idx === 1
-              ? 'bg-[var(--gold-light)] text-[var(--navy)]'
-              : 'bg-[var(--blue-light)] text-[var(--blue-deep)]')
-          "
-        >
-          <ng-container *ngComponentOutlet="item.icon; inputs: { size: 22 }" />
-        </span>
-        <span>
-          <strong class="block text-xs min-[621px]:text-sm leading-[1.25]">{{ item.title }}</strong>
-          <small class="block mt-[3px] text-[var(--muted-ink)] text-[10px] min-[621px]:text-[11px] leading-[1.3]">
-            {{ item.detail }}
-          </small>
-        </span>
-        <svg class="ml-auto text-[var(--blue-deep)] flex-none max-[620px]:w-3" lucideArrowUpRight [size]="16"></svg>
-      </a>
-    }
-  </div>
-</nav>
-
-<!-- School Story -->
-<section
-  class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] py-[clamp(40px,4.5vw,68px)] grid grid-cols-1 min-[621px]:grid-cols-2 items-center gap-[clamp(28px,6vw,90px)]"
->
-  <div
-    class="relative pr-3 pb-3 before:content-[''] before:absolute before:inset-[17px_0_0_17px] before:rounded-[18px] before:bg-[var(--gold-light)]"
-  >
-    <app-photo
-      [src]="levels()[0].image"
-      [alt]="levels()[0].alt"
-      photoClass="aspect-[1.45] min-[621px]:aspect-[1.26] rounded-[18px_44px_18px_18px]"
-    />
-    <span
-      class="absolute left-[15px] bottom-[27px] px-[11px] pt-[7px] pb-1 rounded-md bg-white text-[var(--blue-deep)] font-bold text-sm shadow-sm"
-      lang="ne"
+  @if (heroSlides().length > 1) {
+    <button
+      type="button"
+      class="hidden min-[621px]:inline-grid place-items-center absolute top-1/2 left-5 -translate-y-1/2 z-10 w-10 h-10 rounded-full border border-white/25 bg-[#0d1b2a]/55 text-white transition hover:bg-[var(--gold)] hover:text-[var(--navy)] hover:border-[var(--gold)]"
+      aria-label="Previous hero image"
+      (click)="setHeroSlide(activeHero() - 1)"
     >
-      {{ school().nepali }}
-    </span>
-  </div>
-  <div class="max-[620px]:-order-1">
-    <app-eyebrow>About Pragyan Paathshala</app-eyebrow>
-    <h2 class="mt-3">A school that starts with the child</h2>
-    <p class="mt-3 text-[#53627a]">
-      Every child learns differently. At Pragyan, we make room for children to follow their
-      interests, try ideas out and grow at their own pace.
-    </p>
-    <dl class="grid gap-3 my-5">
-      <div class="pl-3.5 border-l-2 border-[var(--gold)]">
-        <dt class="text-[13px] font-bold">Our vision</dt>
-        <dd class="text-sm text-[var(--muted-ink)]">
-          Recognize children’s talents and help them become capable, caring citizens.
-        </dd>
-      </div>
-      <div class="pl-3.5 border-l-2 border-[var(--gold)]">
-        <dt class="text-[13px] font-bold">Our mission</dt>
-        <dd class="text-sm text-[var(--muted-ink)]">{{ school().mission }}</dd>
-      </div>
-    </dl>
-    <app-action-link to="/about" variant="outline">
-      Discover Our School
-    </app-action-link>
-  </div>
-</section>
+      <svg lucideChevronLeft [size]="20"></svg>
+    </button>
+    <button
+      type="button"
+      class="hidden min-[621px]:inline-grid place-items-center absolute top-1/2 right-5 -translate-y-1/2 z-10 w-10 h-10 rounded-full border border-white/25 bg-[#0d1b2a]/55 text-white transition hover:bg-[var(--gold)] hover:text-[var(--navy)] hover:border-[var(--gold)]"
+      aria-label="Next hero image"
+      (click)="setHeroSlide(activeHero() + 1)"
+    >
+      <svg lucideChevronRight [size]="20"></svg>
+    </button>
 
-<!-- Notice Board -->
-<section class="bg-[var(--sunlight)] border-y border-[var(--line)] py-[clamp(40px,4.5vw,68px)]">
-  <div
-    class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] grid grid-cols-1 min-[621px]:grid-cols-[0.82fr_1.18fr] items-center gap-[clamp(22px,6vw,88px)]"
-  >
-    <div>
-      <span
-        class="grid place-items-center flex-none w-10 h-10 mb-3 rounded-[9px] bg-[var(--gold-light)] text-[var(--navy)]"
-      >
-        <svg lucideBell [size]="23"></svg>
-      </span>
-      <app-eyebrow>For parents &amp; students</app-eyebrow>
-      <h2 class="mt-3">Notice Board</h2>
-      <p class="mt-2.5 mb-5 text-[var(--muted-ink)]">
-        Find term schedules, exam information and admission notices here when the school
-        publishes them.
-      </p>
-      <app-action-link to="/notices" variant="outline">
-        View All Notices
-      </app-action-link>
+    <div
+      class="flex items-center justify-center gap-1.5 absolute bottom-4 min-[621px]:bottom-5 left-1/2 -translate-x-1/2 z-10"
+      role="group"
+      aria-label="Choose hero image"
+    >
+      @for (slide of heroSlides(); track slide.src; let idx = $index) {
+        <button
+          type="button"
+          [attr.aria-label]="'Show hero image ' + (idx + 1)"
+          [attr.aria-current]="activeHero() === idx ? 'true' : null"
+          (click)="setHeroSlide(idx)"
+          [class]="
+            'h-2 rounded-full transition-all duration-200 ' +
+            (activeHero() === idx ? 'w-6 bg-[var(--gold)]' : 'w-2 bg-white/50 hover:bg-white/80')
+          "
+        ></button>
+      }
     </div>
-    <app-notice-list [items]="topNotices()" />
-  </div>
+  }
 </section>
 
-<!-- Academic Overview -->
+<!-- 1. Welcome to Pragyan Paathshala -->
 <section
-  class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] py-[clamp(40px,4.5vw,68px)]"
+  class="bg-white py-14 sm:py-20 border-b border-[var(--line)]"
+  aria-labelledby="home-about-heading"
 >
-  <div class="mb-[30px] flex flex-col min-[711px]:flex-row justify-between gap-[25px] min-[711px]:items-end">
-    <div>
-      <app-eyebrow>Academics</app-eyebrow>
-      <h2 class="mt-3">From first discoveries to Grade 8</h2>
-    </div>
-    <p class="w-[min(100%,375px)] text-[var(--muted-ink)]">
-      In the early years, children learn through play. As they grow, they build on that
-      curiosity through practical work and collaboration.
-    </p>
-  </div>
-  <div class="grid grid-cols-1 min-[961px]:grid-cols-2 gap-4">
-    @for (level of levels(); track level.id; let idx = $index) {
-      <article
-        class="overflow-hidden border border-[var(--line)] rounded-2xl bg-white grid grid-cols-1 min-[461px]:grid-cols-[0.92fr_1.08fr]"
+  <div
+    class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center"
+  >
+    <div data-gsap-reveal class="lg:col-span-6 lg:self-start">
+      <app-eyebrow>About Our School</app-eyebrow>
+      <h2
+        id="home-about-heading"
+        class="mt-3 text-[clamp(1.75rem,3vw,2.65rem)] font-bold leading-[1.15] tracking-[-0.03em] text-[var(--navy)]"
       >
-        <app-photo
-          [src]="level.image"
-          [alt]="level.alt"
-          photoClass="min-h-[200px] min-[461px]:min-h-[258px]"
+        Welcome to Pragyan Paathshala
+      </h2>
+      <p class="mt-4 text-[15px] sm:text-base leading-[1.7] text-[var(--muted-ink)]">
+        Established in {{ school().established }} in Latikoili, Birendranagar-9, Surkhet, Pragyan
+        Paathshala is a friendly, student-centered school offering quality education from Early
+        Childhood through Grade 10.
+      </p>
+      <p class="mt-3 text-[15px] sm:text-base leading-[1.7] text-[var(--muted-ink)]">
+       We focus on practical learning, curiosity, good character and individual attention to help every child grow with confidence, both at school and in life.
+      </p>
+      <div class="mt-6">
+        <app-action-link to="/about" variant="primary">
+          Learn More About Us
+        </app-action-link>
+      </div>
+    </div>
+
+    <div data-gsap-media class="lg:col-span-6 lg:self-center">
+      <div class="relative overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--bg)] shadow-sm">
+        <img
+          src="/assets/images/learning-together.webp"
+          alt="Students learning and working together at Pragyan Paathshala"
+          loading="lazy"
+          class="w-full aspect-[16/10] object-cover"
         />
-        <div class="self-center p-[15px] min-[961px]:p-[23px_25px_27px]">
-          <p class="flex items-center gap-[9px] mb-3 text-[var(--blue-deep)] text-xs font-bold">
-            <span
-              class="grid place-items-center h-[27px] min-w-[29px] rounded-md bg-[var(--blue-light)] text-[11px]"
-            >
-              0{{ idx + 1 }}
-            </span>
-            {{ level.grades }}
-          </p>
-          <h3 class="text-[1.35rem] [text-wrap:initial]">{{ level.title }}</h3>
-          <p class="mt-2 text-[var(--muted-ink)] text-[13px]">{{ level.description }}</p>
-          <a
-            class="group mt-[13px] inline-flex items-center w-fit gap-2 text-[var(--blue-deep)] text-[13px] font-bold hover:underline underline-offset-4"
-            routerLink="/academics"
-            [fragment]="level.id"
-            [attr.aria-label]="'Learn more about ' + level.title"
-          >
-            Learn more
-            <svg class="shrink-0 transition-transform duration-180 group-hover:translate-x-[3px]" lucideArrowRight [size]="16"></svg>
-          </a>
-        </div>
-      </article>
-    }
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- Student Life -->
-<section class="bg-[var(--bg)] border-y border-[var(--line)] py-[clamp(40px,4.5vw,68px)]">
+<!-- 2. Explore Our Academic Programs -->
+<section
+  class="bg-[var(--bg)] py-14 sm:py-20 border-b border-[var(--line)]"
+  aria-labelledby="home-academics-heading"
+>
   <div
     class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)]"
   >
-    <div class="mb-2.5 flex flex-col min-[711px]:flex-row justify-between gap-[25px] min-[711px]:items-end">
-      <div>
-        <app-eyebrow>Student life</app-eyebrow>
-        <h2 class="mt-3">In the classroom and beyond</h2>
-      </div>
-      <a
-        routerLink="/activities"
-        class="group inline-flex items-center w-fit gap-2 text-[var(--blue-deep)] text-[13px] font-bold hover:underline underline-offset-4"
-      >
-        Explore Student Life
-        <svg class="shrink-0 transition-transform duration-180 group-hover:translate-x-[3px]" lucideArrowRight [size]="17"></svg>
-      </a>
-    </div>
-    <p class="text-[var(--muted-ink)] mb-5 text-[13px]">
-      These scenes illustrate learning approaches, not a schedule of school activities.
-    </p>
-    <div
-      class="grid grid-cols-2 min-[621px]:grid-cols-[1.5fr_1fr_1fr] auto-rows-[165px] min-[621px]:auto-rows-[clamp(170px,18vw,240px)] gap-1.5 min-[621px]:gap-2.5"
-    >
-      @for (tile of schoolLife(); track tile.src; let idx = $index; let first = $first; let last = $last) {
-        <article
-          [class]="
-            'relative isolate overflow-hidden rounded-[14px] bg-[var(--navy)] text-white ' +
-            (first ? 'col-span-2 min-[621px]:col-span-1 min-[621px]:row-span-2 ' : '') +
-            (last ? 'min-[621px]:col-span-2 [&_img]:object-[center_47%] ' : '')
-          "
+    <div data-gsap-reveal class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div class="max-w-2xl">
+        <app-eyebrow>Academics · Early Childhood to Grade 10</app-eyebrow>
+        <h2
+          id="home-academics-heading"
+          class="mt-3 text-[clamp(1.75rem,3vw,2.5rem)] font-bold leading-[1.15] tracking-[-0.03em] text-[var(--navy)]"
         >
-          <app-photo
-            [src]="tile.src"
-            [alt]="tile.alt"
-            photoClass="absolute inset-0 -z-10 after:content-[''] after:absolute after:inset-0 after:bg-gradient-to-t after:from-[var(--navy)] after:to-transparent after:to-[66%] [&_figcaption]:z-[1] [&_figcaption]:top-2.5 [&_figcaption]:bottom-auto"
-          />
-          <div class="absolute inset-x-[9px] bottom-[9px] min-[621px]:inset-x-[15px] min-[621px]:bottom-[15px]">
-            <h3 class="text-base min-[621px]:text-[1.22rem] [text-wrap:initial]">{{ tile.title }}</h3>
-            <p class="text-[var(--blue-light)] mt-1 text-xs">{{ tile.description }}</p>
+          Explore Our Academic Programs
+        </h2>
+        <p class="mt-3 text-[15px] sm:text-base text-[var(--muted-ink)]">
+          A complete, well-guided learning journey that builds strong foundations in early years and
+          prepares students through Grade 10.
+        </p>
+      </div>
+      <div class="shrink-0">
+        <app-action-link to="/academics" variant="primary">
+          Explore Academics
+        </app-action-link>
+      </div>
+    </div>
+
+    <div data-gsap-stagger-group class="mt-9 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      @for (stage of academicStages; track stage.id) {
+        <a
+          data-gsap-card
+          routerLink="/academics/levels"
+          [fragment]="stage.id"
+          class="group flex flex-col justify-between rounded-2xl border border-[var(--line)] bg-white p-6 transition hover:-translate-y-0.5 hover:border-[var(--blue)] hover:shadow-md"
+        >
+          <div>
+            <div class="flex items-center justify-between gap-2">
+              <span class="text-xs font-bold tracking-[0.08em] uppercase text-[var(--blue)]">
+                Stage {{ stage.step }}
+              </span>
+              <span
+                class="rounded-full bg-[color-mix(in_srgb,var(--gold)_20%,white)] px-2.5 py-0.5 text-[11px] font-semibold text-[var(--navy)]"
+              >
+                {{ stage.grades }}
+              </span>
+            </div>
+            <h3
+              class="mt-3 text-lg font-bold text-[var(--navy)] group-hover:text-[var(--blue)] transition-colors"
+            >
+              {{ stage.title }}
+            </h3>
+            <p class="mt-2 text-sm leading-[1.6] text-[var(--muted-ink)]">
+              {{ stage.shortDescription }}
+            </p>
           </div>
-        </article>
+          <span
+            class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--blue)] group-hover:gap-2.5 transition-all"
+          >
+            View stage
+            <svg lucideArrowRight [size]="15"></svg>
+          </span>
+        </a>
       }
     </div>
   </div>
 </section>
 
-<!-- School Moments Carousel -->
+<!-- 3. Learning Beyond the Classroom -->
 <section
-  class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] py-[clamp(40px,4.5vw,68px)]"
-  aria-roledescription="carousel"
-  aria-labelledby="moments-heading"
+  class="bg-white py-14 sm:py-20 border-b border-[var(--line)]"
+  aria-labelledby="home-beyond-heading"
 >
-  <div class="mb-[30px] flex flex-col min-[711px]:flex-row justify-between gap-[25px] min-[711px]:items-end">
-    <div>
-      <app-eyebrow>School moments</app-eyebrow>
-      <h2 id="moments-heading" class="mt-3">A closer look at how children learn</h2>
+  <div
+    class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)]"
+  >
+    <div data-gsap-reveal class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div class="max-w-2xl">
+        <app-eyebrow>Holistic Growth</app-eyebrow>
+        <h2
+          id="home-beyond-heading"
+          class="mt-3 text-[clamp(1.75rem,3vw,2.5rem)] font-bold leading-[1.15] tracking-[-0.03em] text-[var(--navy)]"
+        >
+          Learning Beyond the Classroom
+        </h2>
+        <p class="mt-3 text-[15px] sm:text-base text-[var(--muted-ink)]">
+          Children grow best when classroom lessons are paired with sports, creative arts, hands-on
+          discovery and teamwork.
+        </p>
+      </div>
+      <div class="shrink-0">
+        <app-action-link to="/activities" variant="primary">
+          Explore Student Life
+        </app-action-link>
+      </div>
     </div>
-    <a
-      routerLink="/gallery"
-      class="group inline-flex items-center w-fit gap-2 text-[var(--blue-deep)] text-[13px] font-bold hover:underline underline-offset-4"
-    >
-      Explore the Gallery
-      <svg class="shrink-0 transition-transform duration-180 group-hover:translate-x-[3px]" lucideArrowRight [size]="17"></svg>
-    </a>
+
+    <div data-gsap-stagger-group class="mt-9 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      @for (item of beyondClassroom; track item.title) {
+        <a
+          data-gsap-card
+          routerLink="/activities"
+          class="group overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--bg)] transition hover:-translate-y-0.5 hover:shadow-md"
+        >
+          <div class="aspect-[4/3] overflow-hidden bg-[var(--bg)]">
+            <img
+              [src]="item.image"
+              [alt]="item.alt"
+              loading="lazy"
+              class="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
+            />
+          </div>
+          <div class="p-5">
+            <h3 class="text-base font-bold text-[var(--navy)] group-hover:text-[var(--blue)] transition-colors">
+              {{ item.title }}
+            </h3>
+            <p class="mt-1.5 text-sm leading-[1.55] text-[var(--muted-ink)]">
+              {{ item.description }}
+            </p>
+          </div>
+        </a>
+      }
+    </div>
   </div>
-  <div class="overflow-hidden rounded-[18px] bg-[var(--navy)] text-white [&_:focus-visible]:outline-[var(--gold)]">
-    <div
-      class="relative grid grid-flow-col auto-cols-[100%] overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden focus-visible:outline-offset-[-4px]"
-      #momentsTrack
-      id="moments-track"
-      tabindex="0"
-      aria-label="Swipe or use arrow keys to browse images"
-      (scroll)="onTrackScroll($event)"
-      (keydown)="onTrackKeydown($event)"
-    >
-      @for (photo of photos(); track photo.src; let idx = $index) {
-        <article
-          class="snap-start grid grid-cols-1 min-[621px]:grid-cols-[minmax(0,2.25fr)_minmax(0,1fr)]"
-          aria-roledescription="slide"
-          [attr.aria-label]="idx + 1 + ' of ' + photos().length"
-          [attr.aria-hidden]="activeMoment() !== idx"
+</section>
+
+<!-- 4. Why Choose Pragyan Paathshala? -->
+<section
+  class="bg-[var(--bg)] py-14 sm:py-20 border-b border-[var(--line)]"
+  aria-labelledby="home-why-heading"
+>
+  <div
+    class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center"
+  >
+    <div data-gsap-media class="lg:col-span-5 order-2 lg:order-1">
+      <div class="overflow-hidden rounded-2xl border border-[var(--line)] bg-white shadow-sm">
+        <img
+          src="/assets/images/early-learning.webp"
+          alt="Teacher guiding young learners at Pragyan Paathshala"
+          loading="lazy"
+          class="w-full aspect-[4/3] object-cover"
+        />
+      </div>
+    </div>
+
+    <div data-gsap-reveal class="lg:col-span-7 order-1 lg:order-2">
+      <app-eyebrow>Why Families Trust Us</app-eyebrow>
+      <h2
+        id="home-why-heading"
+        class="mt-3 text-[clamp(1.75rem,3vw,2.5rem)] font-bold leading-[1.15] tracking-[-0.03em] text-[var(--navy)]"
+      >
+        Why Choose Pragyan Paathshala?
+      </h2>
+      <p class="mt-3 text-[15px] sm:text-base text-[var(--muted-ink)] max-w-2xl">
+        We work closely with parents to create a safe, joyful and disciplined school community where
+        every student feels known and supported.
+      </p>
+
+      <ul data-gsap-stagger-group class="mt-7 grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+        @for (point of whyChoosePoints; track point) {
+          <li
+            data-gsap-card
+            class="flex items-start gap-3 rounded-xl border border-[var(--line)] bg-white p-4 text-sm font-semibold text-[var(--navy)]"
+          >
+            <svg class="mt-0.5 shrink-0 text-[var(--blue)]" lucideCheckCircle2 [size]="18"></svg>
+            <span>{{ point }}</span>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 5. Life at Our School -->
+<section
+  class="bg-white py-14 sm:py-20 border-b border-[var(--line)]"
+  aria-labelledby="home-life-heading"
+>
+  <div
+    class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)]"
+  >
+    <div data-gsap-reveal class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div class="max-w-2xl">
+        <app-eyebrow>Student Life</app-eyebrow>
+        <h2
+          id="home-life-heading"
+          class="mt-3 text-[clamp(1.75rem,3vw,2.5rem)] font-bold leading-[1.15] tracking-[-0.03em] text-[var(--navy)]"
+        >
+          Life at Our School
+        </h2>
+        <p class="mt-3 text-[15px] sm:text-base text-[var(--muted-ink)]">
+          From daily classroom discussions to outdoor play and creative projects, every school day
+          is built around active student participation.
+        </p>
+      </div>
+      <div class="shrink-0">
+        <app-action-link to="/activities" variant="primary">
+          Explore Student Life
+        </app-action-link>
+      </div>
+    </div>
+
+    <div data-gsap-stagger-group class="mt-9 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+      @for (item of lifePhotos; track item.caption) {
+        <figure
+          data-gsap-card
+          [class]="
+            'group relative overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--bg)] ' +
+            item.spanClass
+          "
+        >
+          <img
+            [src]="item.src"
+            [alt]="item.alt"
+            loading="lazy"
+            class="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+          />
+          <figcaption
+            class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0d1b2acc] via-[#0d1b2a66] to-transparent px-4 py-3 text-sm font-semibold text-white"
+          >
+            {{ item.caption }}
+          </figcaption>
+        </figure>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- 6. What's Happening at Our School? -->
+<section
+  class="bg-[var(--bg)] py-14 sm:py-20 border-b border-[var(--line)]"
+  aria-labelledby="home-updates-heading"
+>
+  <div
+    class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)]"
+  >
+    <div data-gsap-reveal class="max-w-2xl">
+      <app-eyebrow>Events &amp; Notices</app-eyebrow>
+      <h2
+        id="home-updates-heading"
+        class="mt-3 text-[clamp(1.75rem,3vw,2.5rem)] font-bold leading-[1.15] tracking-[-0.03em] text-[var(--navy)]"
+      >
+        What's Happening at Our School?
+      </h2>
+      <p class="mt-3 text-[15px] sm:text-base text-[var(--muted-ink)]">
+        Stay informed about upcoming school events, important announcements and calendar dates for
+        parents and students.
+      </p>
+    </div>
+
+    <div data-gsap-stagger-group class="mt-9 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <!-- Upcoming Events -->
+      <div data-gsap-card class="lg:col-span-5 rounded-2xl border border-[var(--line)] bg-white p-6">
+        <div class="flex items-center justify-between gap-3 pb-4 border-b border-[var(--line)]">
+          <h3 class="text-lg font-bold text-[var(--navy)]">Upcoming Events</h3>
+          <a
+            routerLink="/events"
+            class="inline-flex items-center gap-1 text-sm font-semibold text-[var(--blue)] hover:text-[var(--navy)] transition-colors"
+          >
+            View All Events
+            <svg lucideArrowRight [size]="14"></svg>
+          </a>
+        </div>
+
+        @if (upcomingEvents().length > 0) {
+          <ul class="mt-4 divide-y divide-[var(--line)]">
+            @for (event of upcomingEvents(); track event.title + event.date) {
+              <li class="py-3.5 first:pt-1 last:pb-1">
+                <a routerLink="/events" class="group block">
+                  <div class="flex items-center gap-2 text-xs font-semibold text-[var(--blue)]">
+                    <svg lucideCalendarDays [size]="14"></svg>
+                    <span>{{ event.date }}</span>
+                  </div>
+                  <p class="mt-1 text-sm font-bold text-[var(--navy)] group-hover:text-[var(--blue)] transition-colors">
+                    {{ event.title }}
+                  </p>
+                  @if (event.summary) {
+                    <p class="mt-1 text-xs leading-[1.55] text-[var(--muted-ink)] line-clamp-2">
+                      {{ event.summary }}
+                    </p>
+                  }
+                </a>
+              </li>
+            }
+          </ul>
+        } @else {
+          <div class="py-8 text-center">
+            <p class="text-sm text-[var(--muted-ink)]">
+              No upcoming events are scheduled right now. Check the events page for school calendar
+              updates.
+            </p>
+            <a
+              routerLink="/events"
+              class="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--blue)] hover:text-[var(--navy)]"
+            >
+              Visit Events Page
+              <svg lucideArrowRight [size]="14"></svg>
+            </a>
+          </div>
+        }
+      </div>
+
+      <!-- Latest Notices -->
+      <div data-gsap-card class="lg:col-span-7 rounded-2xl border border-[var(--line)] bg-white p-6">
+        <div class="flex items-center justify-between gap-3 pb-4 border-b border-[var(--line)]">
+          <h3 class="text-lg font-bold text-[var(--navy)]">Latest Notices</h3>
+          <a
+            routerLink="/notices"
+            class="inline-flex items-center gap-1 text-sm font-semibold text-[var(--blue)] hover:text-[var(--navy)] transition-colors"
+          >
+            View All Notices
+            <svg lucideArrowRight [size]="14"></svg>
+          </a>
+        </div>
+
+        <div class="mt-4">
+          <app-notice-list [items]="topNotices()" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. Student Achievement Showcase -->
+<app-achievement-showcase [limit]="3" [showViewAll]="true" [compactIntro]="true" />
+
+<!-- 8. Explore Our School (Gallery) -->
+<section
+  class="bg-white py-14 sm:py-20 border-b border-[var(--line)]"
+  aria-labelledby="home-gallery-heading"
+>
+  <div
+    class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)]"
+  >
+    <div data-gsap-reveal class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div class="max-w-2xl">
+        <app-eyebrow>Photo Gallery</app-eyebrow>
+        <h2
+          id="home-gallery-heading"
+          class="mt-3 text-[clamp(1.75rem,3vw,2.5rem)] font-bold leading-[1.15] tracking-[-0.03em] text-[var(--navy)]"
+        >
+          Explore Our School
+        </h2>
+        <p class="mt-3 text-[15px] sm:text-base text-[var(--muted-ink)]">
+          A closer look at our classrooms, outdoor spaces and student activities in Surkhet.
+        </p>
+      </div>
+      <div class="shrink-0">
+        <app-action-link to="/gallery" variant="primary">
+          View Gallery
+        </app-action-link>
+      </div>
+    </div>
+
+    <div data-gsap-stagger-group class="mt-9 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      @for (photo of photos(); track photo.src; let first = $first) {
+        <figure
+          data-gsap-card
+          [class]="
+            'overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--bg)] ' +
+            (first ? 'sm:col-span-2 lg:col-span-2 lg:row-span-2 min-h-[240px]' : 'aspect-[4/3]')
+          "
         >
           <app-photo
             [src]="photo.src"
             [alt]="photo.alt"
-            photoClass="aspect-[1.6] min-[621px]:aspect-[2.05]"
+            photoClass="h-full w-full object-cover"
+            class="block h-full w-full"
           />
-          <div class="self-stretch min-[621px]:self-center p-[clamp(16px,3vw,43px)]">
-            <span class="block text-[var(--gold)] text-[11px] tracking-[0.13em] mb-1 min-[621px]:mb-[13px] font-bold">
-              {{ formatSlideIndex(idx + 1) }} / {{ formatSlideIndex(photos().length) }}
-            </span>
-            <p class="flex items-center gap-2.5 text-[11px] font-extrabold uppercase tracking-[0.125em] text-[var(--gold-light)]">
-              <span class="inline-block h-0.5 w-[18px] flex-none rounded-lg bg-[var(--sunrise)]" aria-hidden="true"></span>
-              {{ photo.category }}
-            </p>
-            <h3 class="mt-2 text-[clamp(1.5rem,3vw,2.6rem)] [text-wrap:initial]">{{ photo.title }}</h3>
-            <p class="mt-[7px] text-[var(--blue-light)] text-[13px]">
-              Illustrative photography for the school gallery.
-            </p>
-          </div>
-        </article>
+        </figure>
       }
     </div>
-    <div
-      class="flex items-center justify-between gap-2.5 px-4 py-2 border-t border-white/20"
-    >
-      <div class="flex items-center gap-[5px]" aria-label="Choose an image">
-        @for (photo of photos(); track photo.src; let idx = $index) {
-          <button
-            type="button"
-            [attr.aria-label]="'Show ' + photo.title"
-            aria-controls="moments-track"
-            [attr.aria-current]="activeMoment() === idx ? 'true' : null"
-            (click)="jumpToSlide(idx)"
-            [class]="
-              'grid place-items-center w-7 h-8 rounded-[5px] before:content-[\'\'] before:h-[7px] before:rounded-[20px] before:transition-all before:duration-180 ' +
-              (activeMoment() === idx
-                ? 'before:w-5 before:bg-[var(--gold)]'
-                : 'before:w-[7px] before:bg-[var(--blue-light)] hover:before:bg-[var(--gold-light)]')
-            "
-          ></button>
-        }
-      </div>
-      <span class="sr-only" aria-live="polite">
-        {{ activePhoto().title }}, image {{ activeMoment() + 1 }} of {{ photos().length }}
-      </span>
-      <div class="flex items-center gap-[5px]">
-        <button
-          type="button"
-          class="inline-grid place-items-center shrink-0 w-[42px] h-[42px] rounded-[9px] text-white bg-white/12 hover:bg-[var(--gold)] hover:text-[var(--navy)]"
-          aria-label="Previous image"
-          aria-controls="moments-track"
-          (click)="jumpToSlide(activeMoment() - 1)"
-        >
-          <svg lucideChevronLeft [size]="21"></svg>
-        </button>
-        <button
-          type="button"
-          class="inline-grid place-items-center shrink-0 w-[42px] h-[42px] rounded-[9px] text-white bg-white/12 hover:bg-[var(--gold)] hover:text-[var(--navy)]"
-          aria-label="Next image"
-          aria-controls="moments-track"
-          (click)="jumpToSlide(activeMoment() + 1)"
-        >
-          <svg lucideChevronRight [size]="21"></svg>
-        </button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- School News & Upcoming Events -->
-<section class="bg-[var(--sunlight)] border-y border-[var(--line)] py-[clamp(40px,4.5vw,68px)]">
-  <div
-    class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] grid grid-cols-1 min-[621px]:grid-cols-[1.14fr_0.86fr] gap-[clamp(22px,4vw,55px)]"
-  >
-    <div class="min-w-0 flex flex-col gap-3.5">
-      <div class="flex items-end justify-between flex-wrap gap-x-3 gap-y-1.5">
-        <div>
-          <app-eyebrow>From the school</app-eyebrow>
-          <h2 class="mt-3 [text-wrap:initial] text-[clamp(1.65rem,3vw,2.65rem)]">School News</h2>
-        </div>
-        <a
-          routerLink="/news"
-          class="group inline-flex items-center w-fit gap-2 text-[var(--blue-deep)] text-[13px] font-bold hover:underline underline-offset-4"
-        >
-          View All News
-          <svg class="shrink-0 transition-transform duration-180 group-hover:translate-x-[3px]" lucideArrowUpRight [size]="16"></svg>
-        </a>
-      </div>
-      @if (featuredNews(); as item) {
-        <article class="overflow-hidden border border-[var(--line)] rounded-[14px] bg-white">
-          <app-photo [src]="item.image" alt="" photoClass="h-[clamp(162px,17vw,246px)]" />
-          <div class="p-4">
-            <app-update-meta [item]="item" />
-            <h3 class="mt-[9px] mb-[5px] [text-wrap:initial]">{{ item.title }}</h3>
-            <p class="text-[var(--muted-ink)] text-[13px]">{{ item.summary }}</p>
-            <a
-              class="group mt-[11px] inline-flex items-center w-fit gap-2 text-[var(--blue-deep)] text-[13px] font-bold hover:underline underline-offset-4"
-              [routerLink]="content.updatePath(item)"
-              [attr.aria-label]="'View details: ' + item.title"
-            >
-              View details
-              <svg class="shrink-0 transition-transform duration-180 group-hover:translate-x-[3px]" lucideArrowRight [size]="16"></svg>
-            </a>
-          </div>
-        </article>
-      }
-      @if (secondaryNews().length > 0) {
-        <app-notice-list [items]="secondaryNews()" />
-      }
-    </div>
-
-    <div class="min-w-0 flex flex-col gap-3.5">
-      <div class="flex items-end justify-between flex-wrap gap-x-3 gap-y-1.5">
-        <div>
-          <app-eyebrow>School calendar</app-eyebrow>
-          <h2 class="mt-3 [text-wrap:initial] text-[clamp(1.65rem,3vw,2.65rem)]">Upcoming Events</h2>
-        </div>
-        <a
-          routerLink="/events"
-          class="group inline-flex items-center w-fit gap-2 text-[var(--blue-deep)] text-[13px] font-bold hover:underline underline-offset-4"
-        >
-          View All Events
-          <svg class="shrink-0 transition-transform duration-180 group-hover:translate-x-[3px]" lucideArrowUpRight [size]="16"></svg>
-        </a>
-      </div>
-      @if (featuredEvent(); as eventItem) {
-        <article class="overflow-hidden border border-[var(--line)] rounded-[14px] bg-white">
-          <app-photo [src]="eventItem.image" alt="" photoClass="h-[clamp(162px,17vw,246px)]" />
-          <div class="p-4">
-            <app-update-meta [item]="eventItem" />
-            <h3 class="mt-[9px] mb-[5px] [text-wrap:initial]">{{ eventItem.title }}</h3>
-            <p class="text-[var(--muted-ink)] text-[13px]">{{ eventItem.summary }}</p>
-            <a
-              class="group mt-[11px] inline-flex items-center w-fit gap-2 text-[var(--blue-deep)] text-[13px] font-bold hover:underline underline-offset-4"
-              [routerLink]="content.updatePath(eventItem)"
-              [attr.aria-label]="'View details: ' + eventItem.title"
-            >
-              View details
-              <svg class="shrink-0 transition-transform duration-180 group-hover:translate-x-[3px]" lucideArrowRight [size]="16"></svg>
-            </a>
-          </div>
-        </article>
-      }
-      @if (!hasConfirmedEvents()) {
-        <p
-          class="flex items-center gap-[9px] px-[13px] py-3 border border-[var(--line)] rounded-[10px] bg-white text-[var(--muted-ink)] text-[13px]"
-        >
-          <svg class="flex-none text-[var(--blue-deep)]" lucideCalendarDays [size]="19"></svg>
-          No confirmed event dates have been published.
-        </p>
-      }
-    </div>
-  </div>
-</section>
-
-<!-- Growth & Community -->
-<section
-  class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] py-[clamp(40px,4.5vw,68px)]"
->
-  <div class="mb-[30px]">
-    <app-eyebrow>Growing together</app-eyebrow>
-    <h2 class="mt-3">What supports a child’s growth</h2>
-  </div>
-  <div class="grid grid-cols-1 min-[621px]:grid-cols-[1.2fr_0.8fr] gap-3.5">
-    <article
-      class="min-[621px]:row-span-2 bg-[var(--sunlight)] border border-[var(--line)] rounded-2xl overflow-hidden"
-    >
-      <app-photo [src]="photos()[3].src" [alt]="photos()[3].alt" photoClass="aspect-[2.4]" />
-      <div class="p-[clamp(15px,2vw,25px)]">
-        <span
-          class="grid place-items-center flex-none w-10 h-10 rounded-[9px] bg-[var(--blue-light)] text-[var(--blue-deep)]"
-        >
-          <svg lucideHeartHandshake [size]="22"></svg>
-        </span>
-        <h3 class="mt-2.5 [text-wrap:initial]">A child-friendly learning environment</h3>
-        <p class="text-[var(--muted-ink)] mt-1.5 text-[13px]">
-          See the school’s approach to learning spaces and which facilities are still to be
-          confirmed.
-        </p>
-        <a
-          routerLink="/facilities"
-          class="group mt-[11px] inline-flex items-center w-fit gap-2 text-[var(--blue-deep)] text-[13px] font-bold hover:underline underline-offset-4"
-        >
-          Explore the learning environment
-          <svg class="shrink-0 transition-transform duration-180 group-hover:translate-x-[3px]" lucideArrowRight [size]="16"></svg>
-        </a>
-      </div>
-    </article>
-    <article class="p-[clamp(15px,2vw,25px)] bg-[var(--bg)] border border-[var(--line)] rounded-2xl overflow-hidden">
-      <span
-        class="grid place-items-center flex-none w-10 h-10 rounded-[9px] bg-[var(--gold-light)] text-[var(--navy)]"
-      >
-        <svg lucideTrophy [size]="22"></svg>
-      </span>
-      <h3 class="mt-2.5 [text-wrap:initial]">Student Achievements</h3>
-      <p class="text-[var(--muted-ink)] mt-1.5 text-[13px]">
-        Verified student projects, achievements and competition results will be shared here when
-        available.
-      </p>
-      <a
-        class="group mt-[11px] inline-flex items-center w-fit gap-2 text-[var(--blue-deep)] text-[13px] font-bold hover:underline underline-offset-4"
-        routerLink="/news/student-highlights"
-      >
-        Student highlights
-        <svg class="shrink-0 transition-transform duration-180 group-hover:translate-x-[3px]" lucideArrowRight [size]="16"></svg>
-      </a>
-    </article>
-    <article class="p-[clamp(15px,2vw,25px)] bg-[var(--bg)] border border-[var(--line)] rounded-2xl overflow-hidden">
-      <span
-        class="grid place-items-center flex-none w-10 h-10 rounded-[9px] bg-[var(--blue-light)] text-[var(--blue-deep)]"
-      >
-        <svg lucideUsersRound [size]="22"></svg>
-      </span>
-      <h3 class="mt-2.5 [text-wrap:initial]">Teachers &amp; Leadership</h3>
-      <p class="text-[var(--muted-ink)] mt-1.5 text-[13px]">
-        Staff photographs, names and introductions will be added after the school confirms them.
-      </p>
-      <a
-        class="group mt-[11px] inline-flex items-center w-fit gap-2 text-[var(--blue-deep)] text-[13px] font-bold hover:underline underline-offset-4"
-        routerLink="/staff"
-      >
-        Meet the team
-        <svg class="shrink-0 transition-transform duration-180 group-hover:translate-x-[3px]" lucideArrowRight [size]="16"></svg>
-      </a>
-    </article>
-  </div>
-</section>
-
-<section
-  class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] grid grid-cols-1 min-[621px]:grid-cols-[0.78fr_1.22fr] gap-3.5 mb-[clamp(38px,6vw,74px)]"
->
-  <article
-    class="p-[clamp(18px,3vw,35px)] bg-[var(--blue-light)] border border-[var(--line)] rounded-2xl overflow-hidden"
-  >
-    <svg class="text-[var(--blue)] mb-[11px]" lucideQuote [size]="31" aria-hidden="true"></svg>
-    <app-eyebrow>Parent voices</app-eyebrow>
-    <h2 class="mt-3 text-[clamp(1.55rem,2.55vw,2.2rem)]">Hear from families</h2>
-    <p class="text-[var(--muted-ink)] mt-1.5 text-[13px]">
-      Parent testimonials will be added once families share their experiences and give
-      permission to publish them.
-    </p>
-    <small class="block text-[var(--blue-deep)] mt-[11px] font-bold text-[11px]">
-      Placeholder · no testimonial published
-    </small>
-  </article>
-  <article class="content-center border border-[var(--line)] rounded-2xl overflow-hidden bg-white">
-    <div class="grid grid-cols-3 gap-[3px]">
-      @for (item of communityPhotos(); track item.src) {
-        <app-photo
-          [src]="item.src"
-          [alt]="item.alt"
-          photoClass="aspect-[1.3] [&_figcaption]:right-[3px] [&_figcaption]:bottom-[3px] [&_figcaption]:px-1 [&_figcaption]:py-0.5"
-        />
-      }
-    </div>
-    <div class="flex flex-wrap items-center justify-between gap-[9px] p-[13px]">
-      <div>
-        <h3>School community</h3>
-        <p class="text-[var(--muted-ink)] mt-1.5 text-[13px]">
-          {{
-            school().social.length
-              ? 'Find us on our official channels.'
-              : 'Official social links will be added once verified.'
-          }}
-        </p>
-      </div>
-      @if (school().social.length > 0) {
-        @for (social of school().social; track social.url) {
-          <a
-            [href]="social.url"
-            class="group inline-flex items-center w-fit gap-2 text-[var(--blue-deep)] text-[13px] font-bold hover:underline underline-offset-4"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Follow on {{ social.name }}
-            <svg class="shrink-0 transition-transform duration-180 group-hover:translate-x-[3px]" lucideArrowUpRight [size]="16"></svg>
-          </a>
-        }
-      } @else {
-        <a
-          routerLink="/gallery"
-          class="group inline-flex items-center w-fit gap-2 text-[var(--blue-deep)] text-[13px] font-bold hover:underline underline-offset-4"
-        >
-          View gallery
-          <svg class="shrink-0 transition-transform duration-180 group-hover:translate-x-[3px]" lucideImages [size]="17"></svg>
-        </a>
-      }
-    </div>
-  </article>
-</section>
-
-<!-- Admissions Feature -->
-<section
-  class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)]"
->
-  <div
-    class="admission-band relative isolate overflow-hidden grid grid-cols-1 min-[961px]:grid-cols-[1.24fr_0.76fr] items-center gap-[clamp(20px,4vw,55px)] p-[clamp(25px,4.5vw,55px)] rounded-[22px] text-white bg-[var(--blue-deep)] after:content-[''] after:absolute after:-z-10 after:w-[390px] after:h-[390px] after:border after:border-[#fdd41936] after:rounded-full after:-right-[65px] after:-top-[190px] after:shadow-[0_0_0_28px_#fdd4190e,0_0_0_60px_#fdd4190e] [&_:focus-visible]:outline-[var(--gold)]"
-  >
-    <div>
-      <app-eyebrow>Admissions · Nursery to Grade 8</app-eyebrow>
-      <h2 class="mt-3 max-w-[680px] text-[clamp(1.55rem,3.1vw,2.8rem)] [text-wrap:initial]">
-        Give your child a place to learn, grow and discover
-      </h2>
-      <p class="mt-2 text-[#edf3ff]">
-        Start by exploring the grade levels and finding out what to ask before you apply.
-      </p>
-      <div class="flex flex-wrap items-center gap-[11px] mt-[23px]">
-        <app-action-link to="/admissions" variant="gold" icon="diagonal">
-          Admission Inquiry
-        </app-action-link>
-        <app-action-link to="/contact" variant="light-outline" icon="none">
-          Contact the School
-        </app-action-link>
-      </div>
-    </div>
-    <app-admission-steps />
   </div>
 </section>
 
 <!-- Contact Panel -->
 <app-contact-panel />
-  
+
+<!-- Join Our School Community (Admissions CTA) -->
+<section
+  class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] pb-12 sm:pb-16"
+  aria-labelledby="home-cta-heading"
+>
+  <div
+    data-gsap-reveal
+    class="admission-band relative isolate overflow-hidden flex flex-col lg:flex-row lg:items-center justify-between gap-6 p-[clamp(25px,4.5vw,55px)] rounded-[22px] text-white bg-[var(--blue-deep)] after:content-[''] after:absolute after:-z-10 after:w-[390px] after:h-[390px] after:border after:border-[#fdd41936] after:rounded-full after:-right-[65px] after:-top-[190px] after:shadow-[0_0_0_28px_#fdd4190e,0_0_0_60px_#fdd4190e] [&_:focus-visible]:outline-[var(--gold)]"
+  >
+    <div class="max-w-2xl">
+      <app-eyebrow>Admissions · Early Childhood to Grade 10</app-eyebrow>
+      <h2
+        id="home-cta-heading"
+        class="mt-3 text-[clamp(1.55rem,3.1vw,2.6rem)] font-bold leading-[1.15] [text-wrap:initial]"
+      >
+        Join Our School Community
+      </h2>
+      <p class="mt-2.5 text-[#edf3ff] text-[15px] sm:text-base">
+        Give your child a supportive place to learn, grow and discover. Explore our admissions
+        process or contact our school office in Latikoili, Surkhet.
+      </p>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-[11px] shrink-0">
+      <app-action-link to="/admissions" variant="gold" icon="diagonal">
+        Explore Admissions
+      </app-action-link>
+      <app-action-link to="/contact" variant="light-outline" icon="none">
+        Contact Us
+      </app-action-link>
+    </div>
+  </div>
+</section>

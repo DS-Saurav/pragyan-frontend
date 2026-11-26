@@ -61,6 +61,13 @@ export const routes: Routes = [
           import('./features/activities/activities.component').then((m) => m.ActivitiesComponent),
       },
       {
+        path: 'achievements',
+        loadComponent: () =>
+          import('./features/achievements/achievements.component').then(
+            (m) => m.AchievementsComponent,
+          ),
+      },
+      {
         path: 'facilities',
         loadComponent: () =>
           import('./features/facilities/facilities.component').then((m) => m.FacilitiesComponent),

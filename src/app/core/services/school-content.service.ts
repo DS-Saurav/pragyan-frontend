@@ -19,6 +19,7 @@ import {
   LucideShapes,
   LucideSparkles,
   LucideTarget,
+  LucideTrophy,
   LucideUsersRound,
   LucideUtensils,
   LucideVolleyball,
@@ -117,9 +118,28 @@ export class SchoolContentService {
         },
       ],
     },
-    { to: '/activities', title: 'Student Life' },
+    {
+      to: '/activities',
+      title: 'Student Life',
+      children: [
+        {
+          to: '/activities',
+          title: 'Student Life Overview',
+          description:
+            'Explore sports, arts, clubs, outdoor learning and daily student experiences.',
+          icon: LucideVolleyball,
+        },
+        {
+          to: '/achievements',
+          title: 'Achievements',
+          description:
+            'Celebrating student milestones in academics, sports, creativity and competitions.',
+          icon: LucideTrophy,
+        },
+      ],
+    },
     { to: '/gallery', title: 'Gallery' },
-    { to: '/news', title: 'Events & News' },
+    { to: '/events', title: 'Events & Notices' },
     { to: '/contact', title: 'Contact' },
   ];
 
