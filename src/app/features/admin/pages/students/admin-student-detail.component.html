@@ -1,0 +1,221 @@
+<div class="space-y-5">
+  <!-- Back & Actions Bar -->
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <a
+      routerLink="/admin/students"
+      class="inline-flex items-center gap-2 rounded-xl border border-[#e4eaf2] bg-white px-3.5 py-2 text-xs font-semibold text-[#123552] shadow-xs transition hover:border-[#c8dce9] hover:bg-[#f0f7fc]"
+    >
+      <svg lucideArrowLeft [size]="15"></svg>
+      <span>Back to Students</span>
+    </a>
+
+    @if (student(); as s) {
+      <div class="flex flex-wrap items-center gap-2">
+        <select
+          [value]="s.status"
+          (change)="changeStatus($event)"
+          aria-label="Change student status"
+          class="h-9 rounded-xl border border-[#cbd5e1] bg-white px-3 text-xs font-semibold text-[#123552] focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
+        >
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+          <option value="transferred">Transferred</option>
+          <option value="passed_out">Passed Out</option>
+          <option value="suspended">Suspended</option>
+        </select>
+
+        <button
+          type="button"
+          (click)="deleteStudent()"
+          class="inline-flex h-9 items-center gap-1.5 rounded-xl border border-rose-200 bg-white px-3.5 text-xs font-semibold text-rose-600 transition hover:bg-rose-50"
+        >
+          <svg lucideTrash2 [size]="14"></svg>
+          <span>Delete</span>
+        </button>
+      </div>
+    }
+  </div>
+
+  @if (loading()) {
+    <div class="rounded-2xl border border-[#e4eaf2] bg-white p-10 text-center shadow-sm">
+      <p class="text-sm font-semibold text-[#123552]">Loading student details...</p>
+    </div>
+  } @else if (error(); as errMsg) {
+    <div class="rounded-2xl border border-rose-200 bg-rose-50 p-8 text-center">
+      <p class="text-sm font-semibold text-rose-700">{{ errMsg }}</p>
+      <a
+        routerLink="/admin/students"
+        class="mt-3 inline-flex rounded-xl bg-[#1c629e] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#124c7b]"
+      >
+        Return to Students List
+      </a>
+    </div>
+  } @else if (student(); as s) {
+    <!-- Profile Summary Banner -->
+    <div class="rounded-2xl border border-[#e4eaf2] bg-white p-6 shadow-sm">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-4">
+          <div
+            class="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-[#123552] text-xl font-bold text-white shadow-sm"
+          >
+            {{ initials() }}
+          </div>
+          <div>
+            <div class="flex flex-wrap items-center gap-2">
+              <h2 class="text-xl font-bold tracking-tight text-[#123552] sm:text-2xl">
+                {{ s.firstName }} {{ s.lastName }}
+              </h2>
+              <span
+                [class]="
+                  'rounded-full border px-2.5 py-0.5 text-[11px] font-bold uppercase ' +
+                  statusClass(s.status)
+                "
+              >
+                {{ s.status.replace('_', ' ') }}
+              </span>
+            </div>
+            <div class="mt-1.5 flex flex-wrap items-center gap-2 text-xs text-slate-500">
+              <span class="rounded-md bg-[#eaf4fb] px-2 py-0.5 font-semibold text-[#1c629e]">
+                {{ s.admNumber }}
+              </span>
+              <span>&bull;</span>
+              <span class="font-medium text-[#123552]">{{ s.classApplied || 'Unassigned' }}</span>
+              <span>&bull;</span>
+              <span>Roll {{ s.rollNo }}</span>
+              <span>&bull;</span>
+              <span [class]="'rounded px-2 py-0.5 text-[11px] font-bold ' + houseClass(s.house)">
+                {{ s.house }} House
+              </span>
+            </div>
+          </div>
+        </div>
+
+        @if (s.hasAllergies) {
+          <div
+            class="inline-flex items-center gap-2 rounded-xl border border-rose-200 bg-rose-50 px-3.5 py-2 text-xs font-bold text-rose-700"
+          >
+            <svg lucideAlertTriangle [size]="15"></svg>
+            <span>Has Allergies / Medical Notes</span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Detail Sections Grid -->
+    <div class="grid grid-cols-1 gap-5 lg:grid-cols-3">
+      <!-- Personal Information -->
+      <section class="rounded-2xl border border-[#e4eaf2] bg-white p-5 shadow-sm">
+        <div class="mb-4 flex items-center gap-2 border-b border-[#e4eaf2] pb-3">
+          <span
+            class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#eaf4fb] text-[#1c629e]"
+          >
+            <svg lucideUser [size]="16"></svg>
+          </span>
+          <h3 class="text-sm font-bold text-[#123552]">Personal Information</h3>
+        </div>
+        <dl class="space-y-3 text-xs">
+          <div class="flex justify-between gap-3">
+            <dt class="text-slate-500">Gender</dt>
+            <dd class="font-semibold text-[#123552]">{{ s.gender || '—' }}</dd>
+          </div>
+          <div class="flex justify-between gap-3">
+            <dt class="text-slate-500">Date of Birth (A.D.)</dt>
+            <dd class="font-semibold text-[#123552]">{{ s.dob ? s.dob.slice(0, 10) : '—' }}</dd>
+          </div>
+          <div class="flex justify-between gap-3">
+            <dt class="text-slate-500">Date of Birth (B.S.)</dt>
+            <dd class="font-semibold text-[#123552]">{{ s.dobBs || '—' }}</dd>
+          </div>
+          <div class="flex justify-between gap-3">
+            <dt class="text-slate-500">Languages Spoken</dt>
+            <dd class="text-right font-semibold text-[#123552]">{{ s.languagesSpoken || '—' }}</dd>
+          </div>
+          <div class="border-t border-[#f1f5f9] pt-2">
+            <dt class="text-slate-500">Address</dt>
+            <dd class="mt-1 font-semibold text-[#123552]">{{ s.address || '—' }}</dd>
+          </div>
+        </dl>
+      </section>
+
+      <!-- Academic Information -->
+      <section class="rounded-2xl border border-[#e4eaf2] bg-white p-5 shadow-sm">
+        <div class="mb-4 flex items-center gap-2 border-b border-[#e4eaf2] pb-3">
+          <span
+            class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#eaf4fb] text-[#1c629e]"
+          >
+            <svg lucideBookOpen [size]="16"></svg>
+          </span>
+          <h3 class="text-sm font-bold text-[#123552]">Academic Information</h3>
+        </div>
+        <dl class="space-y-3 text-xs">
+          <div class="flex justify-between gap-3">
+            <dt class="text-slate-500">Class</dt>
+            <dd class="font-semibold text-[#123552]">{{ s.classApplied || '—' }}</dd>
+          </div>
+          <div class="flex justify-between gap-3">
+            <dt class="text-slate-500">Roll Number</dt>
+            <dd class="font-semibold text-[#123552]">{{ s.rollNo }}</dd>
+          </div>
+          <div class="flex justify-between gap-3">
+            <dt class="text-slate-500">Academic Year</dt>
+            <dd class="font-semibold text-[#123552]">{{ s.academicYear || '—' }}</dd>
+          </div>
+          <div class="flex justify-between gap-3">
+            <dt class="text-slate-500">House</dt>
+            <dd class="font-semibold text-[#123552]">{{ s.house || '—' }}</dd>
+          </div>
+          <div class="flex justify-between gap-3">
+            <dt class="text-slate-500">English Level (EAL)</dt>
+            <dd class="font-semibold text-[#123552]">{{ s.eal || '—' }}</dd>
+          </div>
+          <div class="flex justify-between gap-3">
+            <dt class="text-slate-500">Admission Date</dt>
+            <dd class="font-semibold text-[#123552]">
+              {{ s.admissionDate ? s.admissionDate.slice(0, 10) : '—' }}
+            </dd>
+          </div>
+          <div class="border-t border-[#f1f5f9] pt-2">
+            <dt class="text-slate-500">Previous School</dt>
+            <dd class="mt-1 font-semibold text-[#123552]">{{ s.previousSchool || '—' }}</dd>
+          </div>
+        </dl>
+      </section>
+
+      <!-- Medical & Additional Details -->
+      <section class="rounded-2xl border border-[#e4eaf2] bg-white p-5 shadow-sm">
+        <div class="mb-4 flex items-center gap-2 border-b border-[#e4eaf2] pb-3">
+          <span
+            class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#eaf4fb] text-[#1c629e]"
+          >
+            <svg lucideHeartPulse [size]="16"></svg>
+          </span>
+          <h3 class="text-sm font-bold text-[#123552]">Medical &amp; Additional</h3>
+        </div>
+        <dl class="space-y-3 text-xs">
+          <div class="flex justify-between gap-3">
+            <dt class="text-slate-500">Blood Group</dt>
+            <dd class="font-semibold text-[#123552]">{{ s.bloodGroup || '—' }}</dd>
+          </div>
+          <div class="flex justify-between gap-3">
+            <dt class="text-slate-500">Emergency Contact</dt>
+            <dd class="text-right font-semibold text-[#123552]">{{ s.emergencyContact || '—' }}</dd>
+          </div>
+          <div class="flex justify-between gap-3">
+            <dt class="text-slate-500">Allergies / Medical Notes</dt>
+            <dd
+              [class]="
+                'font-semibold ' + (s.hasAllergies ? 'text-rose-600' : 'text-emerald-700')
+              "
+            >
+              {{ s.hasAllergies ? 'Yes' : 'None' }}
+            </dd>
+          </div>
+          <div class="border-t border-[#f1f5f9] pt-2">
+            <dt class="text-slate-500">Hobbies &amp; Interests</dt>
+            <dd class="mt-1 font-semibold text-[#123552]">{{ s.hobbies || '—' }}</dd>
+          </div>
+        </dl>
+      </section>
+    </div>
+  }
+</div>

@@ -1,9 +1,19 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  computed,
+  inject,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   LucideBook,
   LucideBriefcase,
+  LucideCheck,
   LucideCheckCircle2,
+  LucideChevronDown,
   LucideFolderOpen,
   LucidePencil,
   LucidePrinter,
@@ -25,11 +35,14 @@ import { AdminFlashService } from '../../services/admin-flash.service';
     LucideFolderOpen,
     LucidePrinter,
     LucidePencil,
+    LucideChevronDown,
+    LucideCheck,
   ],
   templateUrl: './admin-teachers.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '(document:keydown.escape)': 'closeModals()',
+    '(document:keydown.escape)': 'onEscape()',
+    '(document:click)': 'onDocumentClick($event)',
   },
 })
 export class AdminTeachersComponent {
@@ -37,7 +50,10 @@ export class AdminTeachersComponent {
   private readonly data = inject(AdminDataService);
   private readonly flash = inject(AdminFlashService);
 
+  private readonly statusDropdownRef = viewChild<ElementRef<HTMLElement>>('statusDropdown');
+
   protected readonly statusTab = signal<'all' | TeacherStatus>('all');
+  protected readonly statusMenuOpen = signal(false);
   protected readonly searchQuery = signal('');
   protected readonly addModalOpen = signal(false);
   protected readonly editModalOpen = signal(false);
@@ -53,6 +69,44 @@ export class AdminTeachersComponent {
       assignments: all.reduce((sum, t) => sum + t.assignmentsCount, 0),
     };
   });
+
+  protected readonly statusOptions = computed(() => {
+    const c = this.counts();
+    return [
+      { value: 'all' as const, label: 'All Statuses', count: c.all, dot: 'bg-[#123552]' },
+      { value: 'active' as const, label: 'Active', count: c.active, dot: 'bg-emerald-500' },
+      { value: 'inactive' as const, label: 'Inactive', count: c.inactive, dot: 'bg-slate-400' },
+      { value: 'suspended' as const, label: 'Suspended', count: c.suspended, dot: 'bg-rose-500' },
+    ];
+  });
+
+  protected readonly selectedStatusOption = computed(
+    () =>
+      this.statusOptions().find((opt) => opt.value === this.statusTab()) ??
+      this.statusOptions()[0],
+  );
+
+  protected toggleStatusMenu(): void {
+    this.statusMenuOpen.update((prev) => !prev);
+  }
+
+  protected selectStatus(value: 'all' | TeacherStatus): void {
+    this.statusTab.set(value);
+    this.statusMenuOpen.set(false);
+  }
+
+  protected onDocumentClick(event: MouseEvent): void {
+    if (!this.statusMenuOpen()) return;
+    const el = this.statusDropdownRef()?.nativeElement;
+    if (el && !el.contains(event.target as Node)) {
+      this.statusMenuOpen.set(false);
+    }
+  }
+
+  protected onEscape(): void {
+    this.statusMenuOpen.set(false);
+    this.closeModals();
+  }
 
   protected readonly filteredTeachers = computed(() => {
     const tab = this.statusTab();

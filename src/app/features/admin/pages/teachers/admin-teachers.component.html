@@ -1,162 +1,171 @@
-<div class="space-y-6">
+<div class="space-y-5">
+  <!-- Header & Register Button -->
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h2 class="text-xl font-bold tracking-tight text-[#123552] sm:text-2xl">Teachers</h2>
+    <button
+      type="button"
+      (click)="openAddModal()"
+      class="inline-flex items-center gap-1.5 rounded-xl bg-[#1c629e] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#124c7b]"
+    >
+      <span>+ Register Teacher</span>
+    </button>
+  </div>
+
   <!-- Metric Summary Cards -->
-  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+  <div class="grid grid-cols-2 gap-3 lg:grid-cols-4">
     <div
-      class="flex items-center justify-between rounded-xl border border-slate-800 bg-slate-900 p-5 text-white shadow-sm"
+      class="flex items-center justify-between rounded-2xl border border-[#e4eaf2] bg-white p-4 shadow-xs"
     >
       <div>
-        <p class="text-2xl font-bold">{{ counts().all }}</p>
-        <p class="mt-1 text-xs font-semibold uppercase tracking-wider text-slate-400">
-          Total Teachers
-        </p>
+        <p class="text-xs font-semibold text-slate-500">Total Teachers</p>
+        <p class="mt-1 text-2xl font-bold text-[#123552]">{{ counts().all }}</p>
       </div>
-      <div class="rounded-lg bg-slate-800 p-3">
-        <svg lucideBriefcase [size]="20"></svg>
+      <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#eaf4fb] text-[#1c629e]">
+        <svg lucideBriefcase [size]="18"></svg>
       </div>
     </div>
 
-    <div class="flex items-center justify-between rounded-xl bg-emerald-600 p-5 text-white shadow-sm">
+    <div
+      class="flex items-center justify-between rounded-2xl border border-[#e4eaf2] bg-white p-4 shadow-xs"
+    >
       <div>
-        <p class="text-2xl font-bold">{{ counts().active }}</p>
-        <p class="mt-1 text-xs font-semibold uppercase tracking-wider text-emerald-100">Active</p>
+        <p class="text-xs font-semibold text-slate-500">Active</p>
+        <p class="mt-1 text-2xl font-bold text-emerald-600">{{ counts().active }}</p>
       </div>
-      <div class="rounded-lg bg-emerald-700 p-3">
-        <svg lucideCheckCircle2 [size]="20"></svg>
+      <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
+        <svg lucideCheckCircle2 [size]="18"></svg>
       </div>
     </div>
 
-    <div class="flex items-center justify-between rounded-xl bg-sky-600 p-5 text-white shadow-sm">
+    <div
+      class="flex items-center justify-between rounded-2xl border border-[#e4eaf2] bg-white p-4 shadow-xs"
+    >
       <div>
-        <p class="text-2xl font-bold">{{ counts().assignments }}</p>
-        <p class="mt-1 text-xs font-semibold uppercase tracking-wider text-sky-100">
-          Total Assignments
-        </p>
+        <p class="text-xs font-semibold text-slate-500">Total Assignments</p>
+        <p class="mt-1 text-2xl font-bold text-[#1c629e]">{{ counts().assignments }}</p>
       </div>
-      <div class="rounded-lg bg-sky-700 p-3">
-        <svg lucideBook [size]="20"></svg>
+      <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-50 text-sky-600">
+        <svg lucideBook [size]="18"></svg>
       </div>
     </div>
 
-    <div class="flex items-center justify-between rounded-xl bg-amber-600 p-5 text-white shadow-sm">
+    <div
+      class="flex items-center justify-between rounded-2xl border border-[#e4eaf2] bg-white p-4 shadow-xs"
+    >
       <div>
-        <p class="text-2xl font-bold">{{ counts().inactive }}</p>
-        <p class="mt-1 text-xs font-semibold uppercase tracking-wider text-amber-100">Inactive</p>
+        <p class="text-xs font-semibold text-slate-500">Inactive</p>
+        <p class="mt-1 text-2xl font-bold text-amber-600">{{ counts().inactive }}</p>
       </div>
-      <div class="rounded-lg bg-amber-700 p-3">
-        <svg lucideXCircle [size]="20"></svg>
+      <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-50 text-amber-600">
+        <svg lucideXCircle [size]="18"></svg>
       </div>
     </div>
   </div>
 
-  <!-- Status Tabs Bar -->
-  <div
-    class="flex flex-wrap items-center gap-2 rounded-xl border border-gray-100 bg-white p-3 shadow-sm"
-  >
-    <button
-      type="button"
-      (click)="statusTab.set('all')"
-      [class]="
-        'rounded-lg px-4 py-2 text-xs font-bold transition ' +
-        (statusTab() === 'all'
-          ? 'bg-slate-900 text-white shadow'
-          : 'bg-gray-100 text-gray-700 hover:bg-gray-200')
-      "
+  <!-- Unified Directory Card -->
+  <div class="overflow-hidden rounded-2xl border border-[#e4eaf2] bg-white shadow-sm">
+    <!-- Integrated Filter & Export Toolbar -->
+    <div
+      class="flex flex-wrap items-center justify-between gap-3 border-b border-[#e4eaf2] bg-[#f8fafc] px-4 py-3"
     >
-      ALL ({{ counts().all }})
-    </button>
-    <button
-      type="button"
-      (click)="statusTab.set('active')"
-      [class]="
-        'rounded-lg px-4 py-2 text-xs font-bold transition ' +
-        (statusTab() === 'active'
-          ? 'bg-emerald-600 text-white shadow'
-          : 'bg-gray-100 text-gray-700 hover:bg-gray-200')
-      "
-    >
-      ACTIVE ({{ counts().active }})
-    </button>
-    <button
-      type="button"
-      (click)="statusTab.set('inactive')"
-      [class]="
-        'rounded-lg px-4 py-2 text-xs font-bold transition ' +
-        (statusTab() === 'inactive'
-          ? 'bg-gray-600 text-white shadow'
-          : 'bg-gray-100 text-gray-700 hover:bg-gray-200')
-      "
-    >
-      INACTIVE ({{ counts().inactive }})
-    </button>
-    <button
-      type="button"
-      (click)="statusTab.set('suspended')"
-      [class]="
-        'rounded-lg px-4 py-2 text-xs font-bold transition ' +
-        (statusTab() === 'suspended'
-          ? 'bg-rose-600 text-white shadow'
-          : 'bg-gray-100 text-gray-700 hover:bg-gray-200')
-      "
-    >
-      SUSPENDED ({{ counts().suspended }})
-    </button>
-  </div>
+      <div class="flex flex-1 flex-wrap items-center gap-2.5">
+        <input
+          type="search"
+          [value]="searchQuery()"
+          (input)="searchQuery.set($any($event.target).value)"
+          placeholder="Search name, email, department..."
+          aria-label="Search teachers"
+          class="h-9 w-full rounded-lg border border-[#cbd5e1] bg-white px-3 text-xs text-[#123552] placeholder:text-slate-400 focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15 sm:w-64"
+        />
 
-  <!-- Main Card -->
-  <div class="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
-    <div class="mb-6 flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
-      <div>
-        <h3 class="flex items-center gap-2 text-lg font-bold text-gray-900">
-          <svg lucideBriefcase [size]="18"></svg> Teachers Management
-        </h3>
-        <p class="text-xs text-gray-500">
-          Manage faculty members, specializations, class teacher duties, and course assignments.
-        </p>
+        <div #statusDropdown class="relative">
+          <button
+            type="button"
+            (click)="toggleStatusMenu()"
+            [attr.aria-expanded]="statusMenuOpen()"
+            aria-haspopup="listbox"
+            aria-label="Filter by teacher status"
+            class="inline-flex h-9 min-w-[170px] items-center justify-between gap-2 rounded-lg border border-[#cbd5e1] bg-white px-3 text-xs font-semibold text-[#123552] transition hover:border-[#94a3b8] focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
+          >
+            <span class="flex items-center gap-2">
+              <span [class]="'h-2 w-2 rounded-full ' + selectedStatusOption().dot"></span>
+              <span>{{ selectedStatusOption().label }}</span>
+              <span class="rounded-full bg-[#eaf4fb] px-1.5 py-0.5 text-[10px] font-bold text-[#1c629e]">
+                {{ selectedStatusOption().count }}
+              </span>
+            </span>
+            <svg
+              lucideChevronDown
+              [size]="14"
+              [class]="'text-slate-400 transition ' + (statusMenuOpen() ? 'rotate-180' : '')"
+            ></svg>
+          </button>
+
+          @if (statusMenuOpen()) {
+            <div
+              role="listbox"
+              aria-label="Teacher status options"
+              class="absolute left-0 top-full z-30 mt-1.5 w-52 overflow-hidden rounded-xl border border-[#e4eaf2] bg-white py-1 shadow-lg"
+            >
+              @for (opt of statusOptions(); track opt.value) {
+                <button
+                  type="button"
+                  role="option"
+                  [attr.aria-selected]="statusTab() === opt.value"
+                  (click)="selectStatus(opt.value)"
+                  [class]="
+                    'flex w-full items-center justify-between px-3 py-2 text-left text-xs transition ' +
+                    (statusTab() === opt.value
+                      ? 'bg-[#eaf4fb] font-semibold text-[#123552]'
+                      : 'font-medium text-slate-600 hover:bg-slate-50 hover:text-[#123552]')
+                  "
+                >
+                  <span class="flex items-center gap-2">
+                    <span [class]="'h-2 w-2 rounded-full ' + opt.dot"></span>
+                    <span>{{ opt.label }}</span>
+                  </span>
+                  <span class="flex items-center gap-1.5">
+                    <span class="rounded-full bg-slate-100 px-1.5 py-0.5 text-[10px] font-bold text-slate-600">
+                      {{ opt.count }}
+                    </span>
+                    @if (statusTab() === opt.value) {
+                      <svg lucideCheck [size]="13" class="text-[#1c629e]"></svg>
+                    }
+                  </span>
+                </button>
+              }
+            </div>
+          }
+        </div>
       </div>
-      <button
-        type="button"
-        (click)="openAddModal()"
-        class="inline-flex items-center rounded-lg bg-emerald-600 px-4 py-2 text-xs font-bold text-white shadow transition hover:bg-emerald-700"
-      >
-        + Register Teacher
-      </button>
-    </div>
 
-    <!-- Toolbar -->
-    <div class="mb-6 flex flex-col items-center justify-between gap-4 border-b pb-4 md:flex-row">
       <div class="flex items-center gap-2">
         <button
           type="button"
           (click)="exportCsv()"
-          class="flex items-center gap-1 rounded-md bg-emerald-600 px-3 py-1.5 text-xs font-bold text-white shadow transition hover:bg-emerald-700"
+          class="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[#cbd5e1] bg-white px-3 text-xs font-semibold text-[#123552] transition hover:bg-slate-50"
         >
-          <svg lucideFolderOpen [size]="14"></svg> CSV
+          <svg lucideFolderOpen [size]="14" class="text-[#1c629e]"></svg>
+          <span>CSV</span>
         </button>
         <button
           type="button"
           (click)="printPage()"
-          class="flex items-center gap-1 rounded-md bg-indigo-600 px-3 py-1.5 text-xs font-bold text-white shadow transition hover:bg-indigo-700"
+          class="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[#cbd5e1] bg-white px-3 text-xs font-semibold text-[#123552] transition hover:bg-slate-50"
         >
-          <svg lucidePrinter [size]="14"></svg> PRINT
+          <svg lucidePrinter [size]="14" class="text-[#1c629e]"></svg>
+          <span>Print</span>
         </button>
-      </div>
-
-      <div class="flex w-full gap-2 md:w-auto">
-        <input
-          type="text"
-          [value]="searchQuery()"
-          (input)="searchQuery.set($any($event.target).value)"
-          placeholder="Search teachers..."
-          class="w-full rounded-lg border border-gray-300 p-2.5 text-xs focus:ring-2 focus:ring-indigo-500 md:w-64"
-        />
       </div>
     </div>
 
     <!-- Teachers Table -->
-    <div class="overflow-x-auto rounded-xl border border-gray-200">
-      <table class="min-w-full divide-y divide-gray-200 text-left text-xs">
-        <thead class="bg-[#123552] font-bold uppercase tracking-wider text-white">
-          <tr>
+    <div class="overflow-x-auto">
+      <table class="min-w-full border-collapse text-left text-xs">
+        <thead>
+          <tr
+            class="border-b border-[#e4eaf2] bg-[#f8fafc] text-[11px] font-bold uppercase tracking-wider text-slate-500"
+          >
             <th class="px-4 py-3">Teacher</th>
             <th class="px-4 py-3">Contact</th>
             <th class="px-4 py-3">Specialization</th>
@@ -167,81 +176,97 @@
             <th class="px-4 py-3 text-right">Actions</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-gray-200 bg-white">
+        <tbody class="divide-y divide-[#e4eaf2] bg-white">
           @for (teacher of filteredTeachers(); track teacher.id) {
-            <tr class="transition hover:bg-gray-50/50">
-              <td class="px-4 py-3">
-                <div class="font-bold text-gray-900">
+            <tr class="transition hover:bg-[#f0f7fc]/60">
+              <td class="px-4 py-3.5">
+                <div class="font-semibold text-[#123552]">
                   {{ teacher.firstName }} {{ teacher.lastName }}
                 </div>
-                <div class="font-mono text-[11px] text-gray-400">{{ teacher.username }}</div>
+                <div class="font-mono text-[11px] text-slate-400">{{ teacher.username }}</div>
               </td>
-              <td class="px-4 py-3">
-                <div class="text-gray-800">{{ teacher.email }}</div>
-                <div class="text-[11px] text-gray-400">{{ teacher.phone || 'N/A' }}</div>
+              <td class="px-4 py-3.5">
+                <div class="text-slate-700">{{ teacher.email }}</div>
+                <div class="text-[11px] text-slate-400">{{ teacher.phone || 'N/A' }}</div>
               </td>
-              <td class="px-4 py-3">
+              <td class="px-4 py-3.5">
                 <span
-                  class="rounded-md border bg-indigo-50 px-2.5 py-1 text-[10px] font-bold uppercase text-indigo-700"
+                  class="rounded-md bg-[#eaf4fb] px-2.5 py-1 text-[10px] font-bold uppercase text-[#1c629e]"
                 >
                   {{ teacher.specialization || teacher.department || 'General' }}
                 </span>
               </td>
-              <td class="px-4 py-3 text-center font-bold text-indigo-600">
+              <td class="px-4 py-3.5 text-center font-bold text-[#1c629e]">
                 {{ teacher.classesCount }}
               </td>
-              <td class="px-4 py-3 text-center font-bold text-emerald-600">
+              <td class="px-4 py-3.5 text-center font-bold text-emerald-600">
                 {{ teacher.assignmentsCount }}
               </td>
-              <td class="px-4 py-3 font-medium">
+              <td class="px-4 py-3.5 font-medium">
                 @if (teacher.classTeacherOf) {
-                  <span class="font-bold text-amber-600">&#11088; {{ teacher.classTeacherOf }}</span>
+                  <span class="font-semibold text-amber-600">&#11088; {{ teacher.classTeacherOf }}</span>
                 } @else {
-                  <span class="italic text-gray-400">&mdash;</span>
+                  <span class="text-slate-400">&mdash;</span>
                 }
               </td>
-              <td class="px-4 py-3">
+              <td class="px-4 py-3.5">
                 @if (teacher.status === 'active') {
                   <span
-                    class="rounded-md bg-emerald-100 px-2.5 py-1 text-[10px] font-bold uppercase text-emerald-800"
+                    class="rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-bold uppercase text-emerald-700"
                   >
                     Active
                   </span>
                 } @else if (teacher.status === 'inactive') {
                   <span
-                    class="rounded-md bg-gray-100 px-2.5 py-1 text-[10px] font-bold uppercase text-gray-800"
+                    class="rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-bold uppercase text-slate-600"
                   >
                     Inactive
                   </span>
                 } @else {
                   <span
-                    class="rounded-md bg-rose-100 px-2.5 py-1 text-[10px] font-bold uppercase text-rose-800"
+                    class="rounded-full bg-rose-50 px-2.5 py-1 text-[10px] font-bold uppercase text-rose-700"
                   >
                     Suspended
                   </span>
                 }
               </td>
-              <td class="space-x-1 px-4 py-3 text-right">
+              <td class="px-4 py-3.5 text-right">
                 <button
                   type="button"
                   (click)="openEditModal(teacher)"
-                  class="rounded-md bg-slate-900 px-3 py-1 text-[11px] font-bold text-white shadow transition hover:bg-slate-800"
+                  class="inline-flex items-center gap-1 rounded-lg bg-[#eaf4fb] px-2.5 py-1.5 text-[11px] font-semibold text-[#1c629e] transition hover:bg-[#d8ecfa]"
                 >
-                  Manage
-                </button>
-                <button
-                  type="button"
-                  (click)="openEditModal(teacher)"
-                  class="p-1 text-gray-400 transition hover:text-indigo-600"
-                  title="Edit Details"
-                >
-                  <svg lucidePencil [size]="14"></svg>
+                  <svg lucidePencil [size]="12"></svg>
+                  <span>Edit</span>
                 </button>
               </td>
             </tr>
           } @empty {
             <tr>
-              <td colspan="8" class="px-4 py-8 text-center text-gray-500">No teachers found.</td>
+              <td colspan="8" class="px-6 py-12 text-center">
+                <p class="text-sm font-semibold text-[#123552]">No teachers found</p>
+                <p class="mt-1 text-xs text-slate-500">
+                  Register a new teacher or adjust your search/status filter.
+                </p>
+                <div class="mt-4 flex items-center justify-center gap-2">
+                  @if (searchQuery() || statusTab() !== 'all') {
+                    <button
+                      type="button"
+                      (click)="searchQuery.set(''); statusTab.set('all')"
+                      class="rounded-lg border border-[#e4eaf2] bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-600 transition hover:bg-slate-50"
+                    >
+                      Reset Filters
+                    </button>
+                  }
+                  <button
+                    type="button"
+                    (click)="openAddModal()"
+                    class="rounded-lg bg-[#1c629e] px-3.5 py-1.5 text-xs font-semibold text-white transition hover:bg-[#124c7b]"
+                  >
+                    + Register Teacher
+                  </button>
+                </div>
+              </td>
             </tr>
           }
         </tbody>
@@ -252,106 +277,130 @@
   <!-- Register / Edit Teacher Modal -->
   @if (addModalOpen() || editModalOpen()) {
     <div
-      class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-[#123552]/40 p-4 backdrop-blur-xs"
       (click)="closeModals()"
     >
       <div
-        class="w-full max-w-lg rounded-xl bg-white p-6 shadow-2xl"
+        class="w-full max-w-lg overflow-hidden rounded-2xl border border-[#e4eaf2] bg-white shadow-2xl"
         (click)="$event.stopPropagation()"
       >
-        <div class="mb-4 flex items-center justify-between border-b pb-3">
-          <h3 class="text-md font-bold">
-            {{ editModalOpen() ? 'Edit Teacher Details' : 'Register New Teacher' }}
-          </h3>
-          <button type="button" (click)="closeModals()" class="text-xl">&times;</button>
+        <div class="flex items-center justify-between border-b border-[#e4eaf2] bg-white px-6 py-4">
+          <div>
+            <h3 class="text-lg font-bold tracking-tight text-[#123552]">
+              {{ editModalOpen() ? 'Edit Teacher Details' : 'Register New Teacher' }}
+            </h3>
+            <p class="mt-0.5 text-xs text-slate-500">
+              Fill in faculty contact, department, and status details.
+            </p>
+          </div>
+          <button
+            type="button"
+            aria-label="Close modal"
+            (click)="closeModals()"
+            class="flex h-8 w-8 items-center justify-center rounded-lg border border-[#e4eaf2] bg-[#f8fafc] text-base font-semibold text-slate-500 transition hover:bg-slate-100 hover:text-[#123552]"
+          >
+            &times;
+          </button>
         </div>
 
         <form
           [formGroup]="teacherForm"
           (ngSubmit)="editModalOpen() ? saveEditedTeacher() : saveNewTeacher()"
-          class="space-y-4"
+          class="space-y-4 p-6"
         >
-          <div class="grid grid-cols-2 gap-3">
+          <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div>
-              <label class="mb-1 block text-xs font-bold uppercase">First Name</label>
+              <label class="mb-1.5 block text-xs font-semibold text-[#123552]">
+                First Name <span class="text-rose-500">*</span>
+              </label>
               <input
                 type="text"
                 formControlName="firstName"
                 required
-                class="w-full rounded-lg border p-2.5 text-xs"
+                placeholder="e.g. Ramesh"
+                class="h-10 w-full rounded-xl border border-[#cbd5e1] bg-white px-3.5 text-sm text-[#123552] placeholder:text-slate-400 focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
               />
             </div>
             <div>
-              <label class="mb-1 block text-xs font-bold uppercase">Last Name</label>
+              <label class="mb-1.5 block text-xs font-semibold text-[#123552]">
+                Last Name <span class="text-rose-500">*</span>
+              </label>
               <input
                 type="text"
                 formControlName="lastName"
                 required
-                class="w-full rounded-lg border p-2.5 text-xs"
+                placeholder="e.g. Adhikari"
+                class="h-10 w-full rounded-xl border border-[#cbd5e1] bg-white px-3.5 text-sm text-[#123552] placeholder:text-slate-400 focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
               />
             </div>
           </div>
 
-          <div class="grid grid-cols-2 gap-3">
+          <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div>
-              <label class="mb-1 block text-xs font-bold uppercase">Email Address</label>
+              <label class="mb-1.5 block text-xs font-semibold text-[#123552]">
+                Email Address <span class="text-rose-500">*</span>
+              </label>
               <input
                 type="email"
                 formControlName="email"
                 required
-                class="w-full rounded-lg border p-2.5 text-xs"
+                placeholder="name@school.edu.np"
+                class="h-10 w-full rounded-xl border border-[#cbd5e1] bg-white px-3.5 text-sm text-[#123552] placeholder:text-slate-400 focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
               />
             </div>
             <div>
-              <label class="mb-1 block text-xs font-bold uppercase">Phone Number</label>
+              <label class="mb-1.5 block text-xs font-semibold text-[#123552]">Phone Number</label>
               <input
                 type="text"
                 formControlName="phone"
-                class="w-full rounded-lg border p-2.5 text-xs"
+                placeholder="e.g. 9841000000"
+                class="h-10 w-full rounded-xl border border-[#cbd5e1] bg-white px-3.5 text-sm text-[#123552] placeholder:text-slate-400 focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
               />
             </div>
           </div>
 
-          <div class="grid grid-cols-2 gap-3">
+          <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div>
-              <label class="mb-1 block text-xs font-bold uppercase">Department</label>
+              <label class="mb-1.5 block text-xs font-semibold text-[#123552]">
+                Department <span class="text-rose-500">*</span>
+              </label>
               <input
                 type="text"
                 formControlName="department"
                 required
                 placeholder="e.g. Science"
-                class="w-full rounded-lg border p-2.5 text-xs"
+                class="h-10 w-full rounded-xl border border-[#cbd5e1] bg-white px-3.5 text-sm text-[#123552] placeholder:text-slate-400 focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
               />
             </div>
             <div>
-              <label class="mb-1 block text-xs font-bold uppercase">Specialization</label>
+              <label class="mb-1.5 block text-xs font-semibold text-[#123552]">Specialization</label>
               <input
                 type="text"
                 formControlName="specialization"
                 placeholder="e.g. Mathematics"
-                class="w-full rounded-lg border p-2.5 text-xs"
+                class="h-10 w-full rounded-xl border border-[#cbd5e1] bg-white px-3.5 text-sm text-[#123552] placeholder:text-slate-400 focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
               />
             </div>
           </div>
 
-          <div class="grid grid-cols-2 gap-3">
+          <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div>
-              <label class="mb-1 block text-xs font-bold uppercase">
+              <label class="mb-1.5 block text-xs font-semibold text-[#123552]">
                 Class Teacher Of (Optional)
               </label>
               <input
                 type="text"
                 formControlName="classTeacherOf"
                 placeholder="e.g. Class 1 - A"
-                class="w-full rounded-lg border p-2.5 text-xs"
+                class="h-10 w-full rounded-xl border border-[#cbd5e1] bg-white px-3.5 text-sm text-[#123552] placeholder:text-slate-400 focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
               />
             </div>
             <div>
-              <label class="mb-1 block text-xs font-bold uppercase">Status</label>
+              <label class="mb-1.5 block text-xs font-semibold text-[#123552]">Status</label>
               <select
                 formControlName="status"
                 required
-                class="w-full rounded-lg border p-2.5 text-xs"
+                class="h-10 w-full rounded-xl border border-[#cbd5e1] bg-white px-3 text-sm text-[#123552] focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
               >
                 <option value="active">Active</option>
                 <option value="inactive">Inactive</option>
@@ -360,17 +409,17 @@
             </div>
           </div>
 
-          <div class="flex justify-end space-x-2 pt-2">
+          <div class="flex justify-end gap-2.5 border-t border-[#e4eaf2] pt-4">
             <button
               type="button"
               (click)="closeModals()"
-              class="rounded-lg bg-gray-200 px-4 py-2 text-xs font-bold"
+              class="rounded-xl border border-[#e4eaf2] bg-white px-4 py-2 text-xs font-semibold text-slate-600 transition hover:bg-slate-50"
             >
               Cancel
             </button>
             <button
               type="submit"
-              class="rounded-lg bg-emerald-600 px-4 py-2 text-xs font-bold text-white"
+              class="rounded-xl bg-[#1c629e] px-5 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-[#124c7b]"
             >
               {{ editModalOpen() ? 'Update Teacher' : 'Save Teacher' }}
             </button>

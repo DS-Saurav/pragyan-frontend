@@ -69,6 +69,13 @@ export const ADMIN_ROUTES: Routes = [
           import('./pages/students/admin-students.component').then((m) => m.AdminStudentsComponent),
       },
       {
+        path: 'students/:id',
+        loadComponent: () =>
+          import('./pages/students/admin-student-detail.component').then(
+            (m) => m.AdminStudentDetailComponent,
+          ),
+      },
+      {
         path: 'classes',
         loadComponent: () =>
           import('./pages/classes/admin-classes.component').then((m) => m.AdminClassesComponent),
@@ -118,8 +125,6 @@ export const ADMIN_ROUTES: Routes = [
           import('./pages/settings/admin-settings.component').then((m) => m.AdminSettingsComponent),
       },
       // Placeholder routes for all remaining Laravel admin modules
-      { path: 'admissions', loadComponent: placeholder, data: { title: 'Admissions', section: 'Records', icon: LucideUserPlus } },
-      { path: 'parents', loadComponent: placeholder, data: { title: 'Parents', section: 'Records', icon: LucideUsers } },
       { path: 'assets', loadComponent: placeholder, data: { title: 'Assets', section: 'Records', icon: LucideBox } },
       { path: 'inventory', loadComponent: placeholder, data: { title: 'Stock / Inventory', section: 'Records', icon: LucideBoxes } },
       { path: 'subjects', loadComponent: placeholder, data: { title: 'Subjects', section: 'Records', icon: LucideBook } },
@@ -148,7 +153,13 @@ export const ADMIN_ROUTES: Routes = [
       { path: 'users', loadComponent: placeholder, data: { title: 'Users / Staff', section: 'Administration', icon: LucideUsers } },
       { path: 'settings/marksheet', loadComponent: placeholder, data: { title: 'Marksheet Layout', section: 'Administration', icon: LucideLayoutTemplate } },
       { path: 'settings/website', loadComponent: placeholder, data: { title: 'Website Content', section: 'Administration', icon: LucideGlobe } },
-      { path: 'public-photos', loadComponent: placeholder, data: { title: 'Public Photographs', section: 'Administration', icon: LucideImage } },
+      {
+        path: 'public-photos',
+        loadComponent: () =>
+          import('./pages/public-photos/admin-public-photos.component').then(
+            (m) => m.AdminPublicPhotosComponent,
+          ),
+      },
       { path: 'public-admissions', loadComponent: placeholder, data: { title: 'Public Admissions', section: 'Administration', icon: LucideMegaphone } },
       { path: 'media', loadComponent: placeholder, data: { title: 'Media Library', section: 'Administration', icon: LucideImages } },
       { path: 'gallery', loadComponent: placeholder, data: { title: 'Public Gallery', section: 'Administration', icon: LucideImages } },

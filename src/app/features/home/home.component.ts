@@ -73,16 +73,22 @@ export class HomeComponent {
   protected readonly quickLinks = this.content.quickLinks;
   protected readonly photos = this.content.photos;
 
-  protected readonly heroSlides = computed(() => [
-    {
-      src: '/assets/images/learning-together.webp',
-      alt: 'Illustration of children working together on a handmade model in a Nepalese classroom',
-    },
-    ...this.photos().map((photo) => ({
-      src: photo.src,
-      alt: photo.alt,
-    })),
-  ]);
+  protected readonly heroSlides = computed(() => {
+    const dynamic = this.content.dynamicHeroSlides();
+    if (dynamic.length > 0) {
+      return dynamic;
+    }
+    return [
+      {
+        src: '/assets/images/learning-together.webp',
+        alt: 'Illustration of children working together on a handmade model in a Nepalese classroom',
+      },
+      ...this.photos().map((photo) => ({
+        src: photo.src,
+        alt: photo.alt,
+      })),
+    ];
+  });
   protected readonly activeHero = signal(0);
   private heroPointerStartX: number | null = null;
   private heroPaused = false;
@@ -91,6 +97,7 @@ export class HomeComponent {
   private readonly momentsTrackRef = viewChild<ElementRef<HTMLDivElement>>('momentsTrack');
 
   constructor() {
+    this.content.loadHomepage();
     if (
       typeof window !== 'undefined' &&
       !window.matchMedia('(prefers-reduced-motion: reduce)').matches

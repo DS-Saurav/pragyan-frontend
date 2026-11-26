@@ -195,6 +195,12 @@ app-photo {
   }
 }
 
+#mainContent h1,
+#mainContent h2,
+#mainContent h3 {
+  font-family: var(--heading);
+}
+
 html.dark #mainContent {
   background: var(--ui-dark-canvas);
   color: var(--ui-dark-text);

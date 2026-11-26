@@ -1,4 +1,5 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
   LucideBell,
@@ -38,6 +39,21 @@ import type {
 
 @Injectable({ providedIn: 'root' })
 export class SchoolContentService {
+  private readonly http = inject(HttpClient);
+  readonly dynamicHeroSlides = signal<{ src: string; alt: string }[]>([]);
+
+  loadHomepage(): void {
+    this.http
+      .get<{ heroSlides?: { src: string; alt: string }[] }>('/api/public/homepage')
+      .subscribe({
+        next: (res) => {
+          if (Array.isArray(res.heroSlides)) {
+            this.dynamicHeroSlides.set(res.heroSlides);
+          }
+        },
+      });
+  }
+
   readonly navigation: NavLinkItem[] = [
     { to: '/', title: 'Home' },
     {

@@ -1,201 +1,139 @@
-<div class="space-y-6">
+<div class="space-y-5">
   <!-- Header & Add Button -->
-  <div class="flex items-center justify-between">
-    <h2 class="text-xl font-bold text-gray-800">Students Management</h2>
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h2 class="text-xl font-bold tracking-tight text-[#123552] sm:text-2xl">
+      Students List
+    </h2>
     <button
       type="button"
       (click)="openAddModal()"
-      class="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700"
+      class="inline-flex items-center gap-1.5 rounded-xl bg-[#1c629e] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#124c7b]"
     >
-      + Add Student
+      <span>+ Add Student</span>
     </button>
   </div>
 
-  <!-- Status Filter Ribbon -->
-  <div
-    class="grid grid-cols-2 gap-2 rounded-xl border border-gray-200 bg-white p-3 text-center text-xs font-bold shadow-sm md:grid-cols-6"
-  >
-    <button
-      type="button"
-      (click)="statusFilter.set('')"
-      [class]="
-        'rounded-lg p-3 transition ' +
-        (statusFilter() === ''
-          ? 'bg-slate-900 text-white'
-          : 'bg-gray-100 text-gray-700 hover:bg-gray-200')
-      "
-    >
-      ALL ({{ counts().all }})
-    </button>
-    <button
-      type="button"
-      (click)="statusFilter.set('active')"
-      [class]="
-        'rounded-lg p-3 transition ' +
-        (statusFilter() === 'active'
-          ? 'bg-emerald-600 text-white'
-          : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100')
-      "
-    >
-      ACTIVE ({{ counts().active }})
-    </button>
-    <button
-      type="button"
-      (click)="statusFilter.set('inactive')"
-      [class]="
-        'rounded-lg p-3 transition ' +
-        (statusFilter() === 'inactive'
-          ? 'bg-gray-600 text-white'
-          : 'bg-gray-100 text-gray-700 hover:bg-gray-200')
-      "
-    >
-      INACTIVE ({{ counts().inactive }})
-    </button>
-    <button
-      type="button"
-      (click)="statusFilter.set('transferred')"
-      [class]="
-        'rounded-lg p-3 transition ' +
-        (statusFilter() === 'transferred'
-          ? 'bg-purple-600 text-white'
-          : 'bg-purple-50 text-purple-700 hover:bg-purple-100')
-      "
-    >
-      TRANSFERRED ({{ counts().transferred }})
-    </button>
-    <button
-      type="button"
-      (click)="statusFilter.set('passed_out')"
-      [class]="
-        'rounded-lg p-3 transition ' +
-        (statusFilter() === 'passed_out'
-          ? 'bg-pink-600 text-white'
-          : 'bg-pink-50 text-pink-700 hover:bg-pink-100')
-      "
-    >
-      PASSED OUT ({{ counts().passed_out }})
-    </button>
-    <button
-      type="button"
-      (click)="statusFilter.set('suspended')"
-      [class]="
-        'rounded-lg p-3 transition ' +
-        (statusFilter() === 'suspended'
-          ? 'bg-rose-600 text-white'
-          : 'bg-rose-50 text-rose-700 hover:bg-rose-100')
-      "
-    >
-      SUSPENDED ({{ counts().suspended }})
-    </button>
-  </div>
+  <!-- Unified Directory Card (Filters + Table) -->
+  <div class="overflow-hidden rounded-2xl border border-[#e4eaf2] bg-white shadow-sm">
+    <!-- Integrated Filter Bar -->
+    <div class="border-b border-[#e4eaf2] bg-[#f8fafc] px-4 py-3">
+      <div class="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-12">
+        <div class="lg:col-span-3">
+          <label class="mb-1 block text-[11px] font-semibold text-slate-600">Search</label>
+          <input
+            type="search"
+            [value]="searchFilter()"
+            (input)="searchFilter.set($any($event.target).value)"
+            placeholder="Name, Adm #, or Roll..."
+            class="h-9 w-full rounded-lg border border-[#cbd5e1] bg-white px-3 text-xs text-[#123552] placeholder:text-slate-400 focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
+          />
+        </div>
 
-  <!-- Filter Bar -->
-  <div
-    class="grid grid-cols-1 items-end gap-3 rounded-xl border border-gray-200 bg-white p-4 text-xs shadow-sm md:grid-cols-6"
-  >
-    <div>
-      <label class="mb-1 block font-bold text-gray-700">Search</label>
-      <input
-        type="text"
-        [value]="searchFilter()"
-        (input)="searchFilter.set($any($event.target).value)"
-        placeholder="Search students..."
-        class="w-full rounded-lg border-gray-300 text-xs"
-      />
-    </div>
-    <div>
-      <label class="mb-1 block font-bold text-gray-700">Class</label>
-      <select
-        [value]="classFilter()"
-        (change)="classFilter.set($any($event.target).value)"
-        class="w-full rounded-lg border-gray-300 text-xs"
-      >
-        <option value="">All Classes</option>
-        @for (cls of classOptions(); track cls) {
-          <option [value]="cls">{{ cls }}</option>
-        }
-      </select>
-    </div>
-    <div>
-      <label class="mb-1 block font-bold text-gray-700">Gender</label>
-      <select
-        [value]="genderFilter()"
-        (change)="genderFilter.set($any($event.target).value)"
-        class="w-full rounded-lg border-gray-300 text-xs"
-      >
-        <option value="">All Genders</option>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
-        <option value="Other">Other</option>
-      </select>
-    </div>
-    <div>
-      <label class="mb-1 block font-bold text-gray-700">House</label>
-      <select
-        [value]="houseFilter()"
-        (change)="houseFilter.set($any($event.target).value)"
-        class="w-full rounded-lg border-gray-300 text-xs"
-      >
-        <option value="">All Houses</option>
-        <option value="Red">Red</option>
-        <option value="Blue">Blue</option>
-        <option value="Green">Green</option>
-        <option value="Yellow">Yellow</option>
-      </select>
-    </div>
-    <div>
-      <label class="mb-1 block font-bold text-gray-700">Academic Year</label>
-      <select
-        [value]="yearFilter()"
-        (change)="yearFilter.set($any($event.target).value)"
-        class="w-full rounded-lg border-gray-300 text-xs"
-      >
-        @for (year of academicYears(); track year) {
-          <option [value]="year">
-            {{ year }} {{ year === defaultAcademicYear() ? '(Current)' : '' }}
-          </option>
-        }
-      </select>
-    </div>
-    <div class="flex items-center justify-between gap-2 pt-4">
-      <label class="inline-flex items-center space-x-2">
-        <input
-          type="checkbox"
-          [checked]="allergyFilter()"
-          (change)="allergyFilter.set($any($event.target).checked)"
-          class="rounded border-gray-300 text-indigo-600"
-        />
-        <span class="font-bold text-rose-600">Allergies</span>
-      </label>
-      <button
-        type="button"
-        (click)="clearFilters()"
-        class="rounded-lg bg-gray-100 px-3 py-2 font-bold text-gray-700 hover:bg-gray-200"
-      >
-        Clear
-      </button>
-    </div>
-  </div>
+        <div class="lg:col-span-2">
+          <label class="mb-1 block text-[11px] font-semibold text-slate-600">Class</label>
+          <select
+            [value]="classFilter()"
+            (change)="classFilter.set($any($event.target).value)"
+            class="h-9 w-full rounded-lg border border-[#cbd5e1] bg-white px-2.5 text-xs text-[#123552] focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
+          >
+            <option value="">All Classes</option>
+            @for (cls of classOptions(); track cls) {
+              <option [value]="cls">{{ cls }}</option>
+            }
+          </select>
+        </div>
 
-  <!-- Students Table Card -->
-  <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+        <div class="lg:col-span-2">
+          <label class="mb-1 block text-[11px] font-semibold text-slate-600">Gender</label>
+          <select
+            [value]="genderFilter()"
+            (change)="genderFilter.set($any($event.target).value)"
+            class="h-9 w-full rounded-lg border border-[#cbd5e1] bg-white px-2.5 text-xs text-[#123552] focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
+          >
+            <option value="">All Genders</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="lg:col-span-1">
+          <label class="mb-1 block text-[11px] font-semibold text-slate-600">House</label>
+          <select
+            [value]="houseFilter()"
+            (change)="houseFilter.set($any($event.target).value)"
+            class="h-9 w-full rounded-lg border border-[#cbd5e1] bg-white px-2 text-xs text-[#123552] focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
+          >
+            <option value="">All</option>
+            <option value="Red">Red</option>
+            <option value="Blue">Blue</option>
+            <option value="Green">Green</option>
+            <option value="Yellow">Yellow</option>
+          </select>
+        </div>
+
+        <div class="lg:col-span-2">
+          <label class="mb-1 block text-[11px] font-semibold text-slate-600">Academic Year</label>
+          <select
+            [value]="yearFilter()"
+            (change)="onYearFilterChange($any($event.target).value)"
+            class="h-9 w-full rounded-lg border border-[#cbd5e1] bg-white px-2.5 text-xs text-[#123552] focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
+          >
+            <option value="">All Years</option>
+            @for (year of academicYears(); track year) {
+              <option [value]="year">
+                {{ year }} {{ year === defaultAcademicYear() ? '(Current)' : '' }}
+              </option>
+            }
+          </select>
+        </div>
+
+        <div class="flex items-end justify-between gap-2 lg:col-span-2">
+          <label
+            class="inline-flex h-9 cursor-pointer items-center gap-1.5 rounded-lg border border-[#cbd5e1] bg-white px-2.5 text-xs font-semibold text-rose-600 transition hover:bg-rose-50/60"
+          >
+            <input
+              type="checkbox"
+              [checked]="allergyFilter()"
+              (change)="allergyFilter.set($any($event.target).checked)"
+              class="rounded border-slate-300 text-rose-600 focus:ring-rose-500"
+            />
+            <span>Allergies</span>
+          </label>
+          <button
+            type="button"
+            (click)="clearFilters()"
+            class="h-9 rounded-lg border border-[#e4eaf2] bg-white px-3 text-xs font-semibold text-slate-600 transition hover:bg-slate-100 hover:text-[#123552]"
+          >
+            Clear
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Students Table -->
     <div class="overflow-x-auto">
       <table class="w-full border-collapse text-left text-sm">
         <thead>
-          <tr class="bg-[#123552] text-xs uppercase tracking-wider text-white">
-            <th class="p-4">Adm #</th>
-            <th class="p-4">Student</th>
-            <th class="p-4">EAL</th>
-            <th class="p-4">Class</th>
-            <th class="p-4">Status</th>
-            <th class="p-4">House</th>
-            <th class="p-4">Allergies</th>
-            <th class="p-4 text-right">Actions</th>
+          <tr
+            class="border-b border-[#e4eaf2] bg-[#f8fafc] text-[11px] font-bold uppercase tracking-wider text-slate-500"
+          >
+            <th class="px-4 py-3">Adm #</th>
+            <th class="px-4 py-3">Student</th>
+            <th class="px-4 py-3">EAL</th>
+            <th class="px-4 py-3">Class</th>
+            <th class="px-4 py-3">Status</th>
+            <th class="px-4 py-3">House</th>
+            <th class="px-4 py-3">Allergies</th>
+            <th class="px-4 py-3 text-right">Actions</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200 text-xs">
           @for (student of filteredStudents(); track student.id) {
-            <tr class="transition hover:bg-gray-50">
+            <tr
+              (click)="openDetail(student.id)"
+              class="cursor-pointer transition hover:bg-[#f0f7fc]/70"
+            >
               <td class="p-4 font-bold text-indigo-600">{{ student.admNumber }}</td>
               <td class="p-4">
                 <div class="flex items-center space-x-2">
@@ -248,7 +186,7 @@
                   <span class="text-gray-400">&mdash;</span>
                 }
               </td>
-              <td class="p-4 text-right">
+              <td class="p-4 text-right" (click)="$event.stopPropagation()">
                 <div class="inline-flex items-center space-x-1">
                   <button
                     type="button"
@@ -348,7 +286,33 @@
             </tr>
           } @empty {
             <tr>
-              <td colspan="8" class="p-8 text-center text-gray-400">No students found.</td>
+              <td colspan="8" class="px-6 py-12 text-center">
+                @if (studentsLoading()) {
+                  <p class="text-sm font-semibold text-[#123552]">Loading students...</p>
+                  <p class="mt-1 text-xs text-slate-500">Fetching records from server.</p>
+                } @else {
+                  <p class="text-sm font-semibold text-[#123552]">No students found</p>
+                  <p class="mt-1 text-xs text-slate-500">
+                    Try clearing your filters or add a new student record.
+                  </p>
+                  <div class="mt-4 flex items-center justify-center gap-2">
+                    <button
+                      type="button"
+                      (click)="clearFilters()"
+                      class="rounded-lg border border-[#e4eaf2] bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-600 transition hover:bg-slate-50"
+                    >
+                      Reset Filters
+                    </button>
+                    <button
+                      type="button"
+                      (click)="openAddModal()"
+                      class="rounded-lg bg-[#1c629e] px-3.5 py-1.5 text-xs font-semibold text-white transition hover:bg-[#124c7b]"
+                    >
+                      + Add Student
+                    </button>
+                  </div>
+                }
+              </td>
             </tr>
           }
         </tbody>
@@ -359,21 +323,28 @@
   <!-- Add / Edit Student Modal -->
   @if (addModalOpen() || editModalOpen()) {
     <div
-      class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-[#123552]/40 p-4 backdrop-blur-xs"
       (click)="closeAllModals()"
     >
       <div
-        class="w-full max-w-3xl overflow-hidden rounded-xl border border-gray-200 bg-white shadow-2xl"
+        class="flex max-h-[90vh] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-[#e4eaf2] bg-white shadow-2xl"
         (click)="$event.stopPropagation()"
       >
-        <div class="flex items-center justify-between bg-slate-900 px-6 py-4 text-white">
-          <h3 class="text-base font-bold">
-            {{ editModalOpen() ? 'Edit Student' : 'Add Student' }}
-          </h3>
+        <!-- Modal Header -->
+        <div class="flex shrink-0 items-center justify-between border-b border-[#e4eaf2] bg-white px-6 py-4">
+          <div>
+            <h3 class="text-lg font-bold tracking-tight text-[#123552]">
+              {{ editModalOpen() ? 'Edit Student' : 'Add Student' }}
+            </h3>
+            <p class="mt-0.5 text-xs text-slate-500">
+              Enter personal, academic, and medical details below.
+            </p>
+          </div>
           <button
             type="button"
+            aria-label="Close modal"
             (click)="closeAllModals()"
-            class="text-lg font-bold text-slate-400 hover:text-white"
+            class="flex h-8 w-8 items-center justify-center rounded-lg border border-[#e4eaf2] bg-[#f8fafc] text-base font-semibold text-slate-500 transition hover:bg-slate-100 hover:text-[#123552]"
           >
             &times;
           </button>
@@ -382,203 +353,264 @@
         <form
           [formGroup]="studentForm"
           (ngSubmit)="editModalOpen() ? saveEditedStudent() : saveNewStudent()"
-          class="max-h-[80vh] space-y-4 overflow-y-auto p-6"
+          class="flex min-h-0 flex-1 flex-col"
         >
-          <div class="grid grid-cols-1 gap-4 text-xs md:grid-cols-2">
-            <h4
-              class="border-b border-gray-100 pb-1 pt-2 text-xs font-bold uppercase tracking-wider text-gray-400 md:col-span-2"
-            >
-              Personal Information
-            </h4>
-            <div>
-              <label class="mb-1 block font-bold uppercase text-gray-700">First Name *</label>
-              <input
-                type="text"
-                formControlName="firstName"
-                required
-                class="w-full rounded-lg border-gray-300 text-xs"
-              />
-            </div>
-            <div>
-              <label class="mb-1 block font-bold uppercase text-gray-700">Last Name *</label>
-              <input
-                type="text"
-                formControlName="lastName"
-                required
-                class="w-full rounded-lg border-gray-300 text-xs"
-              />
-            </div>
-            <div>
-              <label class="mb-1 block font-bold uppercase text-gray-700">Gender *</label>
-              <select
-                formControlName="gender"
-                required
-                class="w-full rounded-lg border-gray-300 text-xs"
+          <div class="flex-1 space-y-5 overflow-y-auto bg-[#f8fafc]/50 p-6">
+            @if (formError(); as errMsg) {
+              <div
+                role="alert"
+                class="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-xs font-semibold text-rose-700"
               >
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-            <div>
-              <label class="mb-1 block font-bold uppercase text-gray-700">Date of Birth *</label>
-              <input
-                type="date"
-                formControlName="dob"
-                required
-                class="w-full rounded-lg border-gray-300 text-xs"
-              />
-            </div>
-            <div>
-              <label class="mb-1 block font-bold uppercase text-gray-700">
-                Date of Birth (B.S.)
-              </label>
-              <input
-                type="text"
-                formControlName="dobBs"
-                placeholder="e.g. 2069-01-15 (B.S.)"
-                class="w-full rounded-lg border-gray-300 text-xs"
-              />
-            </div>
-            <div>
-              <label class="mb-1 block font-bold uppercase text-gray-700">Languages Spoken</label>
-              <input
-                type="text"
-                formControlName="languagesSpoken"
-                placeholder="e.g. English, Nepali"
-                class="w-full rounded-lg border-gray-300 text-xs"
-              />
-            </div>
-            <div class="md:col-span-2">
-              <label class="mb-1 block font-bold uppercase text-gray-700">Address</label>
-              <input
-                type="text"
-                formControlName="address"
-                placeholder="e.g. Birendranagar, Surkhet"
-                class="w-full rounded-lg border-gray-300 text-xs"
-              />
-            </div>
-
-            <h4
-              class="border-b border-gray-100 pb-1 pt-4 text-xs font-bold uppercase tracking-wider text-gray-400 md:col-span-2"
-            >
-              Academic Information
-            </h4>
-            <div>
-              <label class="mb-1 block font-bold uppercase text-gray-700">Class *</label>
-              <select
-                formControlName="classApplied"
-                required
-                class="w-full rounded-lg border-gray-300 text-xs"
+                {{ errMsg }}
+              </div>
+            }
+            <!-- Personal Information -->
+            <section class="rounded-xl border border-[#e4eaf2] bg-white p-4 sm:p-5">
+              <h4
+                class="mb-4 border-b border-[#e4eaf2] pb-2 text-xs font-bold uppercase tracking-wider text-[#1c629e]"
               >
-                @for (cls of classOptions(); track cls) {
-                  <option [value]="cls">{{ cls }}</option>
-                }
-              </select>
-            </div>
-            <div>
-              <label class="mb-1 block font-bold uppercase text-gray-700">Roll No</label>
-              <input
-                type="number"
-                formControlName="rollNo"
-                min="1"
-                class="w-full rounded-lg border-gray-300 text-xs"
-              />
-            </div>
-            <div>
-              <label class="mb-1 block font-bold uppercase text-gray-700">Academic Year *</label>
-              <input
-                type="text"
-                formControlName="academicYear"
-                required
-                class="w-full rounded-lg border-gray-300 text-xs"
-              />
-            </div>
-            <div>
-              <label class="mb-1 block font-bold uppercase text-gray-700">House</label>
-              <select formControlName="house" class="w-full rounded-lg border-gray-300 text-xs">
-                <option value="Red">Red</option>
-                <option value="Blue">Blue</option>
-                <option value="Green">Green</option>
-                <option value="Yellow">Yellow</option>
-              </select>
-            </div>
-            <div>
-              <label class="mb-1 block font-bold uppercase text-gray-700">
-                English Level (EAL)
-              </label>
-              <input type="text" formControlName="eal" class="w-full rounded-lg border-gray-300 text-xs" />
-            </div>
-            <div>
-              <label class="mb-1 block font-bold uppercase text-gray-700">Admission Date</label>
-              <input
-                type="date"
-                formControlName="admissionDate"
-                class="w-full rounded-lg border-gray-300 text-xs"
-              />
-            </div>
+                Personal Information
+              </h4>
+              <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div>
+                  <label class="mb-1.5 block text-xs font-semibold text-[#123552]">
+                    First Name <span class="text-rose-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    formControlName="firstName"
+                    required
+                    placeholder="e.g. Aarav"
+                    class="h-10 w-full rounded-xl border border-[#cbd5e1] bg-white px-3.5 text-sm text-[#123552] placeholder:text-slate-400 transition focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
+                  />
+                </div>
+                <div>
+                  <label class="mb-1.5 block text-xs font-semibold text-[#123552]">
+                    Last Name <span class="text-rose-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    formControlName="lastName"
+                    required
+                    placeholder="e.g. Sharma"
+                    class="h-10 w-full rounded-xl border border-[#cbd5e1] bg-white px-3.5 text-sm text-[#123552] placeholder:text-slate-400 transition focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
+                  />
+                </div>
+                <div>
+                  <label class="mb-1.5 block text-xs font-semibold text-[#123552]">
+                    Gender <span class="text-rose-500">*</span>
+                  </label>
+                  <select
+                    formControlName="gender"
+                    required
+                    class="h-10 w-full rounded-xl border border-[#cbd5e1] bg-white px-3 text-sm text-[#123552] transition focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
+                  >
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="mb-1.5 block text-xs font-semibold text-[#123552]">
+                    Date of Birth <span class="text-rose-500">*</span>
+                  </label>
+                  <input
+                    type="date"
+                    formControlName="dob"
+                    required
+                    class="h-10 w-full rounded-xl border border-[#cbd5e1] bg-white px-3.5 text-sm text-[#123552] transition focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
+                  />
+                </div>
+                <div>
+                  <label class="mb-1.5 block text-xs font-semibold text-[#123552]">
+                    Date of Birth (B.S.)
+                  </label>
+                  <input
+                    type="text"
+                    formControlName="dobBs"
+                    placeholder="e.g. 2069-01-15 (B.S.)"
+                    class="h-10 w-full rounded-xl border border-[#cbd5e1] bg-white px-3.5 text-sm text-[#123552] placeholder:text-slate-400 transition focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
+                  />
+                </div>
+                <div>
+                  <label class="mb-1.5 block text-xs font-semibold text-[#123552]">
+                    Languages Spoken
+                  </label>
+                  <input
+                    type="text"
+                    formControlName="languagesSpoken"
+                    placeholder="e.g. English, Nepali"
+                    class="h-10 w-full rounded-xl border border-[#cbd5e1] bg-white px-3.5 text-sm text-[#123552] placeholder:text-slate-400 transition focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
+                  />
+                </div>
+                <div class="sm:col-span-2">
+                  <label class="mb-1.5 block text-xs font-semibold text-[#123552]">Address</label>
+                  <input
+                    type="text"
+                    formControlName="address"
+                    placeholder="e.g. Birendranagar, Surkhet"
+                    class="h-10 w-full rounded-xl border border-[#cbd5e1] bg-white px-3.5 text-sm text-[#123552] placeholder:text-slate-400 transition focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
+                  />
+                </div>
+              </div>
+            </section>
 
-            <h4
-              class="border-b border-gray-100 pb-1 pt-4 text-xs font-bold uppercase tracking-wider text-gray-400 md:col-span-2"
-            >
-              Medical &amp; Additional Details
-            </h4>
-            <div>
-              <label class="mb-1 block font-bold uppercase text-gray-700">Blood Group</label>
-              <input
-                type="text"
-                formControlName="bloodGroup"
-                placeholder="e.g. A+"
-                class="w-full rounded-lg border-gray-300 text-xs"
-              />
-            </div>
-            <div>
-              <label class="mb-1 block font-bold uppercase text-gray-700">Emergency Contact</label>
-              <input
-                type="text"
-                formControlName="emergencyContact"
-                placeholder="Phone / Name"
-                class="w-full rounded-lg border-gray-300 text-xs"
-              />
-            </div>
-            <div class="md:col-span-2">
-              <label class="mb-1 block font-bold uppercase text-gray-700">Hobbies</label>
-              <input
-                type="text"
-                formControlName="hobbies"
-                placeholder="e.g. Football, Coding"
-                class="w-full rounded-lg border-gray-300 text-xs"
-              />
-            </div>
-            <div class="flex items-center space-x-2 pt-2 md:col-span-2">
-              <input
-                type="checkbox"
-                id="student_has_allergies"
-                formControlName="hasAllergies"
-                class="rounded border-gray-300 text-indigo-600"
-              />
-              <label for="student_has_allergies" class="text-xs font-bold text-gray-700">
-                Has Allergies / Medical Notes
-              </label>
-            </div>
+            <!-- Academic Information -->
+            <section class="rounded-xl border border-[#e4eaf2] bg-white p-4 sm:p-5">
+              <h4
+                class="mb-4 border-b border-[#e4eaf2] pb-2 text-xs font-bold uppercase tracking-wider text-[#1c629e]"
+              >
+                Academic Information
+              </h4>
+              <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div>
+                  <label class="mb-1.5 block text-xs font-semibold text-[#123552]">
+                    Class <span class="text-rose-500">*</span>
+                  </label>
+                  <select
+                    formControlName="classApplied"
+                    required
+                    class="h-10 w-full rounded-xl border border-[#cbd5e1] bg-white px-3 text-sm text-[#123552] transition focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
+                  >
+                    @for (cls of classOptions(); track cls) {
+                      <option [value]="cls">{{ cls }}</option>
+                    }
+                  </select>
+                </div>
+                <div>
+                  <label class="mb-1.5 block text-xs font-semibold text-[#123552]">Roll No</label>
+                  <input
+                    type="number"
+                    formControlName="rollNo"
+                    min="1"
+                    class="h-10 w-full rounded-xl border border-[#cbd5e1] bg-white px-3.5 text-sm text-[#123552] transition focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
+                  />
+                </div>
+                <div>
+                  <label class="mb-1.5 block text-xs font-semibold text-[#123552]">
+                    Academic Year <span class="text-rose-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    formControlName="academicYear"
+                    required
+                    class="h-10 w-full rounded-xl border border-[#cbd5e1] bg-white px-3.5 text-sm text-[#123552] transition focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
+                  />
+                </div>
+                <div>
+                  <label class="mb-1.5 block text-xs font-semibold text-[#123552]">House</label>
+                  <select
+                    formControlName="house"
+                    class="h-10 w-full rounded-xl border border-[#cbd5e1] bg-white px-3 text-sm text-[#123552] transition focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
+                  >
+                    <option value="Red">Red</option>
+                    <option value="Blue">Blue</option>
+                    <option value="Green">Green</option>
+                    <option value="Yellow">Yellow</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="mb-1.5 block text-xs font-semibold text-[#123552]">
+                    English Level (EAL)
+                  </label>
+                  <input
+                    type="text"
+                    formControlName="eal"
+                    placeholder="e.g. Native, Beginner"
+                    class="h-10 w-full rounded-xl border border-[#cbd5e1] bg-white px-3.5 text-sm text-[#123552] placeholder:text-slate-400 transition focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
+                  />
+                </div>
+                <div>
+                  <label class="mb-1.5 block text-xs font-semibold text-[#123552]">
+                    Admission Date
+                  </label>
+                  <input
+                    type="date"
+                    formControlName="admissionDate"
+                    class="h-10 w-full rounded-xl border border-[#cbd5e1] bg-white px-3.5 text-sm text-[#123552] transition focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
+                  />
+                </div>
+              </div>
+            </section>
+
+            <!-- Medical & Additional Details -->
+            <section class="rounded-xl border border-[#e4eaf2] bg-white p-4 sm:p-5">
+              <h4
+                class="mb-4 border-b border-[#e4eaf2] pb-2 text-xs font-bold uppercase tracking-wider text-[#1c629e]"
+              >
+                Medical &amp; Additional Details
+              </h4>
+              <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div>
+                  <label class="mb-1.5 block text-xs font-semibold text-[#123552]">
+                    Blood Group
+                  </label>
+                  <input
+                    type="text"
+                    formControlName="bloodGroup"
+                    placeholder="e.g. A+"
+                    class="h-10 w-full rounded-xl border border-[#cbd5e1] bg-white px-3.5 text-sm text-[#123552] placeholder:text-slate-400 transition focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
+                  />
+                </div>
+                <div>
+                  <label class="mb-1.5 block text-xs font-semibold text-[#123552]">
+                    Emergency Contact
+                  </label>
+                  <input
+                    type="text"
+                    formControlName="emergencyContact"
+                    placeholder="Phone / Name"
+                    class="h-10 w-full rounded-xl border border-[#cbd5e1] bg-white px-3.5 text-sm text-[#123552] placeholder:text-slate-400 transition focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
+                  />
+                </div>
+                <div class="sm:col-span-2">
+                  <label class="mb-1.5 block text-xs font-semibold text-[#123552]">Hobbies</label>
+                  <input
+                    type="text"
+                    formControlName="hobbies"
+                    placeholder="e.g. Football, Coding"
+                    class="h-10 w-full rounded-xl border border-[#cbd5e1] bg-white px-3.5 text-sm text-[#123552] placeholder:text-slate-400 transition focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
+                  />
+                </div>
+                <div class="sm:col-span-2">
+                  <label
+                    for="student_has_allergies"
+                    class="inline-flex cursor-pointer items-center gap-2.5 rounded-xl border border-[#e4eaf2] bg-[#f8fafc] px-3.5 py-2.5 text-xs font-semibold text-[#123552] transition hover:border-rose-200 hover:bg-rose-50/50"
+                  >
+                    <input
+                      type="checkbox"
+                      id="student_has_allergies"
+                      formControlName="hasAllergies"
+                      class="h-4 w-4 rounded border-slate-300 text-rose-600 focus:ring-rose-500"
+                    />
+                    <span>Has Allergies / Medical Notes</span>
+                  </label>
+                </div>
+              </div>
+            </section>
           </div>
 
-          <div class="mt-6 flex justify-end space-x-3 border-t border-gray-200 pt-4">
+          <!-- Modal Footer -->
+          <div
+            class="flex shrink-0 items-center justify-end gap-2.5 border-t border-[#e4eaf2] bg-white px-6 py-4"
+          >
             <button
               type="button"
               (click)="closeAllModals()"
-              class="rounded-lg bg-gray-100 px-4 py-2 text-xs font-bold text-gray-700"
+              class="rounded-xl border border-[#e4eaf2] bg-white px-4 py-2 text-xs font-semibold text-slate-600 transition hover:bg-slate-50 hover:text-[#123552]"
             >
               Cancel
             </button>
             <button
               type="submit"
-              [class]="
-                'rounded-lg px-5 py-2 text-xs font-bold text-white ' +
-                (editModalOpen() ? 'bg-indigo-600' : 'bg-emerald-600')
-              "
+              [disabled]="saving()"
+              class="rounded-xl bg-[#1c629e] px-5 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-[#124c7b] disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {{ editModalOpen() ? 'Update Student' : 'Save Student' }}
+              @if (saving()) {
+                Saving...
+              } @else {
+                {{ editModalOpen() ? 'Update Student' : 'Save Student' }}
+              }
             </button>
           </div>
         </form>

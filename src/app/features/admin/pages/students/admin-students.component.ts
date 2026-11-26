@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import {
   LucideAlertTriangle,
   LucideBarChart3,
@@ -36,11 +37,13 @@ import { AdminFlashService } from '../../services/admin-flash.service';
 })
 export class AdminStudentsComponent {
   private readonly fb = inject(FormBuilder);
+  private readonly router = inject(Router);
   private readonly data = inject(AdminDataService);
   private readonly flash = inject(AdminFlashService);
 
   protected readonly classOptions = this.data.classOptions;
   protected readonly academicYears = this.data.academicYears;
+  protected readonly studentsLoading = this.data.studentsLoading;
   protected readonly defaultAcademicYear = computed(() => this.data.settings().academicYear);
 
   // Filters
@@ -49,14 +52,20 @@ export class AdminStudentsComponent {
   protected readonly classFilter = signal('');
   protected readonly genderFilter = signal('');
   protected readonly houseFilter = signal('');
-  protected readonly yearFilter = signal('2082-2083');
+  protected readonly yearFilter = signal('');
   protected readonly allergyFilter = signal(false);
 
-  // Modals
+  // Modals & Request State
   protected readonly addModalOpen = signal(false);
   protected readonly editModalOpen = signal(false);
   protected readonly editingStudentId = signal<number | null>(null);
+  protected readonly saving = signal(false);
+  protected readonly formError = signal<string | null>(null);
   protected readonly quickModal = signal<{ type: string; studentName: string } | null>(null);
+
+  constructor() {
+    this.data.loadStudents();
+  }
 
   protected readonly counts = computed(() => {
     const all = this.data.students();
@@ -122,11 +131,21 @@ export class AdminStudentsComponent {
     this.classFilter.set('');
     this.genderFilter.set('');
     this.houseFilter.set('');
-    this.yearFilter.set(this.defaultAcademicYear());
+    this.yearFilter.set('');
     this.allergyFilter.set(false);
   }
 
+  protected onYearFilterChange(year: string): void {
+    this.yearFilter.set(year);
+    this.data.loadStudents(year || undefined);
+  }
+
+  protected openDetail(id: number): void {
+    void this.router.navigate(['/admin/students', id]);
+  }
+
   protected openAddModal(): void {
+    this.formError.set(null);
     this.studentForm.reset({
       firstName: '',
       lastName: '',
@@ -152,12 +171,13 @@ export class AdminStudentsComponent {
   }
 
   protected openEditModal(student: AdminStudent): void {
+    this.formError.set(null);
     this.editingStudentId.set(student.id);
     this.studentForm.patchValue({
       firstName: student.firstName,
       lastName: student.lastName,
       gender: student.gender,
-      dob: student.dob,
+      dob: student.dob ? student.dob.slice(0, 10) : '',
       dobBs: student.dobBs,
       languagesSpoken: student.languagesSpoken,
       address: student.address,
@@ -167,7 +187,7 @@ export class AdminStudentsComponent {
       status: student.status,
       house: student.house,
       eal: student.eal,
-      admissionDate: student.admissionDate,
+      admissionDate: student.admissionDate ? student.admissionDate.slice(0, 10) : '',
       previousSchool: student.previousSchool,
       bloodGroup: student.bloodGroup,
       emergencyContact: student.emergencyContact,
@@ -180,34 +200,69 @@ export class AdminStudentsComponent {
   protected saveNewStudent(): void {
     if (this.studentForm.invalid) {
       this.studentForm.markAllAsTouched();
+      this.formError.set('Please fill in all required fields.');
       return;
     }
-    this.data.addStudent(this.studentForm.getRawValue());
-    this.addModalOpen.set(false);
-    this.flash.success('Student record added.');
+    this.saving.set(true);
+    this.formError.set(null);
+    this.data.addStudent(this.studentForm.getRawValue()).subscribe({
+      next: () => {
+        this.saving.set(false);
+        this.addModalOpen.set(false);
+        this.flash.success('Student record added.');
+      },
+      error: (err) => {
+        this.saving.set(false);
+        this.formError.set(this.extractApiError(err, 'Failed to add student.'));
+      },
+    });
   }
 
   protected saveEditedStudent(): void {
     const id = this.editingStudentId();
     if (id === null || this.studentForm.invalid) {
       this.studentForm.markAllAsTouched();
+      this.formError.set('Please fill in all required fields.');
       return;
     }
-    this.data.updateStudent(id, this.studentForm.getRawValue());
-    this.editModalOpen.set(false);
-    this.flash.success('Student details updated.');
+    this.saving.set(true);
+    this.formError.set(null);
+    this.data.updateStudent(id, this.studentForm.getRawValue()).subscribe({
+      next: () => {
+        this.saving.set(false);
+        this.editModalOpen.set(false);
+        this.flash.success('Student details updated.');
+      },
+      error: (err) => {
+        this.saving.set(false);
+        this.formError.set(this.extractApiError(err, 'Failed to update student.'));
+      },
+    });
   }
 
   protected changeStatus(id: number, event: Event): void {
     const value = (event.target as HTMLSelectElement).value as StudentStatus;
-    this.data.updateStudentStatus(id, value);
-    this.flash.success('Student status updated.');
+    this.data.updateStudentStatus(id, value).subscribe({
+      next: () => this.flash.success('Student status updated.'),
+      error: (err) => this.flash.error(this.extractApiError(err, 'Failed to update status.')),
+    });
   }
 
   protected deleteStudent(id: number, name: string): void {
     if (!confirm(`Delete ${name}? This cannot be undone.`)) return;
-    this.data.deleteStudent(id);
-    this.flash.success(`${name} deleted.`);
+    this.data.deleteStudent(id).subscribe({
+      next: () => this.flash.success(`${name} deleted.`),
+      error: (err) => this.flash.error(this.extractApiError(err, `Failed to delete ${name}.`)),
+    });
+  }
+
+  private extractApiError(err: unknown, fallback: string): string {
+    const e = err as { error?: { message?: string; errors?: Record<string, string[]> } };
+    const firstFieldErrors = e?.error?.errors ? Object.values(e.error.errors)[0] : undefined;
+    if (firstFieldErrors?.length) {
+      return firstFieldErrors[0];
+    }
+    return e?.error?.message || fallback;
   }
 
   protected closeAllModals(): void {

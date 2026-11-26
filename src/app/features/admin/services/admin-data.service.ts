@@ -44,7 +44,7 @@ import {
   LucideUsers,
   LucideWallet,
 } from '@lucide/angular';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import type {
   AdminMenuSection,
   AdminNewsStory,
@@ -92,10 +92,8 @@ export class AdminDataService {
     {
       section: 'Records',
       items: [
-        { label: 'Admissions', icon: LucideUserPlus, route: '/admin/admissions' },
         { label: 'Students', icon: LucideGraduationCap, route: '/admin/students' },
         { label: 'Classes & Sections', icon: LucideLayers, route: '/admin/classes' },
-        { label: 'Parents', icon: LucideUsers, route: '/admin/parents' },
         { label: 'Assets', icon: LucideBox, route: '/admin/assets' },
         { label: 'Stock / Inventory', icon: LucideBoxes, route: '/admin/inventory' },
         { label: 'Subjects', icon: LucideBook, route: '/admin/subjects' },
@@ -290,18 +288,26 @@ export class AdminDataService {
     });
   }
 
-  loadStudents(): void {
+  readonly studentsLoading = signal(false);
+
+  loadStudents(academicYear?: string): void {
+    this.studentsLoading.set(true);
+    const params = academicYear ? { academic_year: academicYear } : undefined;
     this.http
       .get<{
         students: AdminStudent[];
         classes: string[];
         academicYears: string[];
-      }>('/api/admin/students')
+      }>('/api/admin/students', { params })
       .subscribe({
         next: (res) => {
           this.studentsSubject.next(res.students);
           if (res.classes.length) this.classOptions.set(res.classes);
           if (res.academicYears.length) this.academicYears.set(res.academicYears);
+          this.studentsLoading.set(false);
+        },
+        error: () => {
+          this.studentsLoading.set(false);
         },
       });
   }
@@ -336,49 +342,53 @@ export class AdminDataService {
     });
   }
 
+  getStudent(id: number): Observable<{ student: AdminStudent }> {
+    return this.http.get<{ student: AdminStudent }>(`/api/admin/students/${id}`);
+  }
+
   // --- Student Mutations ---
-  addStudent(payload: Omit<AdminStudent, 'id' | 'admNumber'>): void {
-    this.http
+  addStudent(payload: Omit<AdminStudent, 'id' | 'admNumber'>): Observable<{ student: AdminStudent }> {
+    return this.http
       .post<{ student: AdminStudent }>('/api/admin/students', this.toSnakeStudent(payload))
-      .subscribe({
-        next: (res) => {
+      .pipe(
+        tap((res) => {
           this.studentsSubject.next([res.student, ...this.studentsSubject.value]);
           this.loadDashboard();
-        },
-      });
+        }),
+      );
   }
 
-  updateStudent(id: number, payload: Partial<AdminStudent>): void {
-    this.http
+  updateStudent(id: number, payload: Partial<AdminStudent>): Observable<{ student: AdminStudent }> {
+    return this.http
       .put<{ student: AdminStudent }>(`/api/admin/students/${id}`, this.toSnakeStudent(payload))
-      .subscribe({
-        next: (res) => {
+      .pipe(
+        tap((res) => {
           this.studentsSubject.next(
             this.studentsSubject.value.map((s) => (s.id === id ? res.student : s)),
           );
-        },
-      });
+        }),
+      );
   }
 
-  updateStudentStatus(id: number, status: StudentStatus): void {
-    this.http
+  updateStudentStatus(id: number, status: StudentStatus): Observable<{ student: AdminStudent }> {
+    return this.http
       .patch<{ student: AdminStudent }>(`/api/admin/students/${id}/status`, { status })
-      .subscribe({
-        next: (res) => {
+      .pipe(
+        tap((res) => {
           this.studentsSubject.next(
             this.studentsSubject.value.map((s) => (s.id === id ? res.student : s)),
           );
-        },
-      });
+        }),
+      );
   }
 
-  deleteStudent(id: number): void {
-    this.http.delete(`/api/admin/students/${id}`).subscribe({
-      next: () => {
+  deleteStudent(id: number): Observable<{ deleted: boolean }> {
+    return this.http.delete<{ deleted: boolean }>(`/api/admin/students/${id}`).pipe(
+      tap(() => {
         this.studentsSubject.next(this.studentsSubject.value.filter((s) => s.id !== id));
         this.loadDashboard();
-      },
-    });
+      }),
+    );
   }
 
   // --- Class Mutations ---
