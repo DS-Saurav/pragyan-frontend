@@ -2,21 +2,22 @@ import { NgComponentOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   computed,
   effect,
   inject,
   signal,
+  viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Title } from '@angular/platform-browser';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import {
-  LucideBuilding2,
   LucideChevronLeft,
   LucideLogOut,
   LucideMenu,
   LucideMoon,
-  LucideRefreshCw,
+  LucideSearch,
   LucideSun,
   LucideUser,
   LucideX,
@@ -36,7 +37,6 @@ import { AdminFlashComponent } from '../shared/admin-flash.component';
     RouterLinkActive,
     NgComponentOutlet,
     AdminFlashComponent,
-    LucideBuilding2,
     LucideChevronLeft,
     LucideX,
     LucideUser,
@@ -44,12 +44,13 @@ import { AdminFlashComponent } from '../shared/admin-flash.component';
     LucideSun,
     LucideLogOut,
     LucideMenu,
-    LucideRefreshCw,
+    LucideSearch,
   ],
   templateUrl: './admin-layout.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '(document:keydown.escape)': 'onEscape()',
+    '(document:click)': 'onDocumentClick($event)',
   },
 })
 export class AdminLayoutComponent {
@@ -59,9 +60,15 @@ export class AdminLayoutComponent {
   protected readonly data = inject(AdminDataService);
   private readonly flash = inject(AdminFlashService);
 
+  private readonly profileMenuRef = viewChild<ElementRef<HTMLElement>>('profileMenu');
+  private readonly searchMenuRef = viewChild<ElementRef<HTMLElement>>('searchMenu');
+
   protected readonly collapsed = signal(this.readStorage('sidebarCollapsed') === '1');
   protected readonly darkMode = signal(this.readStorage('darkMode') === '1');
   protected readonly mobileOpen = signal(false);
+  protected readonly profileMenuOpen = signal(false);
+  protected readonly searchQuery = signal('');
+  protected readonly searchOpen = signal(false);
 
   protected readonly settings = this.data.settings;
   protected readonly user = this.auth.currentUser;
@@ -71,6 +78,45 @@ export class AdminLayoutComponent {
 
   protected readonly schoolName = computed(() => this.settings().schoolName);
   protected readonly academicYear = computed(() => this.settings().academicYear);
+  protected readonly currentRoute = signal(this.router.url.split('?')[0]);
+
+  protected readonly currentBreadcrumb = computed(() => {
+    const path = this.currentRoute();
+    for (const group of this.menuSections) {
+      const matched = group.items.find(
+        (item) => path === item.route || path.startsWith(item.route + '/'),
+      );
+      if (matched) {
+        return { section: group.section, label: matched.label, route: matched.route };
+      }
+    }
+    if (path.startsWith('/admin/profile')) {
+      return { section: 'Account', label: 'My Profile', route: '/admin/profile' };
+    }
+    if (path.startsWith('/admin/about')) {
+      return { section: 'System', label: 'About App', route: '/admin/about' };
+    }
+    return { section: 'Admin', label: 'Control Panel', route: '/admin/dashboard' };
+  });
+
+  protected readonly searchResults = computed(() => {
+    const q = this.searchQuery().trim().toLowerCase();
+    const items = this.menuSections.flatMap((group) =>
+      group.items.map((item) => ({
+        section: group.section,
+        label: item.label,
+        route: item.route,
+        icon: item.icon,
+      })),
+    );
+    const filtered = q
+      ? items.filter(
+          (item) =>
+            item.label.toLowerCase().includes(q) || item.section.toLowerCase().includes(q),
+        )
+      : items;
+    return filtered.slice(0, 8);
+  });
 
   constructor() {
     this.data.loadAll();
@@ -88,10 +134,11 @@ export class AdminLayoutComponent {
       )
       .subscribe((event) => {
         this.mobileOpen.set(false);
+        this.profileMenuOpen.set(false);
+        this.searchOpen.set(false);
         const path = event.urlAfterRedirects.split('?')[0];
-        const allItems = this.menuSections.flatMap((s) => s.items);
-        const matched = allItems.find((item) => path === item.route || path.startsWith(item.route + '/'));
-        const pageTitle = matched?.label ?? 'Admin Control Panel';
+        this.currentRoute.set(path);
+        const pageTitle = this.currentBreadcrumb().label;
         this.titleService.setTitle(`${pageTitle} | ${this.schoolName()}`);
       });
   }
@@ -120,7 +167,62 @@ export class AdminLayoutComponent {
     this.mobileOpen.set(false);
   }
 
+  protected toggleProfileMenu(): void {
+    this.profileMenuOpen.update((prev) => !prev);
+  }
+
+  protected closeProfileMenu(): void {
+    this.profileMenuOpen.set(false);
+  }
+
+  protected openSearch(): void {
+    this.searchOpen.set(true);
+  }
+
+  protected onSearchInput(value: string): void {
+    this.searchQuery.set(value);
+    this.searchOpen.set(true);
+  }
+
+  protected selectSearchItem(route: string): void {
+    this.searchOpen.set(false);
+    this.searchQuery.set('');
+    void this.router.navigate([route]);
+  }
+
+  protected onSearchKeydown(event: KeyboardEvent): void {
+    if (event.key === 'Enter') {
+      const first = this.searchResults()[0];
+      if (first) {
+        event.preventDefault();
+        this.selectSearchItem(first.route);
+      }
+    }
+  }
+
+  protected onDocumentClick(event: MouseEvent): void {
+    const target = event.target as Node;
+    if (this.profileMenuOpen()) {
+      const container = this.profileMenuRef()?.nativeElement;
+      if (container && !container.contains(target)) {
+        this.profileMenuOpen.set(false);
+      }
+    }
+    if (this.searchOpen()) {
+      const searchEl = this.searchMenuRef()?.nativeElement;
+      if (searchEl && !searchEl.contains(target)) {
+        this.searchOpen.set(false);
+      }
+    }
+  }
+
   protected onEscape(): void {
+    if (this.searchOpen()) {
+      this.searchOpen.set(false);
+    }
+    if (this.profileMenuOpen()) {
+      this.profileMenuOpen.set(false);
+    }
     if (this.mobileOpen()) {
       this.closeMobile();
     }

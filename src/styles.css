@@ -133,19 +133,19 @@ app-photo {
    Admin Panel Design System (from pragyan-backend/resources/css/app.css)
    ========================================================================== */
 :root {
-  --ui-ink: #0b1a4a;
-  --ui-accent: #1d4ed8;
-  --ui-accent-strong: #1e40af;
-  --ui-ring: #3b82f6;
-  --ui-canvas: #f1f5f9;
+  --ui-ink: #123552;
+  --ui-accent: #1c629e;
+  --ui-accent-strong: #124c7b;
+  --ui-ring: #3c85bc;
+  --ui-canvas: #f8fafc;
   --ui-surface: #ffffff;
   --ui-muted: #64748b;
-  --dashboard-deep: #081336;
-  --dashboard-soft: rgb(255 255 255 / 10%);
-  --dashboard-soft-hover: rgb(255 255 255 / 17%);
-  --dashboard-edge: rgb(255 255 255 / 16%);
-  --dashboard-shadow: 0 1.25rem 3rem rgb(8 19 54 / 22%);
-  --dashboard-hover-shadow: 0 0.75rem 1.5rem rgb(8 19 54 / 16%);
+  --dashboard-deep: #123552;
+  --dashboard-soft: rgb(255 255 255 / 11%);
+  --dashboard-soft-hover: rgb(255 255 255 / 19%);
+  --dashboard-edge: rgb(253 212 25 / 28%);
+  --dashboard-shadow: 0 1.25rem 3rem rgb(18 53 82 / 22%);
+  --dashboard-hover-shadow: 0 0.75rem 1.5rem rgb(18 53 82 / 16%);
   --ui-dark-canvas: #0f172a;
   --ui-dark-surface: #17213a;
   --ui-dark-border: #334155;
@@ -213,6 +213,7 @@ html.dark #mainContent video {
   }
   .ui-page-title {
     @apply text-xl font-bold tracking-tight text-slate-900 sm:text-2xl;
+    font-family: var(--heading);
     line-height: 1.15;
     text-wrap: balance;
   }
@@ -239,7 +240,7 @@ html.dark #mainContent video {
     @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60;
   }
   .ui-btn-primary {
-    @apply bg-blue-700 text-white shadow-sm hover:bg-blue-800 focus-visible:ring-blue-600;
+    @apply bg-[#1c629e] text-white shadow-sm hover:bg-[#124c7b] focus-visible:ring-[#3c85bc];
   }
   .ui-btn-secondary {
     @apply border border-slate-300 bg-white text-slate-700 shadow-sm hover:bg-slate-50 focus-visible:ring-slate-400;
@@ -302,7 +303,7 @@ html.dark #mainContent video {
     @apply bg-sky-100 text-sky-800;
   }
   .ui-badge-brand {
-    @apply bg-[#0b1a4a] text-white;
+    @apply bg-[#123552] text-white;
   }
   .ui-table {
     @apply min-w-full divide-y divide-slate-200 text-left text-sm;
@@ -344,7 +345,7 @@ html.dark #mainContent video {
     @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-lg;
   }
   .ui-link {
-    @apply font-semibold text-blue-700 underline-offset-2 hover:text-blue-800 hover:underline;
+    @apply font-semibold text-[#124c7b] underline-offset-2 hover:text-[#1c629e] hover:underline;
   }
   .ui-divider {
     @apply border-t border-slate-200;
@@ -356,7 +357,7 @@ html.dark #mainContent video {
     @apply inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-600 transition hover:border-slate-300 hover:text-slate-900;
   }
   .ui-tab-active {
-    @apply border-transparent bg-[#0b1a4a] text-white hover:border-transparent hover:text-white;
+    @apply border-transparent bg-[#124c7b] text-white hover:border-transparent hover:text-white;
   }
   .dashboard-shell {
     @apply space-y-5 sm:space-y-6;
@@ -370,11 +371,11 @@ html.dark #mainContent video {
     @apply bg-white text-slate-600 ring-slate-200;
   }
   .dashboard-year-pill {
-    @apply bg-blue-50 text-blue-700 ring-blue-100;
+    @apply bg-[#fff6cd] text-[#123552] ring-[#f2df91];
   }
   .dashboard-briefing {
     @apply relative overflow-hidden rounded-2xl text-white;
-    background: linear-gradient(135deg, var(--dashboard-deep), var(--ui-ink) 48%, var(--ui-accent-strong));
+    background: linear-gradient(135deg, #123552, #124c7b 52%, #1c629e);
     box-shadow: var(--dashboard-shadow);
   }
   .dashboard-briefing::before {
@@ -402,12 +403,14 @@ html.dark #mainContent video {
     @apply relative z-10 grid gap-6 p-5 sm:p-7 lg:grid-cols-[minmax(0,1.3fr)_minmax(14rem,.7fr)] lg:items-center lg:gap-10 lg:p-8;
   }
   .dashboard-eyebrow {
-    @apply inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em] text-blue-100;
+    @apply inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em] text-[#fff6cd];
     background: var(--dashboard-soft);
+    border: 1px solid rgb(253 212 25 / 35%);
     line-height: 1.2;
   }
   .dashboard-briefing-title {
     @apply mt-4 text-2xl font-extrabold tracking-tight text-white sm:text-3xl;
+    font-family: var(--heading);
     line-height: 1.08;
     text-wrap: balance;
   }
@@ -472,7 +475,7 @@ html.dark #mainContent video {
     @apply flex gap-3 px-4 py-4 sm:px-5;
   }
   .dashboard-notice-icon {
-    @apply mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-700 ring-1 ring-blue-100;
+    @apply mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#eaf4fb] text-[#124c7b] ring-1 ring-[#c8dce9];
   }
   .dashboard-notice-title {
     @apply text-sm font-semibold text-slate-900;
@@ -504,7 +507,7 @@ html.dark #mainContent video {
     transition-property: background-color, border-color, box-shadow, color, transform;
   }
   .dashboard-action svg {
-    @apply text-blue-700;
+    @apply text-[#124c7b];
   }
 }
 
@@ -542,4 +545,21 @@ html.dark #mainContent .dashboard-notice-icon {
   background: rgb(37 99 235 / 18%);
   border-color: rgb(96 165 250 / 30%);
   color: #bfdbfe;
+}
+
+html.dark #sidebar {
+  background: #123552;
+  border-color: rgb(255 255 255 / 10%);
+  color: #e2e8f0;
+}
+html.dark #sidebar .sb-brand-name,
+html.dark #sidebar .sb-profile-text p {
+  color: #ffffff;
+}
+html.dark #sidebar .sb-item {
+  color: #cbd5e1;
+}
+html.dark #sidebar .sb-item.sb-active {
+  background: rgb(255 255 255 / 12%);
+  color: #ffffff;
 }

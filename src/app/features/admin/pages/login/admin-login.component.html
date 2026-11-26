@@ -1,37 +1,37 @@
 <div class="grid min-h-screen font-sans antialiased text-slate-900 lg:grid-cols-2">
   <!-- Left Branding Panel -->
   <aside
-    class="hidden flex-col justify-between bg-gradient-to-br from-[#0b1a4a] via-[#0d235f] to-slate-900 p-10 text-white lg:flex"
+    class="hidden flex-col justify-between bg-gradient-to-br from-[#123552] via-[#124c7b] to-[#1c629e] p-10 text-white lg:flex"
   >
     <a routerLink="/" class="flex items-center gap-3">
-      <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10">
-        <svg lucideBuilding2 [size]="20"></svg>
+      <span class="flex h-10 items-center justify-center rounded-xl bg-white px-2.5 py-1 shadow-sm">
+        <img src="/images/school-wordmark.png" alt="" class="h-7 w-auto object-contain" />
       </span>
-      <span class="text-lg font-extrabold">{{ schoolName }}</span>
+      <span class="text-lg font-extrabold" style="font-family: var(--heading)">{{ schoolName }}</span>
     </a>
 
     <div>
-      <p class="text-[11px] font-bold uppercase tracking-widest text-emerald-300">
+      <p class="text-[11px] font-bold uppercase tracking-widest text-[#fdd419]">
         School Management System
       </p>
-      <h1 class="mt-4 max-w-md text-3xl font-extrabold leading-tight">
+      <h1 class="mt-4 max-w-md text-3xl font-extrabold leading-tight" style="font-family: var(--heading)">
         One place for your school's daily work.
       </h1>
-      <p class="mt-4 max-w-md text-sm leading-relaxed text-slate-300">
+      <p class="mt-4 max-w-md text-sm leading-relaxed text-[#eaf4fb]">
         Admissions, students, attendance, exams, finance, communication and support — organised and
         accessible to the right people.
       </p>
-      <ul class="mt-8 space-y-3 text-sm text-slate-200">
+      <ul class="mt-8 space-y-3 text-sm text-slate-100">
         <li class="flex items-center gap-3">
-          <svg lucideCheckCircle2 [size]="16" class="text-emerald-400"></svg>
+          <svg lucideCheckCircle2 [size]="16" class="text-[#fdd419]"></svg>
           Role-based access
         </li>
         <li class="flex items-center gap-3">
-          <svg lucideCheckCircle2 [size]="16" class="text-emerald-400"></svg>
+          <svg lucideCheckCircle2 [size]="16" class="text-[#fdd419]"></svg>
           Clear, responsive workspace
         </li>
         <li class="flex items-center gap-3">
-          <svg lucideCheckCircle2 [size]="16" class="text-emerald-400"></svg>
+          <svg lucideCheckCircle2 [size]="16" class="text-[#fdd419]"></svg>
           Works on desktop and mobile
         </li>
       </ul>
@@ -43,15 +43,15 @@
   </aside>
 
   <!-- Right Login Form -->
-  <main class="flex flex-col justify-center bg-slate-50 px-4 py-10 sm:px-6 lg:px-12">
+  <main class="flex flex-col justify-center bg-[#fffdf5] px-4 py-10 sm:px-6 lg:px-12">
     <div class="mx-auto w-full max-w-md">
       <a routerLink="/" class="mb-8 flex items-center gap-3 lg:hidden">
         <span
-          class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0b1a4a] text-white"
+          class="flex h-10 items-center justify-center rounded-xl border border-slate-200 bg-white px-2.5 py-1 shadow-sm"
         >
-          <svg lucideBuilding2 [size]="20"></svg>
+          <img src="/images/school-wordmark.png" alt="" class="h-7 w-auto object-contain" />
         </span>
-        <span class="text-lg font-extrabold text-slate-900">{{ schoolName }}</span>
+        <span class="text-lg font-extrabold text-[#123552]" style="font-family: var(--heading)">{{ schoolName }}</span>
       </a>
 
       <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
@@ -108,7 +108,7 @@
               hlmBtn
               type="submit"
               [disabled]="submitting()"
-              class="inline-flex items-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900"
+              class="inline-flex items-center rounded-lg border border-transparent bg-[#1c629e] px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-sm transition hover:bg-[#124c7b] focus:bg-[#124c7b]"
             >
               {{ submitting() ? 'Logging in...' : 'Log in' }}
             </button>

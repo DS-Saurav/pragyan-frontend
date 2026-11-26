@@ -22,28 +22,36 @@
       [class.collapsed]="collapsed()"
       [class.-translate-x-full]="!mobileOpen()"
       [class.translate-x-0]="mobileOpen()"
-      class="print:hidden fixed inset-y-0 left-0 z-50 flex h-screen w-64 shrink-0 flex-col overflow-hidden border-r border-white/10 bg-[#0b1a4a] text-slate-300 md:sticky md:top-0 md:z-auto md:translate-x-0"
+      class="print:hidden fixed inset-y-0 left-0 z-50 flex h-screen w-64 shrink-0 flex-col overflow-hidden border-r border-[#e4eaf2] bg-white text-[#46536a] md:sticky md:top-0 md:z-auto md:translate-x-0"
     >
       <!-- Brand Header -->
-      <div class="flex h-16 shrink-0 items-center justify-between border-b border-white/10 px-4">
-        <a routerLink="/admin/dashboard" class="flex min-w-0 items-center gap-2.5">
-          <span
-            class="sb-brand-tile flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/10 text-white ring-1 ring-white/15"
-          >
-            <svg lucideBuilding2 [size]="18"></svg>
-          </span>
-          <span class="sb-brand-name truncate text-[15px] font-bold text-white">
-            {{ schoolName() }}
-          </span>
+      <div
+        [class]="
+          'flex h-16 shrink-0 items-center border-b border-[#e4eaf2] px-3 ' +
+          (collapsed() ? 'justify-center' : 'justify-between gap-2')
+        "
+      >
+        <a
+          routerLink="/admin/dashboard"
+          [class]="
+            'flex min-w-0 items-center ' +
+            (collapsed() ? 'hidden' : 'flex-1 justify-center')
+          "
+        >
+          <img
+            src="/images/school-wordmark.png"
+            alt="Pragyan Pathashala"
+            class="sb-brand-tile h-[52px] w-auto max-w-full shrink-0 bg-transparent object-contain"
+          />
         </a>
-        <div class="flex items-center gap-1">
+        <div class="flex shrink-0 items-center gap-1">
           <button
             type="button"
             aria-label="Close navigation"
-            class="flex h-8 w-8 items-center justify-center rounded-md bg-white/10 text-slate-200 hover:bg-white/20 md:hidden"
+            class="flex h-8 w-8 items-center justify-center rounded-lg border border-[#e4eaf2] bg-[#f8fafc] text-[#123552] transition hover:bg-[#eaf4fb] md:hidden"
             (click)="closeMobile()"
           >
-            <svg lucideX [size]="14"></svg>
+            <svg lucideX [size]="15"></svg>
           </button>
           <button
             type="button"
@@ -51,36 +59,11 @@
             [attr.aria-label]="collapsed() ? 'Expand sidebar' : 'Collapse sidebar'"
             aria-controls="sidebar"
             [attr.aria-expanded]="!collapsed()"
-            class="sb-collapse hidden h-7 w-7 shrink-0 items-center justify-center rounded-md bg-white/10 text-slate-200 hover:bg-white/20 md:flex"
+            class="sb-collapse hidden h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-[#e4eaf2] bg-[#f8fafc] text-[#123552] transition hover:border-[#c8dce9] hover:bg-[#eaf4fb] md:flex"
             (click)="toggleCollapse()"
           >
-            <svg lucideChevronLeft [size]="14" class="transition"></svg>
+            <svg lucideChevronLeft [size]="15" class="transition"></svg>
           </button>
-        </div>
-      </div>
-
-      <!-- User Profile Block -->
-      <div class="flex shrink-0 flex-col items-center py-5">
-        @if (user()?.avatarUrl; as avatar) {
-          <img
-            [src]="avatar"
-            alt=""
-            class="sb-avatar h-[72px] w-[72px] rounded-full border-2 border-white/25 object-cover"
-          />
-        } @else {
-          <div
-            class="sb-avatar flex h-[72px] w-[72px] items-center justify-center rounded-full border-2 border-white/25 bg-white/10"
-          >
-            <svg lucideUser [size]="30" class="text-white"></svg>
-          </div>
-        }
-        <div class="sb-profile-text mt-3 px-3 text-center">
-          <p class="truncate text-sm font-bold text-white">{{ user()?.name }}</p>
-          <span
-            class="mt-1 inline-block max-w-[13rem] truncate rounded-full bg-white/10 px-3 py-0.5 text-[11px] text-slate-300"
-          >
-            {{ user()?.roleLabel }}
-          </span>
         </div>
       </div>
 
@@ -92,7 +75,7 @@
       >
         @for (group of menuSections; track group.section) {
           <p
-            class="sb-section px-3 pb-1.5 pt-4 text-[10px] font-semibold uppercase tracking-widest text-white/45"
+            class="sb-section px-3 pb-1.5 pt-4 text-[10px] font-bold uppercase tracking-widest text-[#64748b]"
           >
             {{ group.section }}
           </p>
@@ -100,16 +83,11 @@
             <a
               [routerLink]="item.route"
               [title]="item.label"
-              routerLinkActive="sb-active bg-white/10 text-white"
+              routerLinkActive="sb-active !bg-[#1c629e] !text-white font-semibold shadow-sm"
               #rla="routerLinkActive"
               [attr.aria-current]="rla.isActive ? 'page' : null"
-              class="sb-item relative my-0.5 flex items-center rounded-lg px-3 py-2 text-slate-300 transition hover:bg-white/5 hover:text-white"
+              class="sb-item relative my-0.5 flex items-center rounded-lg px-3 py-2 text-[#46536a] transition hover:bg-[#eaf4fb] hover:text-[#124c7b]"
             >
-              @if (rla.isActive) {
-                <span
-                  class="absolute bottom-1.5 left-0 top-1.5 w-[3px] rounded-r bg-blue-500"
-                ></span>
-              }
               <span class="mr-3 flex w-4 shrink-0 items-center justify-center">
                 <ng-container *ngComponentOutlet="item.icon; inputs: { size: 15 }" />
               </span>
@@ -125,33 +103,6 @@
           }
         }
       </nav>
-
-      <!-- Bottom Controls -->
-      <div class="shrink-0 space-y-2 border-t border-white/10 p-3">
-        <button
-          type="button"
-          [attr.aria-pressed]="darkMode()"
-          (click)="toggleDarkMode()"
-          class="sb-item flex w-full items-center justify-center gap-2 rounded-lg bg-white/10 px-3 py-2 text-[13px] font-medium text-slate-200 hover:bg-white/15"
-        >
-          @if (darkMode()) {
-            <svg lucideSun [size]="15"></svg>
-            <span class="sb-label">Light Mode</span>
-          } @else {
-            <svg lucideMoon [size]="15"></svg>
-            <span class="sb-label">Dark Mode</span>
-          }
-        </button>
-
-        <button
-          type="button"
-          (click)="logout()"
-          class="sb-item flex w-full items-center justify-center gap-2 rounded-lg border border-red-900/60 bg-red-950/70 px-3 py-2 text-[13px] font-medium text-slate-200 hover:bg-red-900"
-        >
-          <svg lucideLogOut [size]="15"></svg>
-          <span class="sb-label">Logout</span>
-        </button>
-      </div>
     </aside>
 
     <!-- Main Column -->
@@ -170,44 +121,139 @@
           >
             <svg lucideMenu [size]="18"></svg>
           </button>
-          <div class="min-w-0">
-            <a routerLink="/admin/dashboard" class="block" title="Go to dashboard">
-              <p class="truncate text-sm font-bold tracking-tight text-slate-800 sm:text-base">
-                {{ schoolName() }}
-              </p>
-            </a>
+          <div #searchMenu class="relative w-64 sm:w-80 md:w-96">
+            <div class="relative flex items-center">
+              <svg
+                lucideSearch
+                [size]="16"
+                class="pointer-events-none absolute left-3.5 text-[#46536a]"
+              ></svg>
+              <input
+                type="search"
+                [value]="searchQuery()"
+                (focus)="openSearch()"
+                (input)="onSearchInput($any($event.target).value)"
+                (keydown)="onSearchKeydown($event)"
+                placeholder="Search pages... (Students, Teachers, Notices)"
+                aria-label="Quick search admin pages"
+                class="h-10 w-full rounded-xl border border-[#cbd5e1] bg-[#f1f5f9] pl-10 pr-3.5 text-sm font-medium text-[#123552] placeholder:text-slate-500 shadow-xs transition hover:border-[#94a3b8] focus:border-[#1c629e] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1c629e]/20"
+              />
+            </div>
+
+            @if (searchOpen()) {
+              <div
+                role="listbox"
+                aria-label="Matching admin pages"
+                class="absolute left-0 top-full z-50 mt-1.5 w-full overflow-hidden rounded-xl border border-[#e4eaf2] bg-white py-1 shadow-lg"
+              >
+                @if (searchResults().length === 0) {
+                  <p class="px-3.5 py-2.5 text-xs text-slate-500">No matching pages found.</p>
+                } @else {
+                  @for (item of searchResults(); track item.route) {
+                    <button
+                      type="button"
+                      role="option"
+                      (click)="selectSearchItem(item.route)"
+                      class="flex w-full items-center justify-between gap-2 px-3.5 py-2 text-left text-sm transition hover:bg-[#f0f7fc]"
+                    >
+                      <span class="flex min-w-0 items-center gap-2.5">
+                        <span class="flex w-4 shrink-0 items-center justify-center text-[#1c629e]">
+                          <ng-container *ngComponentOutlet="item.icon; inputs: { size: 15 }" />
+                        </span>
+                        <span class="truncate font-medium text-[#123552]">{{ item.label }}</span>
+                      </span>
+                      <span
+                        class="shrink-0 rounded bg-[#f1f5f9] px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-slate-500"
+                      >
+                        {{ item.section }}
+                      </span>
+                    </button>
+                  }
+                }
+              </div>
+            }
           </div>
         </div>
 
-        <div class="flex items-center gap-2 sm:gap-3">
-          <span
-            class="hidden rounded-full bg-slate-100 px-3 py-1 text-[11px] font-bold text-slate-600 ring-1 ring-slate-200 lg:inline-flex"
-          >
-            AY {{ academicYear() }}
-          </span>
+        <div #profileMenu class="relative flex items-center">
           <button
             type="button"
-            title="Refresh page"
-            aria-label="Refresh page"
-            class="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-slate-500 hover:bg-slate-50"
-            (click)="refreshView()"
+            (click)="toggleProfileMenu()"
+            [attr.aria-expanded]="profileMenuOpen()"
+            aria-haspopup="menu"
+            [title]="user()?.name ? user()?.name + ' · Account menu' : 'Account menu'"
+            aria-label="Account menu"
+            class="flex h-9 w-9 items-center justify-center rounded-full bg-[#123552] text-white shadow-sm transition hover:bg-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/40"
           >
-            <svg lucideRefreshCw [size]="16"></svg>
+            @if (user()?.avatarUrl; as avatar) {
+              <img [src]="avatar" alt="" class="h-9 w-9 rounded-full object-cover" />
+            } @else {
+              <svg lucideUser [size]="16"></svg>
+            }
           </button>
-          <a
-            routerLink="/admin/profile"
-            title="My account"
-            class="flex items-center gap-2 rounded-full border border-slate-200 bg-white py-1 pl-1 pr-2.5 shadow-sm transition hover:bg-slate-50 sm:pr-3"
-          >
-            <span
-              class="flex h-7 w-7 items-center justify-center rounded-full bg-[#0b1a4a] text-white"
+
+          @if (profileMenuOpen()) {
+            <div
+              role="menu"
+              aria-label="Account options"
+              class="absolute right-0 top-full z-50 mt-2 w-56 overflow-hidden rounded-xl border border-[#e4eaf2] bg-white py-1.5 shadow-lg"
             >
-              <svg lucideUser [size]="13"></svg>
-            </span>
-            <span class="hidden max-w-[9rem] truncate text-xs font-semibold text-slate-700 sm:inline">
-              {{ user()?.name }}
-            </span>
-          </a>
+              <div class="border-b border-[#e4eaf2] px-3.5 py-2.5">
+                <p class="truncate text-sm font-semibold text-[#123552]">
+                  {{ user()?.name || 'School Admin' }}
+                </p>
+                <p class="truncate text-xs text-slate-500">
+                  {{ user()?.roleLabel || 'Admin' }}
+                </p>
+              </div>
+
+              <div class="py-1">
+                <a
+                  routerLink="/admin/profile"
+                  role="menuitem"
+                  (click)="closeProfileMenu()"
+                  class="flex items-center gap-2.5 px-3.5 py-2 text-sm font-medium text-slate-700 transition hover:bg-[#f0f7fc] hover:text-[#123552]"
+                >
+                  <svg lucideUser [size]="15" class="text-[#1c629e]"></svg>
+                  <span>My Profile</span>
+                </a>
+
+                <button
+                  type="button"
+                  role="menuitem"
+                  (click)="toggleDarkMode()"
+                  class="flex w-full items-center justify-between px-3.5 py-2 text-left text-sm font-medium text-slate-700 transition hover:bg-[#f0f7fc] hover:text-[#123552]"
+                >
+                  <span class="flex items-center gap-2.5">
+                    @if (darkMode()) {
+                      <svg lucideSun [size]="15" class="text-[#1c629e]"></svg>
+                      <span>Light Theme</span>
+                    } @else {
+                      <svg lucideMoon [size]="15" class="text-[#1c629e]"></svg>
+                      <span>Dark Theme</span>
+                    }
+                  </span>
+                  <span
+                    class="rounded-full bg-[#eaf4fb] px-2 py-0.5 text-[11px] font-semibold text-[#1c629e]"
+                  >
+                    {{ darkMode() ? 'Dark' : 'Light' }}
+                  </span>
+                </button>
+              </div>
+
+              <div class="border-t border-[#e4eaf2] pt-1">
+                <button
+                  type="button"
+                  role="menuitem"
+                  (click)="closeProfileMenu(); logout()"
+                  class="flex w-full items-center gap-2.5 px-3.5 py-2 text-left text-sm font-medium text-rose-600 transition hover:bg-rose-50"
+                >
+                  <svg lucideLogOut [size]="15"></svg>
+                  <span>Logout</span>
+                </button>
+              </div>
+            </div>
+          }
         </div>
       </header>
 
