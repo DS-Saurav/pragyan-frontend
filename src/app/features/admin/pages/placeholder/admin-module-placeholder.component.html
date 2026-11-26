@@ -1,0 +1,27 @@
+<div class="ui-page">
+  <app-admin-page-header [title]="meta().title" [subtitle]="meta().description">
+    <ng-container actions>
+      <a routerLink="/admin/dashboard" class="ui-btn ui-btn-secondary">Back to Dashboard</a>
+    </ng-container>
+  </app-admin-page-header>
+
+  <section class="ui-card p-8">
+    <div class="mx-auto flex max-w-lg flex-col items-center text-center">
+      <span
+        class="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50 text-blue-700 ring-1 ring-blue-100"
+      >
+        <ng-container *ngComponentOutlet="meta().icon; inputs: { size: 26 }" />
+      </span>
+      <span class="ui-badge ui-badge-info mb-3">{{ meta().section }}</span>
+      <h2 class="text-lg font-bold text-slate-900">{{ meta().title }}</h2>
+      <p class="mt-2 text-sm text-slate-600">
+        The route and navigation structure for <strong>{{ meta().title }}</strong> are ready. Full
+        CRUD views and Laravel API integration can be added here next.
+      </p>
+      <div class="mt-6 flex flex-wrap justify-center gap-3">
+        <a routerLink="/admin/dashboard" class="ui-btn ui-btn-primary">Return to Dashboard</a>
+        <a routerLink="/admin/students" class="ui-btn ui-btn-secondary">View Students</a>
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,199 @@
+<div class="ui-page">
+  <app-admin-page-header
+    title="School Settings"
+    subtitle="Update your school profile, academic defaults and branding colors."
+  >
+    <ng-container actions>
+      <a routerLink="/admin/settings/marksheet" class="ui-btn ui-btn-secondary">
+        <svg lucideLayoutTemplate [size]="16"></svg> Marksheet layout
+      </a>
+      <button type="submit" form="settingsForm" class="ui-btn ui-btn-primary">
+        <svg lucideCheckCircle2 [size]="16"></svg> Save settings
+      </button>
+    </ng-container>
+  </app-admin-page-header>
+
+  <form id="settingsForm" [formGroup]="form" (ngSubmit)="saveSettings()">
+    <div class="grid gap-5 lg:grid-cols-3">
+      <!-- School Information -->
+      <section class="ui-card lg:col-span-2">
+        <div class="ui-card-header">
+          <div>
+            <h2 class="text-sm font-bold text-slate-900">School information</h2>
+            <p class="mt-0.5 text-xs text-slate-500">
+              Shown across the application, notices and reports.
+            </p>
+          </div>
+          <svg lucideBuilding2 [size]="18" class="text-slate-400"></svg>
+        </div>
+
+        <div class="space-y-4 p-5">
+          <div>
+            <label for="school_name" class="ui-label">
+              School name <span class="text-rose-600">*</span>
+            </label>
+            <input
+              id="school_name"
+              type="text"
+              formControlName="schoolName"
+              required
+              class="ui-input"
+            />
+          </div>
+
+          <div>
+            <label for="tagline" class="ui-label">Tagline</label>
+            <input id="tagline" type="text" formControlName="tagline" class="ui-input" />
+          </div>
+
+          <div>
+            <label for="address" class="ui-label">Address</label>
+            <textarea id="address" formControlName="address" rows="2" class="ui-input"></textarea>
+          </div>
+
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label for="phone" class="ui-label">Phone</label>
+              <input id="phone" type="text" formControlName="phone" class="ui-input" />
+            </div>
+            <div>
+              <label for="email" class="ui-label">Email</label>
+              <input id="email" type="email" formControlName="email" class="ui-input" />
+            </div>
+          </div>
+
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label for="website" class="ui-label">Website</label>
+              <input id="website" type="text" formControlName="website" class="ui-input" />
+            </div>
+            <div>
+              <label for="logo_url" class="ui-label">Logo URL</label>
+              <input
+                id="logo_url"
+                type="text"
+                formControlName="logoUrl"
+                placeholder="https://..."
+                class="ui-input"
+              />
+            </div>
+          </div>
+
+          <div class="grid gap-4 sm:grid-cols-3">
+            <div>
+              <label for="time_zone" class="ui-label">Time zone</label>
+              <select id="time_zone" formControlName="timeZone" class="ui-input">
+                <option value="Asia/Kathmandu">Asia/Kathmandu</option>
+                <option value="Asia/Kolkata">Asia/Kolkata</option>
+              </select>
+            </div>
+            <div>
+              <label for="currency_symbol" class="ui-label">Currency symbol</label>
+              <input
+                id="currency_symbol"
+                type="text"
+                formControlName="currencySymbol"
+                class="ui-input"
+              />
+            </div>
+            <div>
+              <label for="academic_year" class="ui-label">Academic year</label>
+              <input
+                id="academic_year"
+                type="text"
+                formControlName="academicYear"
+                class="ui-input"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Theme & Colors -->
+      <section class="ui-card">
+        <div class="ui-card-header">
+          <div>
+            <h2 class="text-sm font-bold text-slate-900">Theme &amp; colors</h2>
+            <p class="mt-0.5 text-xs text-slate-500">
+              Match the application to your school branding.
+            </p>
+          </div>
+          <svg lucidePalette [size]="18" class="text-slate-400"></svg>
+        </div>
+
+        <div class="space-y-5 p-5">
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label for="primary_input" class="ui-label">Primary</label>
+              <div class="flex items-center gap-2 rounded-lg border border-slate-300 bg-white p-1.5">
+                <input
+                  type="color"
+                  [value]="form.controls.primaryColor.value"
+                  (input)="form.patchValue({ primaryColor: $any($event.target).value })"
+                  class="h-7 w-8 cursor-pointer rounded border-0 bg-transparent p-0"
+                />
+                <input
+                  id="primary_input"
+                  type="text"
+                  formControlName="primaryColor"
+                  class="w-full border-0 bg-transparent p-0 font-mono text-xs text-slate-700 focus:ring-0"
+                />
+              </div>
+            </div>
+            <div>
+              <label for="accent_input" class="ui-label">Accent</label>
+              <div class="flex items-center gap-2 rounded-lg border border-slate-300 bg-white p-1.5">
+                <input
+                  type="color"
+                  [value]="form.controls.accentColor.value"
+                  (input)="form.patchValue({ accentColor: $any($event.target).value })"
+                  class="h-7 w-8 cursor-pointer rounded border-0 bg-transparent p-0"
+                />
+                <input
+                  id="accent_input"
+                  type="text"
+                  formControlName="accentColor"
+                  class="w-full border-0 bg-transparent p-0 font-mono text-xs text-slate-700 focus:ring-0"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <p class="ui-label">Presets</p>
+            <div class="flex flex-wrap gap-2">
+              @for (preset of presets; track preset.label) {
+                <button
+                  type="button"
+                  (click)="applyPreset(preset.primary, preset.accent)"
+                  class="ui-btn ui-btn-secondary ui-btn-sm"
+                >
+                  {{ preset.label }}
+                </button>
+              }
+            </div>
+          </div>
+
+          <div
+            class="rounded-xl p-4 text-white shadow-sm"
+            [style.backgroundColor]="form.controls.primaryColor.value"
+          >
+            <p class="text-[11px] font-semibold text-white/80">Preview</p>
+            <p class="mt-2 text-sm font-bold">Sidebar and headers</p>
+            <button
+              type="button"
+              class="mt-3 rounded-lg px-3 py-1.5 text-xs font-bold text-white shadow"
+              [style.backgroundColor]="form.controls.accentColor.value"
+            >
+              Accent button
+            </button>
+          </div>
+
+          <button type="submit" class="ui-btn ui-btn-primary w-full">
+            <svg lucideCheckCircle2 [size]="16"></svg> Save settings
+          </button>
+        </div>
+      </section>
+    </div>
+  </form>
+</div>

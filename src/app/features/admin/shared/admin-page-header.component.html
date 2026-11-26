@@ -1,0 +1,12 @@
+<div class="ui-page-header">
+  <div>
+    <h1 class="ui-page-title">{{ title() }}</h1>
+    @if (subtitle(); as sub) {
+      <p class="ui-page-subtitle">{{ sub }}</p>
+    }
+  </div>
+
+  <div class="flex flex-wrap items-center gap-2">
+    <ng-content select="[actions]" />
+  </div>
+</div>

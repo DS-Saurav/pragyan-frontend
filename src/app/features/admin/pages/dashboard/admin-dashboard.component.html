@@ -1,0 +1,163 @@
+<div class="dashboard-shell">
+  <app-admin-page-header
+    title="Dashboard"
+    subtitle="A focused view of the school day, your priorities and the latest published updates."
+  >
+    <ng-container actions>
+      <span class="dashboard-date-pill">
+        <svg lucideCalendar [size]="14" aria-hidden="true"></svg>
+        <span>{{ today | date: 'EEE, MMM d, y' }}</span>
+      </span>
+      <span class="dashboard-year-pill">
+        <span class="sr-only">Academic year</span>
+        AY {{ academicYear() }}
+      </span>
+    </ng-container>
+  </app-admin-page-header>
+
+  <!-- Briefing Hero -->
+  <section
+    class="dashboard-briefing dashboard-briefing-staff"
+    aria-labelledby="staff-dashboard-heading"
+  >
+    <div class="dashboard-briefing-content">
+      <div>
+        <span class="dashboard-eyebrow">
+          <svg lucideActivity [size]="14" aria-hidden="true"></svg>
+          Daily overview
+        </span>
+        <h2 id="staff-dashboard-heading" class="dashboard-briefing-title">
+          School day at a glance
+        </h2>
+        <p class="dashboard-briefing-copy">
+          Start with the school records you can act on, then move through the newest published
+          updates.
+        </p>
+      </div>
+      <dl class="dashboard-context" aria-label="Today’s dashboard context">
+        <div>
+          <dt>Today</dt>
+          <dd>{{ today | date: 'EEEE, d MMM' }}</dd>
+        </div>
+        <div>
+          <dt>Academic year</dt>
+          <dd>{{ academicYear() }}</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- School Records Stat Grid -->
+  <section aria-label="School records at a glance">
+    <div class="dashboard-section-heading">
+      <p>School records</p>
+      <span>Only the areas available to your account are shown.</span>
+    </div>
+    <div class="dashboard-stat-grid">
+      @for (stat of stats(); track stat.label) {
+        <app-admin-stat-card
+          [label]="stat.label"
+          [value]="stat.value"
+          [icon]="stat.icon"
+          [tone]="stat.tone"
+        />
+      }
+    </div>
+  </section>
+
+  <!-- Workspace: Latest Notices + Next Actions -->
+  <div class="dashboard-workspace">
+    <section class="ui-card dashboard-notices-panel">
+      <div class="ui-card-header">
+        <div>
+          <h2 class="text-sm font-bold text-slate-900">Latest notices</h2>
+          <p class="dashboard-panel-subtitle">
+            Published announcements for your school community.
+          </p>
+        </div>
+        <a routerLink="/admin/notices" class="ui-link text-xs">View all</a>
+      </div>
+
+      @if (latestNotices().length === 0) {
+        <div class="p-5">
+          <app-admin-empty-state
+            [icon]="megaphoneIcon"
+            title="No notices yet"
+            message="Published notices will appear here as soon as they are added."
+          />
+        </div>
+      } @else {
+        <ul class="dashboard-notice-list">
+          @for (notice of latestNotices(); track notice.id) {
+            <li class="dashboard-notice-row">
+              <span class="dashboard-notice-icon">
+                <svg lucideMegaphone [size]="16" aria-hidden="true"></svg>
+              </span>
+              <div class="min-w-0">
+                <p class="dashboard-notice-title">{{ notice.title }}</p>
+                @if (notice.content) {
+                  <p class="dashboard-notice-summary">
+                    {{
+                      notice.content.length > 140
+                        ? (notice.content.slice(0, 140) + '...')
+                        : notice.content
+                    }}
+                  </p>
+                }
+                <p class="dashboard-notice-meta">
+                  <span>
+                    <svg lucideCalendar [size]="12" aria-hidden="true"></svg>
+                    {{ notice.date | date: 'MMM d, y' }}
+                  </span>
+                  <span class="capitalize">{{ notice.audience }}</span>
+                </p>
+              </div>
+            </li>
+          }
+        </ul>
+      }
+    </section>
+
+    <section
+      id="dashboard-actions"
+      class="ui-card dashboard-actions-panel"
+      aria-labelledby="dashboard-actions-heading"
+    >
+      <div class="ui-card-header">
+        <div>
+          <h2 id="dashboard-actions-heading" class="text-sm font-bold text-slate-900">
+            Next actions
+          </h2>
+          <p class="dashboard-panel-subtitle">Jump straight to your regular work.</p>
+        </div>
+        <svg lucideZap [size]="18" class="dashboard-panel-icon" aria-hidden="true"></svg>
+      </div>
+      <div class="dashboard-action-list">
+        <a routerLink="/admin/students" class="dashboard-action">
+          <svg lucideGraduationCap [size]="17" aria-hidden="true"></svg>
+          <span>Manage students</span>
+        </a>
+        <a routerLink="/admin/attendance" class="dashboard-action">
+          <svg lucideUserCheck [size]="17" aria-hidden="true"></svg>
+          <span>Mark attendance</span>
+        </a>
+        <a routerLink="/admin/fees" class="dashboard-action">
+          <svg lucideWallet [size]="17" aria-hidden="true"></svg>
+          <span>Fees collection</span>
+        </a>
+        <a routerLink="/admin/discipline" class="dashboard-action">
+          <svg lucideShieldCheck [size]="17" aria-hidden="true"></svg>
+          <span>Discipline register</span>
+        </a>
+        <a routerLink="/admin/settings" class="dashboard-action">
+          <svg lucideSettings [size]="17" aria-hidden="true"></svg>
+          <span>School settings</span>
+        </a>
+        <a routerLink="/admin/profile" class="dashboard-action">
+          <svg lucideUserCircle [size]="17" aria-hidden="true"></svg>
+          <span>My account</span>
+        </a>
+      </div>
+    </section>
+  </div>
+</div>

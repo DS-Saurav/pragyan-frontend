@@ -1,0 +1,12 @@
+<div class="ui-empty">
+  <div class="ui-empty-icon">
+    <ng-container *ngComponentOutlet="icon(); inputs: { size: 22 }" />
+  </div>
+  <p class="ui-empty-title">{{ title() }}</p>
+  @if (message(); as msg) {
+    <p class="ui-empty-text">{{ msg }}</p>
+  }
+  <div class="mt-4 empty:hidden">
+    <ng-content select="[actions]" />
+  </div>
+</div>

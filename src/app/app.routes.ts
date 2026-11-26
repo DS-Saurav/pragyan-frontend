@@ -3,6 +3,11 @@ import { SchoolLayoutComponent } from './layout/school-layout.component';
 
 export const routes: Routes = [
   {
+    path: 'admin',
+    loadChildren: () =>
+      import('./features/admin/admin.routes').then((m) => m.ADMIN_ROUTES),
+  },
+  {
     path: '',
     component: SchoolLayoutComponent,
     children: [

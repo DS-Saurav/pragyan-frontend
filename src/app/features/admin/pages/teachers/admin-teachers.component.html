@@ -1,0 +1,382 @@
+<div class="space-y-6">
+  <!-- Metric Summary Cards -->
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div
+      class="flex items-center justify-between rounded-xl border border-slate-800 bg-slate-900 p-5 text-white shadow-sm"
+    >
+      <div>
+        <p class="text-2xl font-bold">{{ counts().all }}</p>
+        <p class="mt-1 text-xs font-semibold uppercase tracking-wider text-slate-400">
+          Total Teachers
+        </p>
+      </div>
+      <div class="rounded-lg bg-slate-800 p-3">
+        <svg lucideBriefcase [size]="20"></svg>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-between rounded-xl bg-emerald-600 p-5 text-white shadow-sm">
+      <div>
+        <p class="text-2xl font-bold">{{ counts().active }}</p>
+        <p class="mt-1 text-xs font-semibold uppercase tracking-wider text-emerald-100">Active</p>
+      </div>
+      <div class="rounded-lg bg-emerald-700 p-3">
+        <svg lucideCheckCircle2 [size]="20"></svg>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-between rounded-xl bg-sky-600 p-5 text-white shadow-sm">
+      <div>
+        <p class="text-2xl font-bold">{{ counts().assignments }}</p>
+        <p class="mt-1 text-xs font-semibold uppercase tracking-wider text-sky-100">
+          Total Assignments
+        </p>
+      </div>
+      <div class="rounded-lg bg-sky-700 p-3">
+        <svg lucideBook [size]="20"></svg>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-between rounded-xl bg-amber-600 p-5 text-white shadow-sm">
+      <div>
+        <p class="text-2xl font-bold">{{ counts().inactive }}</p>
+        <p class="mt-1 text-xs font-semibold uppercase tracking-wider text-amber-100">Inactive</p>
+      </div>
+      <div class="rounded-lg bg-amber-700 p-3">
+        <svg lucideXCircle [size]="20"></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Status Tabs Bar -->
+  <div
+    class="flex flex-wrap items-center gap-2 rounded-xl border border-gray-100 bg-white p-3 shadow-sm"
+  >
+    <button
+      type="button"
+      (click)="statusTab.set('all')"
+      [class]="
+        'rounded-lg px-4 py-2 text-xs font-bold transition ' +
+        (statusTab() === 'all'
+          ? 'bg-slate-900 text-white shadow'
+          : 'bg-gray-100 text-gray-700 hover:bg-gray-200')
+      "
+    >
+      ALL ({{ counts().all }})
+    </button>
+    <button
+      type="button"
+      (click)="statusTab.set('active')"
+      [class]="
+        'rounded-lg px-4 py-2 text-xs font-bold transition ' +
+        (statusTab() === 'active'
+          ? 'bg-emerald-600 text-white shadow'
+          : 'bg-gray-100 text-gray-700 hover:bg-gray-200')
+      "
+    >
+      ACTIVE ({{ counts().active }})
+    </button>
+    <button
+      type="button"
+      (click)="statusTab.set('inactive')"
+      [class]="
+        'rounded-lg px-4 py-2 text-xs font-bold transition ' +
+        (statusTab() === 'inactive'
+          ? 'bg-gray-600 text-white shadow'
+          : 'bg-gray-100 text-gray-700 hover:bg-gray-200')
+      "
+    >
+      INACTIVE ({{ counts().inactive }})
+    </button>
+    <button
+      type="button"
+      (click)="statusTab.set('suspended')"
+      [class]="
+        'rounded-lg px-4 py-2 text-xs font-bold transition ' +
+        (statusTab() === 'suspended'
+          ? 'bg-rose-600 text-white shadow'
+          : 'bg-gray-100 text-gray-700 hover:bg-gray-200')
+      "
+    >
+      SUSPENDED ({{ counts().suspended }})
+    </button>
+  </div>
+
+  <!-- Main Card -->
+  <div class="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
+    <div class="mb-6 flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
+      <div>
+        <h3 class="flex items-center gap-2 text-lg font-bold text-gray-900">
+          <svg lucideBriefcase [size]="18"></svg> Teachers Management
+        </h3>
+        <p class="text-xs text-gray-500">
+          Manage faculty members, specializations, class teacher duties, and course assignments.
+        </p>
+      </div>
+      <button
+        type="button"
+        (click)="openAddModal()"
+        class="inline-flex items-center rounded-lg bg-emerald-600 px-4 py-2 text-xs font-bold text-white shadow transition hover:bg-emerald-700"
+      >
+        + Register Teacher
+      </button>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="mb-6 flex flex-col items-center justify-between gap-4 border-b pb-4 md:flex-row">
+      <div class="flex items-center gap-2">
+        <button
+          type="button"
+          (click)="exportCsv()"
+          class="flex items-center gap-1 rounded-md bg-emerald-600 px-3 py-1.5 text-xs font-bold text-white shadow transition hover:bg-emerald-700"
+        >
+          <svg lucideFolderOpen [size]="14"></svg> CSV
+        </button>
+        <button
+          type="button"
+          (click)="printPage()"
+          class="flex items-center gap-1 rounded-md bg-indigo-600 px-3 py-1.5 text-xs font-bold text-white shadow transition hover:bg-indigo-700"
+        >
+          <svg lucidePrinter [size]="14"></svg> PRINT
+        </button>
+      </div>
+
+      <div class="flex w-full gap-2 md:w-auto">
+        <input
+          type="text"
+          [value]="searchQuery()"
+          (input)="searchQuery.set($any($event.target).value)"
+          placeholder="Search teachers..."
+          class="w-full rounded-lg border border-gray-300 p-2.5 text-xs focus:ring-2 focus:ring-indigo-500 md:w-64"
+        />
+      </div>
+    </div>
+
+    <!-- Teachers Table -->
+    <div class="overflow-x-auto rounded-xl border border-gray-200">
+      <table class="min-w-full divide-y divide-gray-200 text-left text-xs">
+        <thead class="bg-slate-900 font-bold uppercase tracking-wider text-white">
+          <tr>
+            <th class="px-4 py-3">Teacher</th>
+            <th class="px-4 py-3">Contact</th>
+            <th class="px-4 py-3">Specialization</th>
+            <th class="px-4 py-3 text-center">Classes</th>
+            <th class="px-4 py-3 text-center">Subjects</th>
+            <th class="px-4 py-3">Class Teacher Of</th>
+            <th class="px-4 py-3">Status</th>
+            <th class="px-4 py-3 text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200 bg-white">
+          @for (teacher of filteredTeachers(); track teacher.id) {
+            <tr class="transition hover:bg-gray-50/50">
+              <td class="px-4 py-3">
+                <div class="font-bold text-gray-900">
+                  {{ teacher.firstName }} {{ teacher.lastName }}
+                </div>
+                <div class="font-mono text-[11px] text-gray-400">{{ teacher.username }}</div>
+              </td>
+              <td class="px-4 py-3">
+                <div class="text-gray-800">{{ teacher.email }}</div>
+                <div class="text-[11px] text-gray-400">{{ teacher.phone || 'N/A' }}</div>
+              </td>
+              <td class="px-4 py-3">
+                <span
+                  class="rounded-md border bg-indigo-50 px-2.5 py-1 text-[10px] font-bold uppercase text-indigo-700"
+                >
+                  {{ teacher.specialization || teacher.department || 'General' }}
+                </span>
+              </td>
+              <td class="px-4 py-3 text-center font-bold text-indigo-600">
+                {{ teacher.classesCount }}
+              </td>
+              <td class="px-4 py-3 text-center font-bold text-emerald-600">
+                {{ teacher.assignmentsCount }}
+              </td>
+              <td class="px-4 py-3 font-medium">
+                @if (teacher.classTeacherOf) {
+                  <span class="font-bold text-amber-600">&#11088; {{ teacher.classTeacherOf }}</span>
+                } @else {
+                  <span class="italic text-gray-400">&mdash;</span>
+                }
+              </td>
+              <td class="px-4 py-3">
+                @if (teacher.status === 'active') {
+                  <span
+                    class="rounded-md bg-emerald-100 px-2.5 py-1 text-[10px] font-bold uppercase text-emerald-800"
+                  >
+                    Active
+                  </span>
+                } @else if (teacher.status === 'inactive') {
+                  <span
+                    class="rounded-md bg-gray-100 px-2.5 py-1 text-[10px] font-bold uppercase text-gray-800"
+                  >
+                    Inactive
+                  </span>
+                } @else {
+                  <span
+                    class="rounded-md bg-rose-100 px-2.5 py-1 text-[10px] font-bold uppercase text-rose-800"
+                  >
+                    Suspended
+                  </span>
+                }
+              </td>
+              <td class="space-x-1 px-4 py-3 text-right">
+                <button
+                  type="button"
+                  (click)="openEditModal(teacher)"
+                  class="rounded-md bg-slate-900 px-3 py-1 text-[11px] font-bold text-white shadow transition hover:bg-slate-800"
+                >
+                  Manage
+                </button>
+                <button
+                  type="button"
+                  (click)="openEditModal(teacher)"
+                  class="p-1 text-gray-400 transition hover:text-indigo-600"
+                  title="Edit Details"
+                >
+                  <svg lucidePencil [size]="14"></svg>
+                </button>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="8" class="px-4 py-8 text-center text-gray-500">No teachers found.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Register / Edit Teacher Modal -->
+  @if (addModalOpen() || editModalOpen()) {
+    <div
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+      (click)="closeModals()"
+    >
+      <div
+        class="w-full max-w-lg rounded-xl bg-white p-6 shadow-2xl"
+        (click)="$event.stopPropagation()"
+      >
+        <div class="mb-4 flex items-center justify-between border-b pb-3">
+          <h3 class="text-md font-bold">
+            {{ editModalOpen() ? 'Edit Teacher Details' : 'Register New Teacher' }}
+          </h3>
+          <button type="button" (click)="closeModals()" class="text-xl">&times;</button>
+        </div>
+
+        <form
+          [formGroup]="teacherForm"
+          (ngSubmit)="editModalOpen() ? saveEditedTeacher() : saveNewTeacher()"
+          class="space-y-4"
+        >
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="mb-1 block text-xs font-bold uppercase">First Name</label>
+              <input
+                type="text"
+                formControlName="firstName"
+                required
+                class="w-full rounded-lg border p-2.5 text-xs"
+              />
+            </div>
+            <div>
+              <label class="mb-1 block text-xs font-bold uppercase">Last Name</label>
+              <input
+                type="text"
+                formControlName="lastName"
+                required
+                class="w-full rounded-lg border p-2.5 text-xs"
+              />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="mb-1 block text-xs font-bold uppercase">Email Address</label>
+              <input
+                type="email"
+                formControlName="email"
+                required
+                class="w-full rounded-lg border p-2.5 text-xs"
+              />
+            </div>
+            <div>
+              <label class="mb-1 block text-xs font-bold uppercase">Phone Number</label>
+              <input
+                type="text"
+                formControlName="phone"
+                class="w-full rounded-lg border p-2.5 text-xs"
+              />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="mb-1 block text-xs font-bold uppercase">Department</label>
+              <input
+                type="text"
+                formControlName="department"
+                required
+                placeholder="e.g. Science"
+                class="w-full rounded-lg border p-2.5 text-xs"
+              />
+            </div>
+            <div>
+              <label class="mb-1 block text-xs font-bold uppercase">Specialization</label>
+              <input
+                type="text"
+                formControlName="specialization"
+                placeholder="e.g. Mathematics"
+                class="w-full rounded-lg border p-2.5 text-xs"
+              />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="mb-1 block text-xs font-bold uppercase">
+                Class Teacher Of (Optional)
+              </label>
+              <input
+                type="text"
+                formControlName="classTeacherOf"
+                placeholder="e.g. Class 1 - A"
+                class="w-full rounded-lg border p-2.5 text-xs"
+              />
+            </div>
+            <div>
+              <label class="mb-1 block text-xs font-bold uppercase">Status</label>
+              <select
+                formControlName="status"
+                required
+                class="w-full rounded-lg border p-2.5 text-xs"
+              >
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+                <option value="suspended">Suspended</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="flex justify-end space-x-2 pt-2">
+            <button
+              type="button"
+              (click)="closeModals()"
+              class="rounded-lg bg-gray-200 px-4 py-2 text-xs font-bold"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="rounded-lg bg-emerald-600 px-4 py-2 text-xs font-bold text-white"
+            >
+              {{ editModalOpen() ? 'Update Teacher' : 'Save Teacher' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+</div>

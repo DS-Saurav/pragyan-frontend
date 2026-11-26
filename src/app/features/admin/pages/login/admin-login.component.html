@@ -1,0 +1,128 @@
+<div class="grid min-h-screen font-sans antialiased text-slate-900 lg:grid-cols-2">
+  <!-- Left Branding Panel -->
+  <aside
+    class="hidden flex-col justify-between bg-gradient-to-br from-[#0b1a4a] via-[#0d235f] to-slate-900 p-10 text-white lg:flex"
+  >
+    <a routerLink="/" class="flex items-center gap-3">
+      <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10">
+        <svg lucideBuilding2 [size]="20"></svg>
+      </span>
+      <span class="text-lg font-extrabold">{{ schoolName }}</span>
+    </a>
+
+    <div>
+      <p class="text-[11px] font-bold uppercase tracking-widest text-emerald-300">
+        School Management System
+      </p>
+      <h1 class="mt-4 max-w-md text-3xl font-extrabold leading-tight">
+        One place for your school's daily work.
+      </h1>
+      <p class="mt-4 max-w-md text-sm leading-relaxed text-slate-300">
+        Admissions, students, attendance, exams, finance, communication and support — organised and
+        accessible to the right people.
+      </p>
+      <ul class="mt-8 space-y-3 text-sm text-slate-200">
+        <li class="flex items-center gap-3">
+          <svg lucideCheckCircle2 [size]="16" class="text-emerald-400"></svg>
+          Role-based access
+        </li>
+        <li class="flex items-center gap-3">
+          <svg lucideCheckCircle2 [size]="16" class="text-emerald-400"></svg>
+          Clear, responsive workspace
+        </li>
+        <li class="flex items-center gap-3">
+          <svg lucideCheckCircle2 [size]="16" class="text-emerald-400"></svg>
+          Works on desktop and mobile
+        </li>
+      </ul>
+    </div>
+
+    <p class="text-xs text-slate-400">
+      &copy; {{ currentYear }} {{ schoolName }}. Developed by Saurav Acharya.
+    </p>
+  </aside>
+
+  <!-- Right Login Form -->
+  <main class="flex flex-col justify-center bg-slate-50 px-4 py-10 sm:px-6 lg:px-12">
+    <div class="mx-auto w-full max-w-md">
+      <a routerLink="/" class="mb-8 flex items-center gap-3 lg:hidden">
+        <span
+          class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0b1a4a] text-white"
+        >
+          <svg lucideBuilding2 [size]="20"></svg>
+        </span>
+        <span class="text-lg font-extrabold text-slate-900">{{ schoolName }}</span>
+      </a>
+
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+        @if (errorMessage(); as err) {
+          <div class="mb-4 ui-alert ui-alert-error" role="alert">
+            <span>{{ err }}</span>
+          </div>
+        }
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div>
+            <label hlmLabel for="email" class="block text-sm font-medium text-gray-700">Email</label>
+            <input
+              hlmInput
+              id="email"
+              type="email"
+              formControlName="email"
+              required
+              autofocus
+              autocomplete="username"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+            />
+          </div>
+
+          <div class="mt-4">
+            <label hlmLabel for="password" class="block text-sm font-medium text-gray-700">
+              Password
+            </label>
+            <input
+              hlmInput
+              id="password"
+              type="password"
+              formControlName="password"
+              required
+              autocomplete="current-password"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+            />
+          </div>
+
+          <div class="mt-4 block">
+            <label for="remember_me" class="inline-flex items-center">
+              <input
+                id="remember_me"
+                type="checkbox"
+                formControlName="remember"
+                class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
+              />
+              <span class="ms-2 text-sm text-gray-600">Remember me</span>
+            </label>
+          </div>
+
+          <div class="mt-4 flex items-center justify-end">
+            <button
+              hlmBtn
+              type="submit"
+              [disabled]="submitting()"
+              class="inline-flex items-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900"
+            >
+              {{ submitting() ? 'Logging in...' : 'Log in' }}
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <p class="mt-6 text-center text-xs text-slate-500">
+        <a routerLink="/" class="ui-link">Home</a>
+        <span class="mx-2 text-slate-300">|</span>
+        <a routerLink="/notices" class="ui-link">Notice Board</a>
+        <span class="mx-2 text-slate-300">|</span>
+        <a routerLink="/staff" class="ui-link">Our Team</a>
+      </p>
+    </div>
+  </main>
+</div>

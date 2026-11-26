@@ -1,0 +1,106 @@
+<div class="ui-page">
+  <app-admin-page-header
+    title="Public news"
+    subtitle="Write, review and publish school stories without exposing unfinished revisions to families."
+  >
+    <ng-container actions>
+      <a routerLink="/admin/news/create" class="ui-btn ui-btn-primary">
+        <svg lucidePlus [size]="16" aria-hidden="true"></svg> New story
+      </a>
+    </ng-container>
+  </app-admin-page-header>
+
+  <div class="ui-alert ui-alert-info" role="status">
+    <svg lucideShieldCheck [size]="18" class="mt-0.5 shrink-0" aria-hidden="true"></svg>
+    <span>
+      Only an approved revision with an approved public cover can be published. Editing a live story
+      creates a separate private revision.
+    </span>
+  </div>
+
+  <section class="ui-card overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="ui-table">
+        <thead>
+          <tr>
+            <th>Story</th>
+            <th>Public state</th>
+            <th>Live revision</th>
+            <th>Updated</th>
+            <th class="text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (story of stories(); track story.id) {
+            <tr>
+              <td>
+                <p class="font-semibold text-slate-900">{{ story.title }}</p>
+                <p class="mt-0.5 text-xs text-slate-500">
+                  {{ story.slug || 'Slug will be chosen on publication' }}
+                  @if (story.isFeatured) {
+                    <span class="ml-1 font-semibold text-blue-700">&bull; Homepage feature</span>
+                  }
+                </p>
+              </td>
+              <td>
+                <app-admin-badge [tone]="toneFor(story.publicationState)">
+                  {{ story.publicationState }}
+                </app-admin-badge>
+              </td>
+              <td class="text-sm text-slate-600">
+                @if (story.publishedAt) {
+                  Revision {{ story.revisionNumber }}
+                  <span class="block text-xs text-slate-500">
+                    {{ story.publishedAt | date: 'd MMM y, h:mm a' }}
+                  </span>
+                } @else {
+                  &mdash;
+                }
+              </td>
+              <td class="whitespace-nowrap text-sm text-slate-600">
+                {{ story.updatedAt | date: 'd MMM y, h:mm a' }}
+              </td>
+              <td class="text-right">
+                <div class="inline-flex flex-wrap justify-end gap-2">
+                  <a
+                    [routerLink]="['/admin/news', story.id, 'edit']"
+                    class="ui-btn ui-btn-secondary !px-3 !py-1.5 text-xs"
+                  >
+                    <svg lucidePencil [size]="14"></svg> Open
+                  </a>
+                  @if (story.publicationState === 'published' && !story.isFeatured) {
+                    <button
+                      type="button"
+                      (click)="feature(story.id)"
+                      class="ui-btn ui-btn-secondary !px-3 !py-1.5 text-xs"
+                    >
+                      Feature
+                    </button>
+                  } @else if (story.isFeatured) {
+                    <button
+                      type="button"
+                      (click)="unfeature()"
+                      class="ui-btn ui-btn-secondary !px-3 !py-1.5 text-xs"
+                    >
+                      Remove feature
+                    </button>
+                  }
+                </div>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="5" class="px-4 py-10">
+                <app-admin-empty-state
+                  [icon]="newspaperIcon"
+                  title="No news stories yet"
+                  message="Create a private draft when a story has been approved for editorial preparation."
+                />
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>

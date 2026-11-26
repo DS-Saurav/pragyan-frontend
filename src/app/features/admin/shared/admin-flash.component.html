@@ -1,0 +1,36 @@
+@for (msg of flash.messages(); track msg.id) {
+  <div
+    [class]="
+      'mb-4 ui-alert justify-between ' +
+      (msg.type === 'success'
+        ? 'ui-alert-success'
+        : msg.type === 'error'
+          ? 'ui-alert-error'
+          : msg.type === 'warning'
+            ? 'ui-alert-warning'
+            : 'ui-alert-info')
+    "
+    [attr.role]="msg.type === 'error' || msg.type === 'warning' ? 'alert' : 'status'"
+  >
+    <div class="flex items-start gap-2">
+      @if (msg.type === 'success') {
+        <svg lucideCheckCircle2 [size]="18" class="mt-0.5 shrink-0"></svg>
+      } @else if (msg.type === 'error') {
+        <svg lucideXCircle [size]="18" class="mt-0.5 shrink-0"></svg>
+      } @else if (msg.type === 'warning') {
+        <svg lucideAlertTriangle [size]="18" class="mt-0.5 shrink-0"></svg>
+      } @else {
+        <svg lucideInfo [size]="18" class="mt-0.5 shrink-0"></svg>
+      }
+      <span>{{ msg.text }}</span>
+    </div>
+    <button
+      type="button"
+      class="shrink-0 opacity-70 hover:opacity-100"
+      aria-label="Dismiss message"
+      (click)="flash.dismiss(msg.id)"
+    >
+      <svg lucideX [size]="16"></svg>
+    </button>
+  </div>
+}

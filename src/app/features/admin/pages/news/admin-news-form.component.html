@@ -1,0 +1,171 @@
+<div class="ui-page">
+  <app-admin-page-header
+    [title]="isEditing() ? 'Edit news story' : 'New news story'"
+    subtitle="Draft revisions stay private until a separate reviewer and publisher approve them."
+  >
+    <ng-container actions>
+      <a routerLink="/admin/news" class="ui-btn ui-btn-secondary">Back to news</a>
+    </ng-container>
+  </app-admin-page-header>
+
+  @if (story(); as current) {
+    <div class="ui-alert ui-alert-info" role="status">
+      <svg lucideInfo [size]="18" class="mt-0.5 shrink-0"></svg>
+      <span>
+        Story: <strong class="capitalize">{{ current.publicationState }}</strong>. Revision
+        {{ current.revisionNumber }}:
+        <strong class="capitalize">{{ current.workflowState }}</strong>.
+      </span>
+    </div>
+  }
+
+  <div class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_20rem]">
+    <form [formGroup]="form" (ngSubmit)="saveRevision()" class="space-y-6">
+      <section class="ui-card">
+        <div class="ui-card-header">
+          <div>
+            <h2 class="text-sm font-bold text-slate-900">Story details</h2>
+            <p class="mt-0.5 text-xs text-slate-500">
+              The summary appears in News listings and sharing metadata.
+            </p>
+          </div>
+        </div>
+        <div class="grid gap-4 p-5 md:grid-cols-2">
+          <div class="md:col-span-2">
+            <label for="title" class="ui-label">Title <span class="text-rose-600">*</span></label>
+            <input id="title" formControlName="title" required maxlength="180" class="ui-input" />
+          </div>
+          <div>
+            <label for="slug" class="ui-label">Stable web address</label>
+            <input
+              id="slug"
+              formControlName="slug"
+              maxlength="180"
+              class="ui-input"
+              placeholder="Generated from the title if left blank"
+            />
+          </div>
+          <div>
+            <label for="category" class="ui-label">Category</label>
+            <input
+              id="category"
+              formControlName="category"
+              maxlength="60"
+              class="ui-input"
+              placeholder="e.g. Learning"
+            />
+          </div>
+          <div class="md:col-span-2">
+            <label for="summary" class="ui-label">
+              Summary <span class="text-rose-600">*</span>
+            </label>
+            <textarea
+              id="summary"
+              formControlName="summary"
+              rows="3"
+              required
+              maxlength="600"
+              class="ui-input"
+            ></textarea>
+          </div>
+          <div class="md:col-span-2">
+            <label for="body_markdown" class="ui-label">
+              Story <span class="text-rose-600">*</span>
+            </label>
+            <textarea
+              id="body_markdown"
+              formControlName="bodyMarkdown"
+              rows="14"
+              required
+              class="ui-input font-mono text-sm"
+            ></textarea>
+          </div>
+        </div>
+      </section>
+
+      <div class="flex flex-wrap gap-3">
+        <button type="submit" class="ui-btn ui-btn-primary">
+          <svg lucideSave [size]="16"></svg> Save private revision
+        </button>
+      </div>
+    </form>
+
+    @if (story(); as current) {
+      <aside class="space-y-4">
+        <section class="ui-card p-5">
+          <h2 class="text-sm font-bold text-slate-900">Editorial workflow</h2>
+          <p class="mt-1 text-sm text-slate-600">
+            Each transition records who made it and when.
+          </p>
+          <div class="mt-4 space-y-3">
+            @if (current.workflowState === 'draft') {
+              <button
+                type="button"
+                (click)="transition('submit')"
+                class="ui-btn ui-btn-secondary w-full"
+              >
+                Submit for review
+              </button>
+            }
+            @if (current.workflowState === 'review') {
+              <button
+                type="button"
+                (click)="transition('approve')"
+                class="ui-btn ui-btn-secondary w-full"
+              >
+                Approve revision
+              </button>
+            }
+            @if (current.workflowState === 'approved') {
+              <button
+                type="button"
+                (click)="transition('publish')"
+                class="ui-btn ui-btn-primary w-full"
+              >
+                Publish now
+              </button>
+            }
+            @if (current.publicationState === 'published') {
+              <button
+                type="button"
+                (click)="transition('withdraw')"
+                class="ui-btn ui-btn-secondary w-full"
+              >
+                Withdraw from public site
+              </button>
+            }
+            @if (current.publicationState !== 'archived') {
+              <button
+                type="button"
+                (click)="transition('archive')"
+                class="ui-btn ui-btn-secondary w-full"
+              >
+                Archive story
+              </button>
+            } @else {
+              <button
+                type="button"
+                (click)="transition('restore')"
+                class="ui-btn ui-btn-secondary w-full"
+              >
+                Restore as draft
+              </button>
+            }
+          </div>
+        </section>
+
+        <section class="ui-card p-5">
+          <h2 class="text-sm font-bold text-slate-900">Publishing notes</h2>
+          <ul class="mt-3 list-disc space-y-2 pl-5 text-sm text-slate-600">
+            <li>At least one public-safe cover image is required to publish.</li>
+            <li>
+              Changing a published URL creates a safe redirect only after the replacement is
+              published.
+            </li>
+            <li>Withdrawing media consent automatically removes affected public uses.</li>
+          </ul>
+        </section>
+      </aside>
+    }
+  </div>
+</div>

@@ -1,0 +1,92 @@
+<div class="ui-page">
+  <app-admin-page-header
+    title="Public notices"
+    subtitle="Prepare family-facing notices privately, then review and publish a stable public version."
+  >
+    <ng-container actions>
+      <a routerLink="/admin/notices/create" class="ui-btn ui-btn-primary">
+        <svg lucidePlus [size]="16" aria-hidden="true"></svg> New notice
+      </a>
+    </ng-container>
+  </app-admin-page-header>
+
+  <div class="ui-alert ui-alert-info" role="status">
+    <svg lucideShieldCheck [size]="18" class="mt-0.5 shrink-0" aria-hidden="true"></svg>
+    <span>
+      Editing a live notice creates a private revision. Families continue to see the last published
+      version until a replacement is approved.
+    </span>
+  </div>
+
+  <section class="ui-card overflow-hidden" aria-labelledby="noticeTableTitle">
+    <div class="sr-only" id="noticeTableTitle">Public notice editorial records</div>
+    <div class="overflow-x-auto">
+      <table class="ui-table">
+        <thead>
+          <tr>
+            <th>Notice</th>
+            <th>Public state</th>
+            <th>Audience</th>
+            <th>Publication</th>
+            <th class="text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (notice of notices(); track notice.id) {
+            <tr>
+              <td>
+                <p class="font-semibold text-slate-900">{{ notice.title }}</p>
+                <p class="mt-0.5 text-xs text-slate-500">
+                  @if (notice.slug) {
+                    /notices/{{ notice.slug }}
+                  } @else {
+                    Public address is created when a public version is published.
+                  }
+                  @if (notice.isUrgent && notice.publicationState === 'published') {
+                    <span class="ml-1 font-semibold text-rose-700">&bull; Urgent</span>
+                  }
+                </p>
+              </td>
+              <td>
+                <app-admin-badge [tone]="toneFor(notice.publicationState)">
+                  {{ notice.publicationState }}
+                </app-admin-badge>
+              </td>
+              <td class="text-sm capitalize text-slate-600">{{ notice.audience }}</td>
+              <td class="text-sm text-slate-600">
+                @if (notice.publishedAt) {
+                  Revision {{ notice.revisionNumber }}
+                  <span class="block text-xs text-slate-500">
+                    Updated {{ notice.publishedAt | date: 'd MMM y, h:mm a' }}
+                  </span>
+                } @else {
+                  <span class="text-slate-500">&mdash;</span>
+                }
+              </td>
+              <td class="text-right">
+                <div class="inline-flex flex-wrap justify-end gap-2">
+                  <a
+                    [routerLink]="['/admin/notices', notice.id, 'edit']"
+                    class="ui-btn ui-btn-secondary !px-3 !py-1.5 text-xs"
+                  >
+                    <svg lucidePencil [size]="14" aria-hidden="true"></svg> Open
+                  </a>
+                </div>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="5" class="px-4 py-10">
+                <app-admin-empty-state
+                  [icon]="megaphoneIcon"
+                  title="No notices yet"
+                  message="Create a private draft when a school update is ready for editorial preparation."
+                />
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
