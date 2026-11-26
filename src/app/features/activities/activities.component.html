@@ -1,50 +1,608 @@
-<app-page-intro
-  label="Student Life"
-  title="Learning beyond the classroom"
-  description="Activities give children different ways to express themselves, develop physically and learn to work with others."
-  [image]="introImage()"
-/>
-
+<!-- Section 1: Hero Section -->
 <section
-  class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] py-[clamp(40px,4.5vw,68px)]"
+  class="relative isolate flex min-h-[440px] items-center overflow-hidden bg-[var(--navy)] py-16 text-white sm:min-h-[500px] sm:py-24"
+  aria-label="Student Life at Pragyan Paathshala"
 >
-  <div class="mb-[30px] flex flex-col min-[711px]:flex-row justify-between gap-[25px] min-[711px]:items-end">
-    <div>
-      <app-eyebrow>Explore categories</app-eyebrow>
-      <h2 class="mt-3">Different ways to take part</h2>
+  <img
+    src="/assets/images/sports.webp"
+    alt="Students enjoying active games and school life at Pragyan Paathshala"
+    class="absolute inset-0 -z-20 h-full w-full object-cover object-center"
+  />
+  <div
+    aria-hidden="true"
+    class="absolute inset-0 -z-10 bg-gradient-to-r from-[var(--navy)]/90 via-[var(--navy)]/75 to-[var(--navy)]/35"
+  ></div>
+
+  <div
+    class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)]"
+  >
+    <div class="max-w-2xl">
+      <p
+        class="inline-flex items-center gap-2 rounded-full border border-[var(--gold)]/50 bg-[var(--navy)]/75 px-3.5 py-1 text-[11px] font-bold uppercase tracking-[0.12em] text-[var(--gold-light)]"
+      >
+        <svg lucideSparkles [size]="14" class="text-[var(--gold)]"></svg>
+        <span>Student Life</span>
+      </p>
+
+      <h1
+        class="mt-4 text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-[3.4rem] lg:leading-[1.08]"
+        style="font-family: var(--heading)"
+      >
+        Beyond the Classroom,<br />
+        <span class="text-[var(--gold)]">Into Life</span>
+      </h1>
+
+      <p class="mt-5 text-base leading-relaxed text-slate-100 sm:text-lg">
+        At Pragyan Paathshala, learning goes beyond books and classrooms. We encourage students to
+        explore their interests, develop new skills, build confidence and enjoy every moment of
+        their school life. Through sports, creative activities, celebrations and practical
+        learning, we help students grow into confident, responsible and caring individuals.
+      </p>
     </div>
-    <p class="w-[min(100%,375px)] text-[var(--muted-ink)]">
-      These categories show the kinds of activities this site can feature. They do not confirm
-      which activities the school currently offers.
-    </p>
+  </div>
+</section>
+
+<!-- Section 2: Introduction to Student Life -->
+<section
+  class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] py-14 sm:py-20"
+>
+  <div class="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-14">
+    <div class="lg:col-span-6">
+      <app-eyebrow>Our Student Experience</app-eyebrow>
+      <h2
+        class="mt-3 text-3xl font-bold tracking-tight text-[var(--navy)] sm:text-4xl"
+        style="font-family: var(--heading)"
+      >
+        A School Life Full of Learning and Joy
+      </h2>
+      <div class="mt-5 space-y-4 text-[15px] leading-relaxed text-[#46536a] sm:text-base">
+        <p>
+          School is not only a place to learn subjects. It is also a place where students make
+          friends, discover their talents, learn good habits and build memories that last a
+          lifetime.
+        </p>
+        <p>
+          At Pragyan Paathshala, we create opportunities for students to learn, play, express
+          themselves and work together. We believe every student has unique abilities, and we
+          encourage them to explore, learn and grow at their own pace.
+        </p>
+      </div>
+    </div>
+
+    <div class="lg:col-span-6">
+      <div class="overflow-hidden rounded-3xl border border-[var(--line)] bg-white p-2 shadow-md">
+        <img
+          src="/assets/images/learning-together.webp"
+          alt="Students working together happily in a classroom"
+          loading="lazy"
+          class="aspect-[4/3] w-full rounded-2xl object-cover"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 3: Sports & Games -->
+<section class="bg-[#f4f8fe] py-14 sm:py-20">
+  <div
+    class="mx-auto grid w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-14"
+  >
+    <div class="order-2 grid grid-cols-2 gap-4 lg:order-1 lg:col-span-6">
+      <div class="col-span-2 overflow-hidden rounded-3xl border border-[var(--line)] bg-white p-2 shadow-sm">
+        <img
+          src="/assets/images/sports.webp"
+          alt="Students running together with a ball outdoors"
+          loading="lazy"
+          class="aspect-[16/9] w-full rounded-2xl object-cover"
+        />
+      </div>
+      <div class="overflow-hidden rounded-2xl border border-[var(--line)] bg-white p-1.5 shadow-xs">
+        <img
+          src="/assets/images/outdoor.webp"
+          alt="Students enjoying outdoor physical activity"
+          loading="lazy"
+          class="aspect-[4/3] w-full rounded-xl object-cover"
+        />
+      </div>
+      <div
+        class="flex flex-col justify-center rounded-2xl border border-[var(--line)] bg-white p-4 shadow-xs"
+      >
+        <p class="text-xs font-bold uppercase tracking-wider text-[var(--blue)]">Active Spirit</p>
+        <p class="mt-1 text-sm font-semibold text-[var(--navy)]">
+          Building fitness, teamwork, discipline, and fair play every day.
+        </p>
+      </div>
+    </div>
+
+    <div class="order-1 lg:order-2 lg:col-span-6">
+      <app-eyebrow>Sports &amp; Games</app-eyebrow>
+      <h2
+        class="mt-3 text-3xl font-bold tracking-tight text-[var(--navy)] sm:text-4xl"
+        style="font-family: var(--heading)"
+      >
+        Learn, Play and Stay Active
+      </h2>
+      <div class="mt-5 space-y-4 text-[15px] leading-relaxed text-[#46536a] sm:text-base">
+        <p>
+          Sports and games help students stay healthy, active and confident. They also teach
+          teamwork, discipline, respect and the importance of fair play.
+        </p>
+        <p>
+          At Pragyan Paathshala, students take part in different sports and games that help them
+          develop physical fitness, teamwork and a positive attitude.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 4: Arts, Culture & Creativity -->
+<section class="bg-[var(--sunlight)] py-14 sm:py-20">
+  <div
+    class="mx-auto grid w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-14"
+  >
+    <div class="lg:col-span-6">
+      <app-eyebrow>Arts, Culture &amp; Creativity</app-eyebrow>
+      <h2
+        class="mt-3 text-3xl font-bold tracking-tight text-[var(--navy)] sm:text-4xl"
+        style="font-family: var(--heading)"
+      >
+        Discover Your Creativity
+      </h2>
+      <div class="mt-5 space-y-4 text-[15px] leading-relaxed text-[#46536a] sm:text-base">
+        <p>
+          Every student has a creative side. We provide opportunities for students to express their
+          ideas and talents through art, music, dance, drama and other creative activities.
+        </p>
+        <p>
+          These activities help students develop confidence, imagination and the courage to express
+          themselves in their own way.
+        </p>
+      </div>
+
+      <div class="mt-6 flex flex-wrap gap-2.5">
+        <span
+          class="inline-flex items-center gap-1.5 rounded-full border border-[var(--gold)]/60 bg-white px-3.5 py-1.5 text-xs font-semibold text-[var(--navy)]"
+        >
+          <svg lucidePalette [size]="14" class="text-[var(--blue)]"></svg>
+          <span>Drawing &amp; Painting</span>
+        </span>
+        <span
+          class="inline-flex items-center gap-1.5 rounded-full border border-[var(--gold)]/60 bg-white px-3.5 py-1.5 text-xs font-semibold text-[var(--navy)]"
+        >
+          <svg lucideSparkles [size]="14" class="text-[var(--blue)]"></svg>
+          <span>Music, Dance &amp; Drama</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 lg:col-span-6">
+      <div class="overflow-hidden rounded-3xl border border-[var(--line)] bg-white p-2 shadow-sm">
+        <img
+          src="/assets/images/art.webp"
+          alt="Child painting with bright colors"
+          loading="lazy"
+          class="aspect-[3/4] w-full rounded-2xl object-cover"
+        />
+      </div>
+      <div class="mt-8 overflow-hidden rounded-3xl border border-[var(--line)] bg-white p-2 shadow-sm">
+        <img
+          src="/assets/images/early-learning.webp"
+          alt="Children creating and exploring together"
+          loading="lazy"
+          class="aspect-[3/4] w-full rounded-2xl object-cover"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 5: Clubs & Extracurricular Activities -->
+<section
+  class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] py-14 sm:py-20"
+>
+  <div class="mx-auto max-w-3xl text-center">
+    <app-eyebrow>Extracurricular Activities</app-eyebrow>
+    <h2
+      class="mt-3 text-3xl font-bold tracking-tight text-[var(--navy)] sm:text-4xl"
+      style="font-family: var(--heading)"
+    >
+      Explore Your Interests and Talents
+    </h2>
+    <div class="mt-4 space-y-3 text-[15px] leading-relaxed text-[#46536a] sm:text-base">
+      <p>
+        Learning new things becomes more enjoyable when students can explore their interests. Our
+        extracurricular activities give students opportunities to discover their talents, develop
+        new skills and learn beyond the classroom.
+      </p>
+      <p>
+        Through different activities, students learn to work together, share ideas, solve problems
+        and take responsibility.
+      </p>
+    </div>
   </div>
 
-  <div class="grid grid-cols-2 min-[1191px]:grid-cols-4 gap-2 min-[461px]:gap-[15px]">
+  <div class="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
     @for (item of activities(); track item.title) {
-      <article class="overflow-hidden rounded-2xl border border-[var(--line)] bg-white">
+      <article
+        class="group flex flex-col overflow-hidden rounded-2xl border border-[var(--line)] bg-white shadow-xs transition hover:-translate-y-0.5 hover:shadow-md"
+      >
         @if (item.image; as imageSrc) {
-          <app-photo [src]="imageSrc" [alt]="altFor(imageSrc)" photoClass="aspect-[1.45]" />
+          <div class="aspect-[16/10] w-full overflow-hidden bg-slate-100">
+            <img
+              [src]="imageSrc"
+              [alt]="altFor(imageSrc) || item.title"
+              loading="lazy"
+              class="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+            />
+          </div>
         }
-        <div class="p-3 min-[461px]:p-[17px]">
+        <div class="flex flex-1 flex-col p-5">
           <span
-            [class]="
-              'grid place-items-center flex-none w-10 h-10 mb-3 rounded-[9px] ' +
-              (item.image
-                ? 'bg-[#e9f6e9] text-[#16763b]'
-                : 'bg-[var(--blue-light)] text-[var(--blue-deep)]')
-            "
+            class="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--blue-light)] text-[var(--blue)]"
           >
-            <ng-container *ngComponentOutlet="item.icon; inputs: { size: 21 }" />
+            <ng-container *ngComponentOutlet="item.icon; inputs: { size: 19 }" />
           </span>
-          <h3 class="text-[0.99rem] min-[461px]:text-[1.22rem] [overflow-wrap:anywhere]">
+          <h3 class="mt-4 text-lg font-bold text-[var(--navy)]" style="font-family: var(--heading)">
             {{ item.title }}
           </h3>
-          <p class="mt-1.5 text-[var(--muted-ink)] text-sm">{{ item.description }}</p>
+          <p class="mt-1.5 text-sm leading-relaxed text-[#53627a]">{{ item.description }}</p>
         </div>
       </article>
     }
   </div>
 </section>
 
-<app-admission-band />
-  
+<!-- Section 6: Learning Beyond the Classroom -->
+<section class="bg-[#f4f8fe] py-14 sm:py-20">
+  <div
+    class="mx-auto grid w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-14"
+  >
+    <div class="lg:col-span-5">
+      <div class="overflow-hidden rounded-3xl border border-[var(--line)] bg-white p-2 shadow-md">
+        <img
+          src="/assets/images/outdoor.webp"
+          alt="Students observing plants and learning outdoors"
+          loading="lazy"
+          class="aspect-[4/4.2] w-full rounded-2xl object-cover"
+        />
+      </div>
+    </div>
+
+    <div class="lg:col-span-7">
+      <app-eyebrow>Practical Discovery</app-eyebrow>
+      <h2
+        class="mt-3 text-3xl font-bold tracking-tight text-[var(--navy)] sm:text-4xl"
+        style="font-family: var(--heading)"
+      >
+        Learning Through Real Experiences
+      </h2>
+      <div class="mt-5 space-y-4 text-[15px] leading-relaxed text-[#46536a] sm:text-base">
+        <p>
+          We believe students learn better when they can connect classroom lessons with real-life
+          experiences. Practical activities, projects, experiments and educational visits help
+          students understand what they learn and develop curiosity about the world around them.
+        </p>
+        <p>We encourage students to ask questions, explore ideas and learn through experience.</p>
+      </div>
+
+      <div class="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <div class="flex items-center gap-3 rounded-xl border border-[var(--line)] bg-white px-4 py-3">
+          <svg lucideCompass [size]="18" class="shrink-0 text-[var(--blue)]"></svg>
+          <span class="text-sm font-semibold text-[var(--navy)]">Projects &amp; Experiments</span>
+        </div>
+        <div class="flex items-center gap-3 rounded-xl border border-[var(--line)] bg-white px-4 py-3">
+          <svg lucideUsers [size]="18" class="shrink-0 text-[var(--blue)]"></svg>
+          <span class="text-sm font-semibold text-[var(--navy)]">Educational Visits &amp; Practice</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 7: Events & Celebrations -->
+<section
+  class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] py-14 sm:py-20"
+>
+  <div class="grid grid-cols-1 items-center gap-10 lg:grid-cols-12">
+    <div class="lg:col-span-5">
+      <app-eyebrow>Events &amp; Celebrations</app-eyebrow>
+      <h2
+        class="mt-3 text-3xl font-bold tracking-tight text-[var(--navy)] sm:text-4xl"
+        style="font-family: var(--heading)"
+      >
+        Celebrating Together
+      </h2>
+      <div class="mt-5 space-y-4 text-[15px] leading-relaxed text-[#46536a] sm:text-base">
+        <p>
+          School events and celebrations bring students together and make school life more
+          enjoyable. They also help students learn about different cultures, traditions and values.
+        </p>
+        <p>
+          At Pragyan Paathshala, special occasions, cultural programs, school events and
+          celebrations give students opportunities to participate, share their talents and create
+          happy memories with their friends and teachers.
+        </p>
+      </div>
+      <div class="mt-6">
+        <a
+          routerLink="/events"
+          class="inline-flex items-center gap-2 text-sm font-bold text-[var(--blue-deep)] hover:underline underline-offset-4"
+        >
+          <span>View School Events</span>
+          <svg lucideArrowRight [size]="16"></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 lg:col-span-7">
+      <div class="col-span-2 overflow-hidden rounded-3xl border border-[var(--line)] bg-white p-2 shadow-sm">
+        <img
+          src="/assets/images/classroom.webp"
+          alt="Students participating together in school programs"
+          loading="lazy"
+          class="aspect-[16/9] w-full rounded-2xl object-cover"
+        />
+      </div>
+      <div class="overflow-hidden rounded-2xl border border-[var(--line)] bg-white p-1.5 shadow-xs">
+        <img
+          src="/assets/images/art.webp"
+          alt="Creative cultural expression"
+          loading="lazy"
+          class="aspect-[4/3] w-full rounded-xl object-cover"
+        />
+      </div>
+      <div class="overflow-hidden rounded-2xl border border-[var(--line)] bg-white p-1.5 shadow-xs">
+        <img
+          src="/assets/images/learning-together.webp"
+          alt="Students sharing happy school memories"
+          loading="lazy"
+          class="aspect-[4/3] w-full rounded-xl object-cover"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 8: Student Achievements -->
+<section class="bg-[var(--navy)] py-14 text-white sm:py-20">
+  <div
+    class="mx-auto grid w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] grid-cols-1 items-center gap-10 lg:grid-cols-12"
+  >
+    <div class="lg:col-span-6">
+      <p class="text-xs font-bold uppercase tracking-[0.14em] text-[var(--gold)]">
+        Student Achievements
+      </p>
+      <h2
+        class="mt-3 text-3xl font-extrabold tracking-tight text-white sm:text-4xl"
+        style="font-family: var(--heading)"
+      >
+        Every Achievement Matters
+      </h2>
+      <div class="mt-5 space-y-4 text-[15px] leading-relaxed text-slate-200 sm:text-base">
+        <p>
+          We believe every achievement deserves appreciation. Whether it is success in academics,
+          sports, art, competitions or other activities, we encourage students to work hard and
+          take pride in their progress.
+        </p>
+        <p>
+          Recognizing students&apos; efforts helps them build confidence, stay motivated and
+          continue working towards their goals.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:col-span-6">
+      <div class="rounded-2xl border border-white/15 bg-white/10 p-5">
+        <svg lucideAward [size]="22" class="text-[var(--gold)]"></svg>
+        <h3 class="mt-3 text-base font-bold text-white" style="font-family: var(--heading)">
+          Academic Progress
+        </h3>
+        <p class="mt-1 text-xs leading-relaxed text-slate-200">
+          Appreciating steady effort, curiosity, and personal improvement in class.
+        </p>
+      </div>
+      <div class="rounded-2xl border border-white/15 bg-white/10 p-5">
+        <svg lucideSparkles [size]="22" class="text-[var(--gold)]"></svg>
+        <h3 class="mt-3 text-base font-bold text-white" style="font-family: var(--heading)">
+          Sports &amp; Creativity
+        </h3>
+        <p class="mt-1 text-xs leading-relaxed text-slate-200">
+          Celebrating participation and effort in games, art, and cultural activities.
+        </p>
+      </div>
+      <div class="rounded-2xl border border-white/15 bg-white/10 p-5">
+        <svg lucideCheckCircle2 [size]="22" class="text-[var(--gold)]"></svg>
+        <h3 class="mt-3 text-base font-bold text-white" style="font-family: var(--heading)">
+          Confidence &amp; Pride
+        </h3>
+        <p class="mt-1 text-xs leading-relaxed text-slate-200">
+          Helping students feel encouraged to take on new challenges.
+        </p>
+      </div>
+      <div class="rounded-2xl border border-white/15 bg-white/10 p-5">
+        <svg lucideHeartHandshake [size]="22" class="text-[var(--gold)]"></svg>
+        <h3 class="mt-3 text-base font-bold text-white" style="font-family: var(--heading)">
+          Positive Attitude
+        </h3>
+        <p class="mt-1 text-xs leading-relaxed text-slate-200">
+          Valuing kindness, teamwork, and respectful effort alongside results.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 9: Student Wellbeing -->
+<section
+  class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] py-14 sm:py-20"
+>
+  <div class="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-14">
+    <div class="lg:col-span-6">
+      <app-eyebrow>Student Wellbeing</app-eyebrow>
+      <h2
+        class="mt-3 text-3xl font-bold tracking-tight text-[var(--navy)] sm:text-4xl"
+        style="font-family: var(--heading)"
+      >
+        Growing in a Caring Environment
+      </h2>
+      <div class="mt-5 space-y-4 text-[15px] leading-relaxed text-[#46536a] sm:text-base">
+        <p>
+          A happy and safe environment is important for every student&apos;s growth. We encourage
+          respect, kindness, cooperation and positive relationships among students, teachers and
+          the school community.
+        </p>
+        <p>
+          Our goal is to help students feel valued, supported and confident as they learn and grow.
+        </p>
+      </div>
+
+      <div class="mt-6 flex flex-wrap gap-3">
+        <span
+          class="inline-flex items-center gap-2 rounded-xl border border-[var(--line)] bg-[#f8fafc] px-4 py-2.5 text-xs font-semibold text-[var(--navy)]"
+        >
+          <svg lucideShieldCheck [size]="16" class="text-[var(--blue)]"></svg>
+          <span>Safe &amp; Welcoming</span>
+        </span>
+        <span
+          class="inline-flex items-center gap-2 rounded-xl border border-[var(--line)] bg-[#f8fafc] px-4 py-2.5 text-xs font-semibold text-[var(--navy)]"
+        >
+          <svg lucideHeartHandshake [size]="16" class="text-[var(--blue)]"></svg>
+          <span>Respect &amp; Kindness</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="lg:col-span-6">
+      <div class="overflow-hidden rounded-3xl border border-[var(--line)] bg-white p-2 shadow-md">
+        <img
+          src="/assets/images/early-learning.webp"
+          alt="Warm interaction between teacher and students"
+          loading="lazy"
+          class="aspect-[4/3] w-full rounded-2xl object-cover"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 10: Student Life Gallery -->
+<section class="bg-[#f4f8fe] py-14 sm:py-20">
+  <div
+    class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)]"
+  >
+    <div class="mx-auto max-w-2xl text-center">
+      <app-eyebrow>Student Life Gallery</app-eyebrow>
+      <h2
+        class="mt-3 text-3xl font-bold tracking-tight text-[var(--navy)] sm:text-4xl"
+        style="font-family: var(--heading)"
+      >
+        Moments That Make School Special
+      </h2>
+      <p class="mt-4 text-[15px] leading-relaxed text-[#46536a] sm:text-base">
+        Every school day brings new experiences, friendships, activities and memories. Explore some
+        of the moments that make life at Pragyan Paathshala special.
+      </p>
+    </div>
+
+    <div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
+      @for (photo of galleryPhotos; track photo.src) {
+        <button
+          type="button"
+          (click)="openLightbox(photo)"
+          [class]="
+            'group relative overflow-hidden rounded-2xl border border-[var(--line)] bg-white text-left shadow-xs focus-visible:outline-2 focus-visible:outline-[var(--blue)] ' +
+            photo.spanClass
+          "
+        >
+          <img
+            [src]="photo.src"
+            [alt]="photo.alt"
+            loading="lazy"
+            class="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+          />
+          <span
+            class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-[var(--navy)]/85 via-[var(--navy)]/35 to-transparent px-4 pb-3 pt-8 text-xs font-semibold text-white"
+          >
+            {{ photo.caption }}
+          </span>
+        </button>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Section 11: Final Call to Action -->
+<section
+  class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] py-14 sm:py-20"
+>
+  <div
+    class="rounded-3xl bg-gradient-to-br from-[var(--navy)] via-[var(--blue-deep)] to-[var(--blue)] px-6 py-12 text-center text-white shadow-lg sm:px-12 sm:py-16"
+  >
+    <p class="text-xs font-bold uppercase tracking-[0.14em] text-[var(--gold)]">
+      Join Pragyan Paathshala
+    </p>
+    <h2
+      class="mx-auto mt-3 max-w-2xl text-3xl font-extrabold tracking-tight text-white sm:text-4xl"
+      style="font-family: var(--heading)"
+    >
+      Be Part of Our School Community
+    </h2>
+    <div class="mx-auto mt-4 max-w-2xl space-y-2 text-sm leading-relaxed text-slate-200 sm:text-base">
+      <p>
+        Every child deserves an environment where they can learn, grow, explore and achieve their
+        potential.
+      </p>
+      <p>
+        At Pragyan Paathshala, we look forward to supporting every student on their journey of
+        learning and growth.
+      </p>
+    </div>
+
+    <div class="mt-8 flex flex-wrap items-center justify-center gap-3.5">
+      <a
+        routerLink="/admissions"
+        class="inline-flex items-center gap-2 rounded-xl bg-[var(--gold)] px-6 py-3 text-sm font-bold text-[var(--navy)] shadow-sm transition hover:bg-[#ffe14d]"
+      >
+        <span>Explore Admissions</span>
+        <svg lucideArrowRight [size]="16"></svg>
+      </a>
+      <a
+        routerLink="/contact"
+        class="inline-flex items-center gap-2 rounded-xl border border-white/30 bg-white/10 px-6 py-3 text-sm font-bold text-white transition hover:bg-white/20"
+      >
+        <span>Contact Us</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox Modal -->
+@if (activePhoto(); as photo) {
+  <div
+    class="fixed inset-0 z-50 flex items-center justify-center bg-[var(--navy)]/85 p-4 backdrop-blur-sm"
+    (click)="closeLightbox()"
+  >
+    <div
+      class="relative max-w-4xl overflow-hidden rounded-3xl bg-white p-2 shadow-2xl"
+      (click)="$event.stopPropagation()"
+    >
+      <button
+        type="button"
+        aria-label="Close image preview"
+        (click)="closeLightbox()"
+        class="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-[var(--navy)] shadow transition hover:bg-white"
+      >
+        <svg lucideX [size]="18"></svg>
+      </button>
+      <img
+        [src]="photo.src"
+        [alt]="photo.alt"
+        class="max-h-[78vh] w-full rounded-2xl object-contain"
+      />
+      <p class="px-4 py-3 text-center text-sm font-semibold text-[var(--navy)]">
+        {{ photo.caption }}
+      </p>
+    </div>
+  </div>
+}

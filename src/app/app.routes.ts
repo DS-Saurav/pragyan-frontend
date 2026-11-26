@@ -28,6 +28,34 @@ export const routes: Routes = [
           import('./features/academics/academics.component').then((m) => m.AcademicsComponent),
       },
       {
+        path: 'academics/levels',
+        loadComponent: () =>
+          import('./features/academics/pages/levels/academic-levels.component').then(
+            (m) => m.AcademicLevelsComponent,
+          ),
+      },
+      {
+        path: 'academics/curriculum',
+        loadComponent: () =>
+          import('./features/academics/pages/curriculum/curriculum.component').then(
+            (m) => m.CurriculumComponent,
+          ),
+      },
+      {
+        path: 'academics/teaching-learning',
+        loadComponent: () =>
+          import('./features/academics/pages/teaching-learning/teaching-learning.component').then(
+            (m) => m.TeachingLearningComponent,
+          ),
+      },
+      {
+        path: 'academics/student-activities',
+        loadComponent: () =>
+          import('./features/academics/pages/student-activities/student-activities.component').then(
+            (m) => m.StudentActivitiesComponent,
+          ),
+      },
+      {
         path: 'activities',
         loadComponent: () =>
           import('./features/activities/activities.component').then((m) => m.ActivitiesComponent),

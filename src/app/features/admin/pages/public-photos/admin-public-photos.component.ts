@@ -33,6 +33,9 @@ export interface HeroSlideItem {
   ],
   templateUrl: './admin-public-photos.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '(document:keydown.escape)': 'closeUploadModal()',
+  },
 })
 export class AdminPublicPhotosComponent {
   private readonly http = inject(HttpClient);
@@ -41,6 +44,7 @@ export class AdminPublicPhotosComponent {
   protected readonly slides = signal<HeroSlideItem[]>([]);
   protected readonly loading = signal(true);
   protected readonly uploading = signal(false);
+  protected readonly uploadModalOpen = signal(false);
   protected readonly uploadError = signal<string | null>(null);
 
   protected readonly selectedFile = signal<File | null>(null);
@@ -70,6 +74,22 @@ export class AdminPublicPhotosComponent {
         this.flash.error('Could not load hero slides.');
       },
     });
+  }
+
+  protected openUploadModal(): void {
+    this.uploadError.set(null);
+    this.selectedFile.set(null);
+    const prev = this.previewUrl();
+    if (prev) URL.revokeObjectURL(prev);
+    this.previewUrl.set(null);
+    this.altText.set('');
+    this.isActive.set(true);
+    this.uploadModalOpen.set(true);
+  }
+
+  protected closeUploadModal(): void {
+    if (this.uploading()) return;
+    this.uploadModalOpen.set(false);
   }
 
   protected onFileSelected(event: Event): void {
@@ -114,6 +134,7 @@ export class AdminPublicPhotosComponent {
         this.isActive.set(true);
         fileInput.value = '';
         this.uploading.set(false);
+        this.uploadModalOpen.set(false);
         this.flash.success('Hero slide uploaded.');
       },
       error: (err) => {

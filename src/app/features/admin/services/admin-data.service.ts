@@ -165,7 +165,7 @@ export class AdminDataService {
         { label: 'Users / Staff', icon: LucideUsers, route: '/admin/users' },
         { label: 'School Settings', icon: LucideSettings, route: '/admin/settings' },
         { label: 'Website Content', icon: LucideGlobe, route: '/admin/settings/website' },
-        { label: 'Public Photographs', icon: LucideImage, route: '/admin/public-photos' },
+        { label: 'Hero Slides', icon: LucideImage, route: '/admin/hero-slides' },
         { label: 'Public Admissions', icon: LucideMegaphone, route: '/admin/public-admissions' },
         { label: 'Media Library', icon: LucideImages, route: '/admin/media' },
         { label: 'Public News', icon: LucideNewspaper, route: '/admin/news' },

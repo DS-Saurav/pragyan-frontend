@@ -5,6 +5,7 @@ import {
   LucideBell,
   LucideBlocks,
   LucideBookOpen,
+  LucideCompass,
   LucideDroplets,
   LucideFootprints,
   LucideGraduationCap,
@@ -60,11 +61,62 @@ export class SchoolContentService {
       to: '/about',
       title: 'About Us',
       children: [
-        { to: '/about', title: 'About Our School' },
-        { to: '/staff', title: 'Teachers & Staff' },
+        {
+          to: '/about',
+          title: 'About Our School',
+          description:
+            'Learn about our story, vision, mission, and student-centered educational philosophy.',
+          icon: LucideHeartHandshake,
+        },
+        {
+          to: '/staff',
+          title: 'Teachers & Staff',
+          description: 'Meet the dedicated educators and staff guiding our students every day.',
+          icon: LucideUsersRound,
+        },
       ],
     },
-    { to: '/academics', title: 'Academics' },
+    {
+      to: '/academics',
+      title: 'Academics',
+      children: [
+        {
+          to: '/academics',
+          title: 'Academic Overview',
+          description:
+            'A complete overview of our academic philosophy, learning environment, and educational approach.',
+          icon: LucideCompass,
+        },
+        {
+          to: '/academics/levels',
+          title: 'Academic Levels',
+          description:
+            'Explore the different stages of education offered at Pragyan Paathshala.',
+          icon: LucideGraduationCap,
+        },
+        {
+          to: '/academics/curriculum',
+          title: 'Curriculum',
+          description:
+            'Discover our learning areas, academic structure, and educational curriculum.',
+          icon: LucideBookOpen,
+        },
+        {
+          to: '/academics/teaching-learning',
+          title: 'Teaching & Learning',
+          description:
+            'Learn about our teaching philosophy and how we encourage meaningful learning.',
+          icon: LucideLightbulb,
+        },
+        {
+          to: '/academics/student-activities',
+          title: 'Student Activities',
+          description:
+            'Explore learning experiences, student participation, academic activities, and educational opportunities.',
+          icon: LucideSparkles,
+        },
+      ],
+    },
     { to: '/activities', title: 'Student Life' },
     { to: '/gallery', title: 'Gallery' },
     { to: '/news', title: 'Events & News' },

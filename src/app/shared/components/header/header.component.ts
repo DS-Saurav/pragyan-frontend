@@ -1,3 +1,4 @@
+import { NgComponentOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -20,6 +21,7 @@ import { BrandComponent } from '../brand/brand.component';
   selector: 'app-header',
   standalone: true,
   imports: [
+    NgComponentOutlet,
     RouterLink,
     RouterLinkActive,
     BrandComponent,
@@ -45,6 +47,7 @@ export class HeaderComponent {
   protected readonly mapsUrl = this.content.mapsUrl;
   protected readonly navigation = this.content.navigation;
   protected readonly menuOpen = signal(false);
+  protected readonly expandedMobileItem = signal<string | null>(null);
   protected readonly isScrolled = signal(false);
   protected readonly showAdminLogin = signal(false);
 
@@ -73,13 +76,24 @@ export class HeaderComponent {
     return children.some((child) => path === child.to || path.startsWith(`${child.to}/`));
   }
 
+  protected hasRichChildren(children?: { description?: string }[]): boolean {
+    return Boolean(children?.some((c) => Boolean(c.description)));
+  }
+
+  protected toggleMobileAccordion(key: string): void {
+    this.expandedMobileItem.update((prev) => (prev === key ? null : key));
+  }
+
   constructor() {
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
         takeUntilDestroyed(),
       )
-      .subscribe(() => this.menuOpen.set(false));
+      .subscribe(() => {
+        this.menuOpen.set(false);
+        this.expandedMobileItem.set(null);
+      });
 
     effect(() => {
       const marker = this.topBarRef()?.nativeElement;

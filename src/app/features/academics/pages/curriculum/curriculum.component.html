@@ -1,0 +1,154 @@
+<!-- Hero Section -->
+<section
+  class="relative isolate overflow-hidden bg-gradient-to-b from-[var(--sunlight)] via-white to-[#f4f8fe] py-12 sm:py-16 lg:py-20"
+>
+  <div
+    class="mx-auto grid w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-14"
+  >
+    <div class="lg:col-span-6">
+      <app-eyebrow>Curriculum</app-eyebrow>
+      <h1
+        class="mt-4 text-4xl font-extrabold tracking-tight text-[var(--navy)] sm:text-5xl"
+        style="font-family: var(--heading)"
+      >
+        Learning That Builds<br />
+        <span class="text-[var(--blue)]">Knowledge and Skills</span>
+      </h1>
+      <p class="mt-5 max-w-xl text-base leading-relaxed text-[#46536a] sm:text-lg">
+        An effective learning journey encourages students to develop knowledge, strengthen
+        essential skills, explore new ideas, and build the confidence to face future challenges.
+      </p>
+    </div>
+
+    <div class="lg:col-span-6">
+      <div class="overflow-hidden rounded-3xl border border-[var(--line)] bg-white p-2 shadow-lg">
+        <img
+          src="/assets/images/classroom.webp"
+          alt="Students engaged in classroom learning at Pragyan Paathshala"
+          class="aspect-[4/3] w-full rounded-2xl object-cover"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Curriculum Introduction -->
+<section
+  class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] py-14 sm:py-16"
+>
+  <div class="mx-auto max-w-3xl text-center">
+    <app-eyebrow>Curriculum Introduction</app-eyebrow>
+    <h2
+      class="mt-3 text-3xl font-bold tracking-tight text-[var(--navy)] sm:text-4xl"
+      style="font-family: var(--heading)"
+    >
+      A Foundation for Meaningful Learning
+    </h2>
+    <p class="mt-4 text-[15px] leading-relaxed text-[#46536a] sm:text-base">
+      Learning is about developing an understanding of the world, building essential skills, and
+      discovering new possibilities. Our academic learning experiences aim to encourage students to
+      engage with different learning areas and develop knowledge that supports their growth.
+    </p>
+  </div>
+
+  <!-- Learning Areas Grid -->
+  <div class="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    @for (area of learningAreas; track area.title) {
+      <article
+        class="flex flex-col rounded-2xl border border-[var(--line)] bg-white p-6 shadow-xs transition hover:-translate-y-0.5 hover:border-[var(--blue)]/40 hover:shadow-md"
+      >
+        <div
+          class="flex h-11 w-11 items-center justify-center rounded-xl border border-[var(--gold)]/40 bg-[var(--sunlight)] text-[var(--navy)]"
+        >
+          <ng-container *ngComponentOutlet="area.icon; inputs: { size: 20 }" />
+        </div>
+        <h3 class="mt-4 text-base font-bold text-[var(--navy)]" style="font-family: var(--heading)">
+          {{ area.title }}
+        </h3>
+        <p class="mt-2 text-sm leading-relaxed text-[#53627a]">
+          {{ area.description }}
+        </p>
+      </article>
+    }
+  </div>
+</section>
+
+<!-- Learning Through Understanding & Assessment -->
+<section class="bg-[#f4f8fe] py-14 sm:py-20">
+  <div
+    class="mx-auto grid w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] grid-cols-1 gap-8 lg:grid-cols-2"
+  >
+    <article class="rounded-3xl border border-[var(--line)] bg-white p-7 shadow-sm sm:p-9">
+      <app-eyebrow>Conceptual Depth</app-eyebrow>
+      <h2
+        class="mt-3 text-2xl font-bold text-[var(--navy)] sm:text-3xl"
+        style="font-family: var(--heading)"
+      >
+        Beyond Memorizing, Toward Understanding
+      </h2>
+      <p class="mt-3 text-[15px] leading-relaxed text-[#46536a] sm:text-base">
+        Meaningful learning encourages students to understand concepts, ask questions, explore
+        ideas, apply knowledge, and develop skills that help them learn independently.
+      </p>
+      <ul class="mt-6 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+        @for (point of understandingPoints; track point) {
+          <li class="flex items-center gap-2 text-sm font-semibold text-[var(--navy)]">
+            <svg lucideCheckCircle2 [size]="16" class="shrink-0 text-[var(--blue)]"></svg>
+            <span>{{ point }}</span>
+          </li>
+        }
+      </ul>
+    </article>
+
+    <article class="rounded-3xl border border-[var(--line)] bg-white p-7 shadow-sm sm:p-9">
+      <app-eyebrow>Academic Progress &amp; Assessment</app-eyebrow>
+      <h2
+        class="mt-3 text-2xl font-bold text-[var(--navy)] sm:text-3xl"
+        style="font-family: var(--heading)"
+      >
+        Understanding Progress, Encouraging Improvement
+      </h2>
+      <p class="mt-3 text-[15px] leading-relaxed text-[#46536a] sm:text-base">
+        Academic progress is an important part of the learning journey. Assessments and learning
+        feedback can help students understand their progress, identify areas for improvement, and
+        continue developing their academic abilities.
+      </p>
+      <div class="mt-6 overflow-hidden rounded-2xl border border-[var(--line)]">
+        <img
+          src="/assets/images/early-learning.webp"
+          alt="Guided learning and student feedback"
+          loading="lazy"
+          class="h-44 w-full object-cover"
+        />
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- Final CTA -->
+<section
+  class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] min-[711px]:w-[min(100%-64px,1440px)] py-14 sm:py-16"
+>
+  <div
+    class="rounded-3xl bg-gradient-to-br from-[var(--navy)] via-[var(--blue-deep)] to-[var(--blue)] px-6 py-12 text-center text-white shadow-lg sm:px-12"
+  >
+    <h2 class="text-2xl font-extrabold sm:text-3xl" style="font-family: var(--heading)">
+      Explore the Learning Journey
+    </h2>
+    <div class="mt-7 flex flex-wrap justify-center gap-3.5">
+      <a
+        routerLink="/academics/levels"
+        class="inline-flex items-center gap-2 rounded-xl bg-[var(--gold)] px-6 py-3 text-sm font-bold text-[var(--navy)] transition hover:bg-[#ffe14d]"
+      >
+        <span>Academic Levels</span>
+        <svg lucideArrowRight [size]="16"></svg>
+      </a>
+      <a
+        routerLink="/contact"
+        class="inline-flex items-center gap-2 rounded-xl border border-white/30 bg-white/10 px-6 py-3 text-sm font-bold text-white transition hover:bg-white/20"
+      >
+        <span>Contact Our School</span>
+      </a>
+    </div>
+  </div>
+</section>

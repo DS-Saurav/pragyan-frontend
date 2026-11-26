@@ -154,12 +154,13 @@ export const ADMIN_ROUTES: Routes = [
       { path: 'settings/marksheet', loadComponent: placeholder, data: { title: 'Marksheet Layout', section: 'Administration', icon: LucideLayoutTemplate } },
       { path: 'settings/website', loadComponent: placeholder, data: { title: 'Website Content', section: 'Administration', icon: LucideGlobe } },
       {
-        path: 'public-photos',
+        path: 'hero-slides',
         loadComponent: () =>
           import('./pages/public-photos/admin-public-photos.component').then(
             (m) => m.AdminPublicPhotosComponent,
           ),
       },
+      { path: 'public-photos', redirectTo: 'hero-slides', pathMatch: 'full' },
       { path: 'public-admissions', loadComponent: placeholder, data: { title: 'Public Admissions', section: 'Administration', icon: LucideMegaphone } },
       { path: 'media', loadComponent: placeholder, data: { title: 'Media Library', section: 'Administration', icon: LucideImages } },
       { path: 'gallery', loadComponent: placeholder, data: { title: 'Public Gallery', section: 'Administration', icon: LucideImages } },

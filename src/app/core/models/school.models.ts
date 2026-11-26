@@ -77,8 +77,15 @@ export interface QuickLinkItem {
   icon: Type<unknown>;
 }
 
+export interface NavChildItem {
+  to: string;
+  title: string;
+  description?: string;
+  icon?: Type<unknown>;
+}
+
 export interface NavLinkItem {
   to: string;
   title: string;
-  children?: { to: string; title: string }[];
+  children?: NavChildItem[];
 }

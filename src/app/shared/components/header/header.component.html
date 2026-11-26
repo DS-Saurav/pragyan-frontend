@@ -96,16 +96,48 @@
               ></svg>
             </a>
             <div
-              class="absolute top-[calc(100%+1px)] -left-2.5 min-w-[190px] p-1.5 border border-[var(--line)] rounded-[10px] bg-white shadow-[var(--shadow)] opacity-0 invisible translate-y-1.5 transition-all duration-160 z-20 group-hover/dropdown:opacity-100 group-hover/dropdown:visible group-hover/dropdown:translate-y-0 group-focus-within/dropdown:opacity-100 group-focus-within/dropdown:visible group-focus-within/dropdown:translate-y-0"
+              [class]="
+                'absolute top-[calc(100%+1px)] -left-2.5 border border-[var(--line)] bg-white shadow-[var(--shadow)] opacity-0 invisible translate-y-1.5 transition-all duration-160 z-20 group-hover/dropdown:opacity-100 group-hover/dropdown:visible group-hover/dropdown:translate-y-0 group-focus-within/dropdown:opacity-100 group-focus-within/dropdown:visible group-focus-within/dropdown:translate-y-0 ' +
+                (hasRichChildren(item.children)
+                  ? 'w-[420px] rounded-2xl p-2.5'
+                  : 'min-w-[190px] rounded-[10px] p-1.5')
+              "
             >
               @for (child of item.children; track child.to) {
-                <a
-                  class="relative flex items-center px-3 py-[9px] rounded-[7px] text-[#46536a] text-[13px] font-semibold whitespace-nowrap transition-colors duration-180 hover:text-[var(--blue-deep)] hover:bg-[var(--blue-light)] [&.active]:text-[var(--blue-deep)] [&.active]:bg-[var(--blue-light)]"
-                  [routerLink]="child.to"
-                  routerLinkActive="active"
-                >
-                  {{ child.title }}
-                </a>
+                @if (hasRichChildren(item.children)) {
+                  <a
+                    class="group/sub flex items-start gap-3 rounded-xl px-3 py-2.5 text-[#46536a] transition-colors duration-180 hover:bg-[var(--blue-light)]/75 hover:text-[var(--blue-deep)] [&.active]:bg-[var(--blue-light)] [&.active]:text-[var(--blue-deep)]"
+                    [routerLink]="child.to"
+                    routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: child.to === item.to }"
+                  >
+                    @if (child.icon) {
+                      <span
+                        class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[var(--blue-light)] text-[var(--blue)] transition-colors group-hover/sub:bg-[var(--blue)] group-hover/sub:text-white"
+                      >
+                        <ng-container *ngComponentOutlet="child.icon; inputs: { size: 16 }" />
+                      </span>
+                    }
+                    <span class="min-w-0">
+                      <span class="block text-[13px] font-bold text-[var(--navy)]">
+                        {{ child.title }}
+                      </span>
+                      @if (child.description) {
+                        <span class="mt-0.5 block text-[11.5px] leading-snug text-[var(--muted-ink)]">
+                          {{ child.description }}
+                        </span>
+                      }
+                    </span>
+                  </a>
+                } @else {
+                  <a
+                    class="relative flex items-center px-3 py-[9px] rounded-[7px] text-[#46536a] text-[13px] font-semibold whitespace-nowrap transition-colors duration-180 hover:text-[var(--blue-deep)] hover:bg-[var(--blue-light)] [&.active]:text-[var(--blue-deep)] [&.active]:bg-[var(--blue-light)]"
+                    [routerLink]="child.to"
+                    routerLinkActive="active"
+                  >
+                    {{ child.title }}
+                  </a>
+                }
               }
             </div>
           </div>
@@ -162,31 +194,51 @@
       class="mx-auto w-[min(100%-32px,1440px)] min-[461px]:w-[min(100%-40px,1440px)] flex flex-col gap-1"
     >
       @for (item of navigation; track item.to) {
-        <a
-          class="px-2.5 py-2.5 rounded-lg text-[#46536a] font-semibold text-sm hover:bg-[var(--blue-light)] hover:text-[var(--blue-deep)] [&.active]:bg-[var(--blue-light)] [&.active]:text-[var(--blue-deep)]"
-          [routerLink]="item.to"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: item.to === '/' }"
-          [class.active]="item.to === '/news' && isUpdatesPage()"
-          (click)="menuOpen.set(false)"
-        >
-          {{ item.title }}
-        </a>
         @if (item.children?.length) {
-          <div class="pl-4 flex flex-col gap-1">
-            @for (child of item.children; track child.to) {
-              @if (child.to !== item.to) {
-                <a
-                  class="px-2.5 py-2 rounded-lg text-[var(--muted-ink)] font-semibold text-[13px] hover:bg-[var(--blue-light)] hover:text-[var(--blue-deep)] [&.active]:bg-[var(--blue-light)] [&.active]:text-[var(--blue-deep)]"
-                  [routerLink]="child.to"
-                  routerLinkActive="active"
-                  (click)="menuOpen.set(false)"
-                >
-                  {{ child.title }}
-                </a>
-              }
+          <div class="flex flex-col">
+            <button
+              type="button"
+              (click)="toggleMobileAccordion(item.to)"
+              [attr.aria-expanded]="expandedMobileItem() === item.to"
+              class="flex w-full items-center justify-between px-2.5 py-2.5 rounded-lg text-left text-[#46536a] font-semibold text-sm hover:bg-[var(--blue-light)] hover:text-[var(--blue-deep)]"
+            >
+              <span>{{ item.title }}</span>
+              <svg
+                lucideChevronDown
+                [size]="16"
+                [class]="
+                  'transition-transform duration-180 ' +
+                  (expandedMobileItem() === item.to ? 'rotate-180' : '')
+                "
+              ></svg>
+            </button>
+            @if (expandedMobileItem() === item.to) {
+              <div class="pl-4 pb-1 flex flex-col gap-1">
+                @for (child of item.children; track child.to) {
+                  <a
+                    class="px-2.5 py-2 rounded-lg text-[var(--muted-ink)] font-semibold text-[13px] hover:bg-[var(--blue-light)] hover:text-[var(--blue-deep)] [&.active]:bg-[var(--blue-light)] [&.active]:text-[var(--blue-deep)]"
+                    [routerLink]="child.to"
+                    routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: child.to === item.to }"
+                    (click)="menuOpen.set(false)"
+                  >
+                    {{ child.title }}
+                  </a>
+                }
+              </div>
             }
           </div>
+        } @else {
+          <a
+            class="px-2.5 py-2.5 rounded-lg text-[#46536a] font-semibold text-sm hover:bg-[var(--blue-light)] hover:text-[var(--blue-deep)] [&.active]:bg-[var(--blue-light)] [&.active]:text-[var(--blue-deep)]"
+            [routerLink]="item.to"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: item.to === '/' }"
+            [class.active]="item.to === '/news' && isUpdatesPage()"
+            (click)="menuOpen.set(false)"
+          >
+            {{ item.title }}
+          </a>
         }
       }
       <div class="mt-2">

@@ -1,88 +1,23 @@
-<div class="space-y-6">
-  <!-- Header -->
+<div class="space-y-5">
+  <!-- Header & Add Button -->
   <div class="flex flex-wrap items-center justify-between gap-3">
     <div>
-      <h2 class="text-xl font-bold tracking-tight text-[#123552] sm:text-2xl">
-        Public Photographs &amp; Hero Slider
-      </h2>
+      <h2 class="text-xl font-bold tracking-tight text-[#123552] sm:text-2xl">Hero Slides</h2>
       <p class="mt-0.5 text-xs text-slate-500">
-        Upload and organize the banner images displayed in the public homepage hero carousel.
+        Organize the banner images displayed in the homepage hero carousel.
       </p>
     </div>
+    <button
+      type="button"
+      (click)="openUploadModal()"
+      class="inline-flex items-center gap-1.5 rounded-xl bg-[#1c629e] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#124c7b]"
+    >
+      <svg lucideUpload [size]="15"></svg>
+      <span>+ Add Hero Slide</span>
+    </button>
   </div>
 
-  <!-- Upload Hero Slide Card -->
-  <section class="rounded-2xl border border-[#e4eaf2] bg-white p-5 shadow-sm sm:p-6">
-    <h3 class="mb-4 flex items-center gap-2 text-sm font-bold text-[#123552]">
-      <svg lucideUpload [size]="16" class="text-[#1c629e]"></svg>
-      <span>Add Hero Slide</span>
-    </h3>
-
-    @if (uploadError(); as errMsg) {
-      <div
-        role="alert"
-        class="mb-4 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-xs font-semibold text-rose-700"
-      >
-        {{ errMsg }}
-      </div>
-    }
-
-    <div class="grid grid-cols-1 gap-4 lg:grid-cols-12">
-      <div class="lg:col-span-5">
-        <label class="mb-1.5 block text-xs font-semibold text-[#123552]">
-          Banner Image (JPG, PNG, WebP · max 5MB)
-        </label>
-        <input
-          #fileInput
-          type="file"
-          accept="image/jpeg,image/png,image/webp"
-          (change)="onFileSelected($event)"
-          class="block w-full cursor-pointer rounded-xl border border-[#cbd5e1] bg-[#f8fafc] px-3 py-2 text-xs text-[#123552] file:mr-3 file:cursor-pointer file:rounded-lg file:border-0 file:bg-[#1c629e] file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-white hover:file:bg-[#124c7b]"
-        />
-        @if (previewUrl(); as preview) {
-          <div class="mt-3 overflow-hidden rounded-xl border border-[#e4eaf2]">
-            <img [src]="preview" alt="Selected preview" class="h-32 w-full object-cover" />
-          </div>
-        }
-      </div>
-
-      <div class="lg:col-span-5">
-        <label class="mb-1.5 block text-xs font-semibold text-[#123552]">
-          Alt Text / Description
-        </label>
-        <input
-          type="text"
-          [ngModel]="altText()"
-          (ngModelChange)="altText.set($event)"
-          placeholder="e.g. Children learning together in classroom"
-          class="h-10 w-full rounded-xl border border-[#cbd5e1] bg-white px-3.5 text-sm text-[#123552] placeholder:text-slate-400 focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
-        />
-        <label class="mt-3 inline-flex cursor-pointer items-center gap-2 text-xs font-semibold text-[#123552]">
-          <input
-            type="checkbox"
-            [ngModel]="isActive()"
-            (ngModelChange)="isActive.set($event)"
-            class="h-4 w-4 rounded border-slate-300 text-[#1c629e] focus:ring-[#1c629e]"
-          />
-          <span>Show on homepage immediately</span>
-        </label>
-      </div>
-
-      <div class="flex items-start justify-end lg:col-span-2 lg:pt-6">
-        <button
-          type="button"
-          [disabled]="uploading() || !selectedFile()"
-          (click)="uploadSlide(fileInput)"
-          class="inline-flex h-10 w-full items-center justify-center gap-1.5 rounded-xl bg-[#1c629e] px-4 text-xs font-semibold text-white shadow-sm transition hover:bg-[#124c7b] disabled:cursor-not-allowed disabled:opacity-60"
-        >
-          <svg lucideUpload [size]="14"></svg>
-          <span>{{ uploading() ? 'Uploading...' : 'Upload Slide' }}</span>
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Existing Slides List -->
+  <!-- Hero Slides List -->
   <section class="overflow-hidden rounded-2xl border border-[#e4eaf2] bg-white shadow-sm">
     <div class="flex items-center justify-between border-b border-[#e4eaf2] bg-[#f8fafc] px-5 py-3.5">
       <div class="flex items-center gap-2">
@@ -99,95 +34,217 @@
     @if (loading()) {
       <div class="p-10 text-center text-sm font-semibold text-[#123552]">Loading hero slides...</div>
     } @else if (slides().length === 0) {
-      <div class="p-10 text-center">
+      <div class="p-12 text-center">
         <p class="text-sm font-semibold text-[#123552]">No custom hero slides uploaded yet</p>
         <p class="mt-1 text-xs text-slate-500">
-          The homepage currently shows the default built-in school images. Upload a slide above to
-          customize it.
+          The homepage currently shows the default built-in school images.
         </p>
+        <button
+          type="button"
+          (click)="openUploadModal()"
+          class="mt-4 inline-flex items-center gap-1.5 rounded-xl bg-[#1c629e] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#124c7b]"
+        >
+          <svg lucideUpload [size]="14"></svg>
+          <span>+ Add Hero Slide</span>
+        </button>
       </div>
     } @else {
-      <div class="divide-y divide-[#e4eaf2]">
+      <div class="grid grid-cols-1 gap-5 p-5 md:grid-cols-2 xl:grid-cols-3">
         @for (slide of slides(); track slide.id; let idx = $index; let first = $first; let last = $last) {
-          <div class="flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between">
-            <div class="flex min-w-0 flex-1 items-center gap-4">
-              <span
-                class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#eaf4fb] text-xs font-bold text-[#1c629e]"
-              >
-                {{ idx + 1 }}
-              </span>
+          <article
+            class="group flex flex-col overflow-hidden rounded-2xl border border-[#e4eaf2] bg-white shadow-xs transition hover:border-[#c8dce9] hover:shadow-md"
+          >
+            <!-- Banner Preview -->
+            <div class="relative aspect-video w-full overflow-hidden bg-slate-100">
               <img
                 [src]="slide.src"
                 [alt]="slide.alt"
-                class="h-20 w-36 shrink-0 rounded-xl border border-[#e4eaf2] object-cover"
+                class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]"
               />
-              <div class="min-w-0 flex-1 space-y-2">
-                <div class="flex flex-wrap items-center gap-2">
-                  <button
-                    type="button"
-                    (click)="toggleActive(slide)"
-                    [class]="
-                      'rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase transition ' +
-                      (slide.isActive
-                        ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100'
-                        : 'bg-slate-100 text-slate-500 hover:bg-slate-200')
-                    "
-                  >
-                    {{ slide.isActive ? 'Active' : 'Hidden' }}
-                  </button>
-                </div>
+              <span
+                class="absolute left-3 top-3 inline-flex h-7 min-w-7 items-center justify-center rounded-lg bg-[#123552]/85 px-2 text-xs font-bold text-white backdrop-blur-xs"
+              >
+                #{{ idx + 1 }}
+              </span>
+              <button
+                type="button"
+                (click)="toggleActive(slide)"
+                [title]="slide.isActive ? 'Click to hide from homepage' : 'Click to show on homepage'"
+                [class]="
+                  'absolute right-3 top-3 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase shadow-xs backdrop-blur-xs transition ' +
+                  (slide.isActive
+                    ? 'bg-emerald-600/90 text-white hover:bg-emerald-700'
+                    : 'bg-slate-800/80 text-slate-200 hover:bg-slate-900')
+                "
+              >
+                {{ slide.isActive ? 'Active' : 'Hidden' }}
+              </button>
+            </div>
+
+            <!-- Card Body -->
+            <div class="flex flex-1 flex-col justify-between gap-3 p-4">
+              <div>
+                <label class="mb-1 block text-[11px] font-semibold text-slate-500">
+                  Alt Text / Caption
+                </label>
                 <div class="flex items-center gap-2">
                   <input
                     type="text"
                     [ngModel]="draftAltById()[slide.id] ?? slide.alt"
                     (ngModelChange)="setDraftAlt(slide.id, $event)"
-                    placeholder="Alt text..."
-                    class="h-8 w-full max-w-md rounded-lg border border-[#cbd5e1] bg-white px-2.5 text-xs text-[#123552] focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
+                    placeholder="Describe this banner..."
+                    class="h-9 min-w-0 flex-1 rounded-lg border border-[#cbd5e1] bg-white px-2.5 text-xs text-[#123552] focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
                   />
                   <button
                     type="button"
                     (click)="saveAlt(slide)"
                     title="Save alt text"
-                    class="inline-flex h-8 items-center gap-1 rounded-lg bg-[#eaf4fb] px-2.5 text-xs font-semibold text-[#1c629e] transition hover:bg-[#d8ecfa]"
+                    class="inline-flex h-9 shrink-0 items-center gap-1 rounded-lg bg-[#eaf4fb] px-3 text-xs font-semibold text-[#1c629e] transition hover:bg-[#d8ecfa]"
                   >
                     <svg lucideCheck [size]="13"></svg>
                     <span>Save</span>
                   </button>
                 </div>
               </div>
-            </div>
 
-            <div class="flex shrink-0 items-center gap-1.5">
-              <button
-                type="button"
-                [disabled]="first"
-                (click)="moveSlide(idx, -1)"
-                title="Move up"
-                class="flex h-8 w-8 items-center justify-center rounded-lg border border-[#e4eaf2] bg-white text-[#123552] transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
-              >
-                <svg lucideArrowUp [size]="14"></svg>
-              </button>
-              <button
-                type="button"
-                [disabled]="last"
-                (click)="moveSlide(idx, 1)"
-                title="Move down"
-                class="flex h-8 w-8 items-center justify-center rounded-lg border border-[#e4eaf2] bg-white text-[#123552] transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
-              >
-                <svg lucideArrowDown [size]="14"></svg>
-              </button>
-              <button
-                type="button"
-                (click)="deleteSlide(slide)"
-                title="Delete slide"
-                class="flex h-8 w-8 items-center justify-center rounded-lg border border-rose-200 bg-white text-rose-600 transition hover:bg-rose-50"
-              >
-                <svg lucideTrash2 [size]="14"></svg>
-              </button>
+              <div class="flex items-center justify-between border-t border-[#f1f5f9] pt-3">
+                <div class="flex items-center gap-1.5">
+                  <button
+                    type="button"
+                    [disabled]="first"
+                    (click)="moveSlide(idx, -1)"
+                    title="Move earlier"
+                    class="inline-flex h-8 items-center gap-1 rounded-lg border border-[#e4eaf2] bg-white px-2.5 text-xs font-semibold text-[#123552] transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    <svg lucideArrowUp [size]="13"></svg>
+                  </button>
+                  <button
+                    type="button"
+                    [disabled]="last"
+                    (click)="moveSlide(idx, 1)"
+                    title="Move later"
+                    class="inline-flex h-8 items-center gap-1 rounded-lg border border-[#e4eaf2] bg-white px-2.5 text-xs font-semibold text-[#123552] transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    <svg lucideArrowDown [size]="13"></svg>
+                  </button>
+                </div>
+
+                <button
+                  type="button"
+                  (click)="deleteSlide(slide)"
+                  title="Delete slide"
+                  class="inline-flex h-8 items-center gap-1.5 rounded-lg border border-rose-200 bg-white px-2.5 text-xs font-semibold text-rose-600 transition hover:bg-rose-50"
+                >
+                  <svg lucideTrash2 [size]="13"></svg>
+                  <span>Delete</span>
+                </button>
+              </div>
             </div>
-          </div>
+          </article>
         }
       </div>
     }
   </section>
+
+  <!-- Upload Hero Slide Modal -->
+  @if (uploadModalOpen()) {
+    <div
+      class="fixed inset-0 z-50 flex items-center justify-center bg-[#123552]/40 p-4 backdrop-blur-xs"
+      (click)="closeUploadModal()"
+    >
+      <div
+        class="w-full max-w-lg overflow-hidden rounded-2xl border border-[#e4eaf2] bg-white shadow-2xl"
+        (click)="$event.stopPropagation()"
+      >
+        <div class="flex items-center justify-between border-b border-[#e4eaf2] bg-white px-6 py-4">
+          <div>
+            <h3 class="text-lg font-bold tracking-tight text-[#123552]">Add Hero Slide</h3>
+            <p class="mt-0.5 text-xs text-slate-500">
+              Upload a banner image for the homepage hero carousel.
+            </p>
+          </div>
+          <button
+            type="button"
+            aria-label="Close modal"
+            (click)="closeUploadModal()"
+            class="flex h-8 w-8 items-center justify-center rounded-lg border border-[#e4eaf2] bg-[#f8fafc] text-base font-semibold text-slate-500 transition hover:bg-slate-100 hover:text-[#123552]"
+          >
+            &times;
+          </button>
+        </div>
+
+        <div class="space-y-4 p-6">
+          @if (uploadError(); as errMsg) {
+            <div
+              role="alert"
+              class="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-xs font-semibold text-rose-700"
+            >
+              {{ errMsg }}
+            </div>
+          }
+
+          <div>
+            <label class="mb-1.5 block text-xs font-semibold text-[#123552]">
+              Banner Image (JPG, PNG, WebP, AVIF · max 10MB)
+            </label>
+            <input
+              #fileInput
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/avif"
+              (change)="onFileSelected($event)"
+              class="block w-full cursor-pointer rounded-xl border border-[#cbd5e1] bg-[#f8fafc] px-3 py-2 text-xs text-[#123552] file:mr-3 file:cursor-pointer file:rounded-lg file:border-0 file:bg-[#1c629e] file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-white hover:file:bg-[#124c7b]"
+            />
+            @if (previewUrl(); as preview) {
+              <div class="mt-3 overflow-hidden rounded-xl border border-[#e4eaf2]">
+                <img [src]="preview" alt="Selected preview" class="h-40 w-full object-cover" />
+              </div>
+            }
+          </div>
+
+          <div>
+            <label class="mb-1.5 block text-xs font-semibold text-[#123552]">
+              Alt Text / Description
+            </label>
+            <input
+              type="text"
+              [ngModel]="altText()"
+              (ngModelChange)="altText.set($event)"
+              placeholder="e.g. Children learning together in classroom"
+              class="h-10 w-full rounded-xl border border-[#cbd5e1] bg-white px-3.5 text-sm text-[#123552] placeholder:text-slate-400 focus:border-[#1c629e] focus:outline-none focus:ring-2 focus:ring-[#1c629e]/15"
+            />
+          </div>
+
+          <label class="inline-flex cursor-pointer items-center gap-2 text-xs font-semibold text-[#123552]">
+            <input
+              type="checkbox"
+              [ngModel]="isActive()"
+              (ngModelChange)="isActive.set($event)"
+              class="h-4 w-4 rounded border-slate-300 text-[#1c629e] focus:ring-[#1c629e]"
+            />
+            <span>Show on homepage immediately</span>
+          </label>
+        </div>
+
+        <div class="flex items-center justify-end gap-2.5 border-t border-[#e4eaf2] bg-white px-6 py-4">
+          <button
+            type="button"
+            [disabled]="uploading()"
+            (click)="closeUploadModal()"
+            class="rounded-xl border border-[#e4eaf2] bg-white px-4 py-2 text-xs font-semibold text-slate-600 transition hover:bg-slate-50 disabled:opacity-60"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            [disabled]="uploading() || !selectedFile()"
+            (click)="uploadSlide(fileInput)"
+            class="inline-flex items-center gap-1.5 rounded-xl bg-[#1c629e] px-5 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-[#124c7b] disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            <svg lucideUpload [size]="14"></svg>
+            <span>{{ uploading() ? 'Uploading...' : 'Upload Slide' }}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  }
 </div>
