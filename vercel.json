@@ -1,0 +1,24 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "angular",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/pragyan-frontend/browser",
+  "rewrites": [
+    {
+      "source": "/api/public/:path*",
+      "destination": "https://laravel-production-64d93b7c.up.railway.app/api/public/:path*"
+    },
+    {
+      "source": "/api/hero-slides/:path*",
+      "destination": "https://laravel-production-64d93b7c.up.railway.app/api/hero-slides/:path*"
+    },
+    {
+      "source": "/api/media/:path*",
+      "destination": "https://laravel-production-64d93b7c.up.railway.app/api/media/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
